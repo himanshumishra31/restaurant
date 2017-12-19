@@ -10,8 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171218115746) do
+ActiveRecord::Schema.define(version: 20171219122904) do
 
-
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "email_confirmed", default: false
+    t.string "confirm_token"
+    t.string "reset_digest"
+    t.datetime "resent_sent_at"
+    t.string "remember_digest"
+  end
 
 end

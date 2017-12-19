@@ -1,0 +1,10 @@
+<h1>Forgot password</h1>
+<div class="field">
+  <div>
+    <%= form_for(:password_reset, url: password_resets_url) do |form| %>
+      <%= form.label :email %>
+      <%= form.email_field :email, size: 40 %>
+      <%= form.submit 'Submit' %>
+    <% end %>
+  </div>
+</div>
