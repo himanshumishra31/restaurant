@@ -31,6 +31,10 @@ gem 'jbuilder', '~> 2.5'
 gem 'letter_opener', '~> 1.4', '>= 1.4.1'
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'bootstrap-sass'
+gem 'jquery-ui-rails', '~>6.0.1'
+gem 'jquery-rails', '~> 4.3.1'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

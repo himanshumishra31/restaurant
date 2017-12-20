@@ -1,38 +1,5 @@
-<h1>New User</h1>
-<h3>Please Fill the following details</h3>
-<div class="signup-form">
-  <%= form_for @user do |form| %>
-    <% if @user.errors.any? %>
-      <div class="error-explanation">
-        <h2><%= pluralize(@user.errors.count, "error") %> prohibted this user from being saved </h2>
-        <ul>
-          <% @user.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-    <fieldset>
-      <legend>Enter User Details</legend>
-      <div class="field">
-        <%= form.label :name, 'Name' %>
-        <%= form.text_field :name, size: 40 %>
-      </div>
-      <div class="field">
-        <%= form.label :password, 'Password' %>
-        <%= form.password_field :password, size: 40 %>
-      </div>
-      <div class="field">
-        <%= form.label :password_confirmation, 'Confirm Password : ' %>
-        <%= form.password_field :password_confirmation, size: 40 %>
-      </div>
-      <div class="field">
-        <%= form.label :email, 'Email: ' %>
-        <%= form.email_field :email, size: 40 %>
-      </div>
-      <div class="actions">
-        <%= form.submit %>
-      </div>
-    </fieldset>
-  <% end %>
+<h1>Enter Details</h1>
+<%= render 'form', user: @user %>
+<div class="banner">
+  <%= link_to 'Login?', login_path %>
 </div>

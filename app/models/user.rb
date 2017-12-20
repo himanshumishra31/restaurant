@@ -1,8 +1,9 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
-  validates :name,:email, presence: true
+  validates :name, :email, :password, presence: true
   validates :email, uniqueness: true, format: { with: Email_Validation_Regex }, allow_blank: true
   before_create :confirmation_token
+  validates :password, length: { minimum: 6 }, allow_blank: true
   has_secure_password
 
   def email_activate
@@ -25,7 +26,6 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  private
     def confirmation_token
       if self.confirm_token.blank?
         self.confirm_token = SecureRandom.urlsafe_base64.to_s
@@ -35,6 +35,15 @@ class User < ApplicationRecord
     def remember
       self.remember_token = User.new_token
       update_attribute(:remember_digest, User.digest(remember_token))
+    end
+
+    def authenticated?(remember_token)
+      return false if remember_digest.nil?
+      BCrypt::Password.new(remember_digest).is_password?(remember_token)
+    end
+
+    def forget
+      update_attribute(:remember_digest, nil)
     end
 
     class << self
@@ -47,5 +56,7 @@ class User < ApplicationRecord
         BCrypt::Password.create(string, cost: cost)
       end
     end
+
+
 
 end
