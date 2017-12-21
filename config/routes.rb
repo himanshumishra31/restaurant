@@ -18,4 +18,6 @@ Rails.application.routes.draw do
   end
   resources :users
   resources :password_resets, only: [:new, :edit, :create, :update]
+  root 'sessions#new', as: 'login_index', via: :all
+
 end

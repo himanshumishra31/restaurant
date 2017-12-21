@@ -1,13 +1,11 @@
 class SessionsController < ApplicationController
-  def new
-  end
 
   def create
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
       if user.email_confirmed
         log_in(user)
-        params[:remember] == 'on' ? remember(user) : forget(user)
+        params[:remember_me] == 'on' ? remember(user) : forget(user)
         redirect_to new_user_path
       else
         flash[:danger] = 'Please activate your account by following instructions in the confirmation email that you received'

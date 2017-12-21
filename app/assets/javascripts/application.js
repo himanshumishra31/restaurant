@@ -12,6 +12,4 @@
 //
 //= require jquery
 //= require rails-ujs
-//= require jquery-ui
-//= require bootstrap.min
 //= require bootstrap

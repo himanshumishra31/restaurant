@@ -11,6 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  *= require jquery-ui
+ *= require bootstrap
  *= require bootstrap.min
  *= require_self
  */
@@ -21,7 +22,7 @@
 }
 
 .top_bar {
-  margin-left: 200px;
+  margin-left: 500px;
   margin-bottom: 100px;
   margin-top: 2000px;
 }
@@ -46,5 +47,25 @@
   }
 }
 
+.current_user {
+  p {
+    color: red;
+    margin-left: 350px;
+    font-size: 30px;
+  }
+}
 
+.form-horizontal {
+  h1 {
+    margin-left: 500px;
+    margin-bottom: 50px;
+  }
+}
 
+.container-page {
+  margin-top: 100px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
