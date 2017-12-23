@@ -12,18 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20171222141943) do
 
-  create_table "admins", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password_digest"
-    t.boolean "email_confirmed", default: true
-    t.string "reset_digest"
-    t.datetime "resent_sent_at"
-    t.string "remember_digest"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "restaurants", force: :cascade do |t|
     t.string "name"
     t.time "opening_time"
