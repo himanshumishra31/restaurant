@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     elsif (user_id = cookies.signed[:user_id])
       user = User.find_by(id: user_id)
       if user && user.authenticated?(:remember, cookies[:remember_token])
-        log_in(user)
+        session[:user_id] = user.id
         @current_user = user
       end
     end
@@ -40,7 +40,6 @@ class ApplicationController < ActionController::Base
   end
 
   def flash_message(type, message_name)
-    debugger
     flash[type] = t(message_name, scope: [:controller, params[:controller], params[:action], :flash, type])
   end
 end
