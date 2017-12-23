@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(permitted_params)
     if @user.save
-      flash[:success] = 'Please confirm your email'
+      flash_message("success", "confirm_email")
       redirect_to login_url
     else
       render 'new'
@@ -19,13 +19,13 @@ class UsersController < ApplicationController
 
   def confirm_email
     @user.activate_email
-    flash[:success] = "Your email has been confirmed. Please sign in to continue."
+    flash_message("success", "email_confirmed")
     redirect_to login_url
   end
 
   def update
     if @user.update(permitted_params)
-      flash[:success] = "Changes have been successfully saved"
+      flash_message("success", "successfully_saved")
       redirect_to login_url
     else
       render 'edit'
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     def can_edit_self_only
       @user = User.find(session[:user_id])
       unless @user == current_user
-        flash[:danger] = "Can't edit other's account"
+        flash_message("danger", "other_account")
         redirect_to login_url
       end
     end
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
     def get_user_from_email_verification
       @user = User.find_by(id: params[:id])
       unless @user
-        flash[:danger] = 'Sorry. User does not exist. Please sign up'
+        flash_message("danger", 'user_not_exist')
         redirect_to new_user_url
       end
     end

@@ -1,2 +1,66 @@
 en:
-  hello: "Hello world"
+  controller:
+    application:
+      flash:
+        danger:
+
+    sessions:
+      create:
+        flash:
+          danger:
+            activate_your_account: 'Please activate your account by following instructions in the confirmation email that you received'
+            invalid_password: 'Invalid Password'
+            email_not_found: 'Email address Not found'
+
+      find_user_by_email:
+        flash:
+          info:
+            password_reset_mail: 'Email sent with password reset instructions'
+          danger:
+            email_not_found: 'Email address Not found'
+            email_not_verified: 'Email id not verified.'
+
+      update_user_new_password:
+        flash:
+          success:
+            new_password_saved: 'Password has been reset'
+          danger:
+            email_not_found: 'Email address Not found'
+            reset_link_expired: 'Password Reset link is expired now. Please request again for new link'
+
+      get_user_new_password:
+        flash:
+          danger:
+            email_not_found: 'Email address Not found'
+
+    users:
+      edit:
+        flash:
+          danger:
+            login_to_continue: 'Please Log in'
+            other_account: "Can't edit others account"
+
+      create:
+        flash:
+          success:
+            confirm_email: 'Please Confirm Your email'
+
+      confirm_email:
+        flash:
+          success:
+            email_confirmed: "Your email has been confirmed. Please sign in to continue."
+          danger:
+            user_not_exist: 'Sorry. User does not exist. Please sign up.'
+
+      update:
+        flash:
+          success:
+            successfully_saved: "Changes have been successfully saved"
+          danger:
+            other_account: "Can't edit others account"
+
+      show:
+        flash:
+          danger:
+            other_account: "Can't edit others account"
+

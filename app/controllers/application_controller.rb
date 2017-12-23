@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   def authorize
     unless current_user
-      flash[:danger] = 'Please Log in'
+      flash_message("danger", "login_to_continue")
       redirect_to login_url
     end
   end
@@ -37,5 +37,10 @@ class ApplicationController < ActionController::Base
     user.forget_digest
     cookies.delete(:user_id)
     cookies.delete(:remember_token)
+  end
+
+  def flash_message(type, message_name)
+    debugger
+    flash[type] = t(message_name, scope: [:controller, params[:controller], params[:action], :flash, type])
   end
 end
