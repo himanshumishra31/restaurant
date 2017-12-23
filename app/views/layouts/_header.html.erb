@@ -1,8 +1,8 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
     <div class="current_user">
-      <% if logged_in? %>
-        <p>Hi <%= current_user.name %>. Welcome to Our <%= link_to "Restaurant", login_path, id: "logo" %></p>
+      <% if @current_user %>
+        <p>Hi <%= @current_user.name %>. Welcome to Our <%= link_to "Restaurant", login_path, id: "logo" %></p>
       <% else %>
         <p> Welome to Our Restaurant</p>
       <% end %>
@@ -11,13 +11,13 @@
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "Home", login_path %></li>
         <li><%= link_to "Help", login_path %></li>
-        <% if logged_in? %>
+        <% if @current_user %>
           <li><%= link_to "Users", login_path %></li>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Account <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><%= link_to "Profile", edit_user_path(current_user) %></li>
-              <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+              <li><%= link_to "Profile", edit_user_path(@current_user) %></li>
+              <li><%= link_to "Settings", edit_user_path(@current_user) %></li>
               <li class="divider"></li>
               <li><%= link_to "Log out", logout_path, method: :delete %></li>
             </ul>

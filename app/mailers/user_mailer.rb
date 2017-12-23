@@ -1,11 +1,11 @@
 class UserMailer < ActionMailer::Base
-  def registration_confirmation(user)
+  def verify_email(user)
     @user = user
-    mail(from: Rails.application.secrets.username, to: @user.email, subject: 'Registration Confirmation')
+    mail(from: Rails.application.secrets.email_id, to: @user.email, subject: 'Registration Confirmation')
   end
 
-  def password_reset(user)
+  def reset_password(user)
     @user = user
-    mail(from: Rails.application.secrets.username, to: @user.email, subject: 'Password Reset')
+    mail(from: Rails.application.secrets.email_id, to: @user.email, subject: 'Password Reset')
   end
 end

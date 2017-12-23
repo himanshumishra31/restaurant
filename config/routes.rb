@@ -1,23 +1,22 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :users do
-    member do
-      get :confirm_email
-    end
+  scope '/account' do
+    get '/confirm_email', to: 'users#confirm_email'
   end
-
+  get '/edit_user_password', to: 'sessions#get_user_new_password'
+  patch '/edit_user_password', to: 'sessions#update_user_new_password'
+  get '/reset_password', to: 'sessions#get_user_email'
+  post '/reset_password', to: 'sessions#find_user_by_email'
+  get '/signup', to: 'users#new'
   controller :sessions do
     get 'login' => :new
     post 'login' => :create
     delete 'logout' => :destroy
   end
-  get '/signup', to: 'users#new'
-
-  scope '/account' do
-    get '/confirm_email', to: 'users#confirm_email'
+  resources :users do
+    member do
+      get :confirm_email
+    end
   end
   resources :users
-  resources :password_resets, only: [:new, :edit, :create, :update]
   root 'sessions#new', as: 'login_index', via: :all
-
 end

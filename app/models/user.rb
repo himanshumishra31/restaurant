@@ -1,36 +1,40 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
+
+  #validations
   validates :name, :email, presence: true
   validates :email, uniqueness: true, format: { with: Email_Validation_Regex }, allow_blank: true
-  before_create :confirmation_token
   validates :password, length: { minimum: 6 }, allow_blank: true
+
+  # callbacks
+  before_create :confirmation_token
+  after_save :send_email_verification_mail
+
   has_secure_password
 
-  def email_activate
-    self.email_confirmed = true
-    self.confirm_token = nil
-    save
+  def activate_email
+    self.update_attributes(email_confirmed: true, confirm_token: nil)
+  end
+
+  def send_email_verification_mail
+    UserMailer.verify_email(self).deliver
   end
 
   def create_reset_digest
     self.reset_token = User.new_token
-    update_attribute(:reset_digest, User.digest(reset_token))
-    update_attribute(:resent_sent_at, Time.zone.now)
-    debugger
+    update_attributes(reset_digest: User.digest(reset_token), reset_password_sent_at: Time.zone.now)
   end
 
   def send_password_reset_email
-    UserMailer.password_reset(self).deliver_now
+    UserMailer.reset_password(self).deliver_now
   end
 
   def password_reset_expired?
-    resent_sent_at < 2.hours.ago
+    reset_password_sent_at < 2.hours.ago
   end
 
   def confirmation_token
-    if self.confirm_token.blank?
-      self.confirm_token = SecureRandom.urlsafe_base64.to_s
-    end
+    self.confirm_token = SecureRandom.urlsafe_base64.to_s if self.confirm_token.blank?
   end
 
   def remember
@@ -39,14 +43,13 @@ class User < ApplicationRecord
   end
 
   def authenticated?(attribute, token)
-    debugger
     digest = send("#{attribute}_digest")
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
   end
 
 
-  def forget
+  def forget_digest
     update_attribute(:remember_digest, nil)
   end
 

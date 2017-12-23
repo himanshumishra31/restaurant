@@ -10,7 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171219122904) do
+ActiveRecord::Schema.define(version: 20171222141943) do
+
+  create_table "admins", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
+    t.boolean "email_confirmed", default: true
+    t.string "reset_digest"
+    t.datetime "resent_sent_at"
+    t.string "remember_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "restaurants", force: :cascade do |t|
+    t.string "name"
+    t.time "opening_time"
+    t.time "closing_time"
+    t.boolean "default_res", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -21,7 +42,7 @@ ActiveRecord::Schema.define(version: 20171219122904) do
     t.boolean "email_confirmed", default: false
     t.string "confirm_token"
     t.string "reset_digest"
-    t.datetime "resent_sent_at"
+    t.datetime "reset_password_sent_at"
     t.string "remember_digest"
   end
 
