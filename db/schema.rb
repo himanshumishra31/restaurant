@@ -33,5 +33,4 @@ ActiveRecord::Schema.define(version: 20171222141943) do
     t.datetime "reset_password_sent_at"
     t.string "remember_digest"
   end
-
 end
