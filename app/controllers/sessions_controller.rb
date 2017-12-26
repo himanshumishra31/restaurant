@@ -9,10 +9,10 @@ class SessionsController < ApplicationController
       if @user.email_confirmed
         create_user(@user)
       else
-        flash_message("danger", "activate_your_account", new_user_url)
+        redirect_with_flash("danger", "activate_your_account", new_user_url)
       end
     else
-      flash_message("danger", "invalid_password", login_url)
+      redirect_with_flash("danger", "invalid_password", login_url)
     end
   end
 
@@ -20,14 +20,14 @@ class SessionsController < ApplicationController
     if @user
       @user.create_reset_digest
       @user.send_password_reset_email
-      flash_message("info", "password_reset_mail", login_url)
+      redirect_with_flash("info", "password_reset_mail", login_url)
     end
   end
 
   def update_user_password
     if @user.update_attributes(user_params)
       @user.update_attribute(:reset_digest, nil)
-      flash_message("success", "new_password_saved", login_url)
+      redirect_with_flash("success", "new_password_saved", login_url)
     else
       render 'reset_password'
     end
@@ -49,15 +49,15 @@ class SessionsController < ApplicationController
 
     def get_user
       @user = User.find_by(email: params[:email])
-      flash_message("danger", "email_not_found", login_url) unless @user
+      redirect_with_flash("danger", "email_not_found", login_url) unless @user
     end
 
     def email_verified?
-      flash_message("danger", "email_not_verified", login_url) unless (@user.email_confirmed)
+      redirect_with_flash("danger", "email_not_verified", login_url) unless (@user.email_confirmed)
     end
 
     def reset_link_expired?
-      flash_message("danger", "reset_link_expired",reset_password_url) if @user.password_reset_expired?
+      redirect_with_flash("danger", "reset_link_expired",reset_password_url) if @user.password_reset_expired?
     end
 
     def user_params

@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(permitted_params)
     if @user.save
-      flash_message("success", "confirm_email", login_url)
+      redirect_with_flash("success", "confirm_email", login_url)
     else
       render 'new'
     end
@@ -18,12 +18,12 @@ class UsersController < ApplicationController
 
   def confirm_email
     @user.activate_email
-    flash_message("success", "email_confirmed", login_url)
+    redirect_with_flash("success", "email_confirmed", login_url)
   end
 
   def update
     if @user.update(permitted_params)
-      flash_message("success", "successfully_saved", login_url)
+      redirect_with_flash("success", "successfully_saved", login_url)
     else
       render 'edit'
     end
@@ -36,11 +36,11 @@ class UsersController < ApplicationController
 
     def validate_user
       @user = User.find(session[:user_id])
-      flash_message("danger", "other_account", login_url) unless @user == current_user
+      redirect_with_flash("danger", "other_account", login_url) unless @user == current_user
     end
 
     def load_user
       @user = User.find_by(id: params[:id])
-      flash_message("danger", 'user_not_exist', new_user_url) unless @user
+      redirect_with_flash("danger", 'user_not_exist', new_user_url) unless @user
     end
 end

@@ -11,7 +11,7 @@ gem 'coffee-rails',                '~> 4.2'
 gem 'jbuilder',                    '~> 2.5'
 gem 'jquery-rails',                '~> 4.3.1'
 gem 'jquery-ui-rails',             '~>6.0.1'
-gem 'letter_opener',               '~> 1.4', '>= 1.4.1'
+gem 'letter_opener',               '>= 1.4.1'
 gem 'puma',                        '~> 3.7'
 gem 'sass-rails',                  '~> 5.0'
 gem 'sqlite3',                     '~> 1.3.13'
@@ -20,8 +20,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier',                    '>= 1.3.0'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'capybara', '~> 2.13'
-  gem 'selenium-webdriver'
 end
 
 group :development do
