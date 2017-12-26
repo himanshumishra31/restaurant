@@ -3,18 +3,19 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
+ruby                               '2.4.1'
+gem 'rails',                       '~> 5.1.4'
 gem 'bcrypt',                      '~> 3.1.7'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass',              '~> 3.3.7'
 gem 'coffee-rails',                '~> 4.2'
 gem 'jbuilder',                    '~> 2.5'
 gem 'jquery-rails',                '~> 4.3.1'
 gem 'jquery-ui-rails',             '~>6.0.1'
 gem 'letter_opener',               '~> 1.4', '>= 1.4.1'
 gem 'puma',                        '~> 3.7'
-gem 'rails',                       '~> 5.1.4'
 gem 'sass-rails',                  '~> 5.0'
-gem 'sqlite3'
-gem 'turbolinks',                  '~> 5'
+gem 'sqlite3',                     '~> 1.3.13'
+gem 'turbolinks',                  '~> 5.0.1'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier',                    '>= 1.3.0'
 group :development, :test do
@@ -25,7 +26,7 @@ end
 
 group :development do
   gem 'listen',                    '>= 3.0.5', '< 3.2'
-  gem 'spring'
+  gem 'spring',                    '~> 2.0.2'
   gem 'spring-watcher-listen',     '~> 2.0.0'
   gem 'web-console',               '>= 3.3.0'
 end

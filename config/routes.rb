@@ -2,10 +2,10 @@ Rails.application.routes.draw do
   scope '/account' do
     get '/confirm_email', to: 'users#confirm_email'
   end
-  get '/edit_user_password', to: 'sessions#get_user_new_password'
-  patch '/edit_user_password', to: 'sessions#update_user_new_password'
-  get '/reset_password', to: 'sessions#get_user_email'
-  post '/reset_password', to: 'sessions#find_user_by_email'
+  get '/edit_user_password', to: 'sessions#reset_password'
+  patch '/edit_user_password', to: 'sessions#update_user_password'
+  get '/reset_password', to: 'sessions#forgot_password'
+  patch '/reset_password', to: 'sessions#reset_password_link'
   get '/signup', to: 'users#new'
   controller :sessions do
     get 'login' => :new

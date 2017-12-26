@@ -1,9 +1,5 @@
 en:
   controller:
-    application:
-      flash:
-        danger:
-
     sessions:
       create:
         flash:
@@ -12,7 +8,7 @@ en:
             invalid_password: 'Invalid Password'
             email_not_found: 'Email address Not found'
 
-      find_user_by_email:
+      reset_password_link:
         flash:
           info:
             password_reset_mail: 'Email sent with password reset instructions'
@@ -20,7 +16,7 @@ en:
             email_not_found: 'Email address Not found'
             email_not_verified: 'Email id not verified.'
 
-      update_user_new_password:
+      update_user_password:
         flash:
           success:
             new_password_saved: 'Password has been reset'
@@ -28,7 +24,7 @@ en:
             email_not_found: 'Email address Not found'
             reset_link_expired: 'Password Reset link is expired now. Please request again for new link'
 
-      get_user_new_password:
+      reset_password:
         flash:
           danger:
             email_not_found: 'Email address Not found'
