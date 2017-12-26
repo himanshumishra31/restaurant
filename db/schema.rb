@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171222141943) do
+ActiveRecord::Schema.define(version: 20171223135127) do
 
-  create_table "restaurants", force: :cascade do |t|
+  create_table "branches", force: :cascade do |t|
     t.string "name"
     t.time "opening_time"
     t.time "closing_time"
     t.boolean "default_res", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "ingredients", force: :cascade do |t|
+    t.string "name"
+    t.float "price"
+    t.integer "category"
+    t.boolean "extra_allowed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -32,5 +41,6 @@ ActiveRecord::Schema.define(version: 20171222141943) do
     t.string "reset_digest"
     t.datetime "reset_password_sent_at"
     t.string "remember_digest"
+    t.string "role", default: "customer"
   end
 end

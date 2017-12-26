@@ -60,3 +60,34 @@ en:
           danger:
             other_account: "Can't edit others account"
 
+    admin/branches:
+      new:
+        flash:
+          danger:
+            access_restricted: "Sorry, you don't have authority to access this section"
+
+      create:
+        flash:
+          success:
+            branch_created: 'Branch has been successfully created'
+
+      update:
+        flash:
+          success:
+            successfully_saved: "Changes have been successfully saved"
+
+    admin/ingredients:
+      create:
+        flash:
+          success:
+            ingredient_created: 'Ingredient has been successfully created'
+
+      update:
+        flash:
+          success:
+            successfully_saved: "Changes have been successfully saved"
+
+
+
+
+

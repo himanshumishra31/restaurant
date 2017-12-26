@@ -17,7 +17,7 @@ class User < ApplicationRecord
   end
 
   def send_email_verification_mail
-    UserMailer.verify_email(self).deliver
+    UserMailer.verify_email(self).deliver unless self.email_confirmed
   end
 
   def create_reset_digest
