@@ -1,34 +1,37 @@
-<%= form_tag html: { class: "form-horizontal" } do %>
+<div class="container">
+  <div class="top-bar center-block text-center text-uppercase">Log in</div>
+  <%= form_tag({}, {class: 'form-horizontal login-form center-block'}) do %>
   <fieldset>
-    <legend class="top_bar">Login</legend>
     <div class="form-group">
-      <%= label_tag :email, 'Email', class: "col-lg-2 control-label" %>
-      <div class="col-lg-10">
-        <%= email_field_tag :email, params[:email], class: 'form-control' %>
+      <%# <%= label_tag :email, 'Email', class: "col-sm-2 control-label" %>
+      <div class="col-sm-12">
+        <%= email_field_tag :email, params[:email], placeholder:'Enter Your Email', class: 'form-control form-control-input' %>
       </div>
     </div>
     <div class="form-group">
-      <%= label_tag :password, 'Password: ', class: 'col-lg-2 control-label' %>
-      <div class="col-lg-10 ">
-        <%= password_field_tag :password, params[:password], class: 'form-control' %>
+      <%# <%= label_tag :password, 'Password ', class: 'col-sm-2 control-label' %>
+      <div class="col-sm-12 ">
+        <%= password_field_tag :password, params[:password], placeholder:'Enter Your Password', class: 'form-control form-control-input' %>
       </div>
     </div>
     <div class="form-group">
-      <%= label_tag :remember_me, class: "checkbox inline" do %>
-        <div class="col-lg-10 ">
-          <%= check_box_tag :remember_me, params[:remember_me] %>
-          <span>Remember me on this computer</span>
+      <%= label_tag :remember_me do %>
+        <div class="col-sm-12">
+          <%= check_box_tag :remember_me, params[:remember_me]%>
+          <span class="checkbox-label">Remember me on this computer</span>
         </div>
       <% end %>
     </div>
     <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-        <%= submit_tag 'submit', class: 'btn btn-primary' %>
+      <div class="col-sm-12">
+        <%= submit_tag 'log in', class: 'btn btn-primary btn-lg btn-block text-uppercase' %>
       </div>
     </div>
   </fieldset>
-  <div class="banner">
+  <div class="traversal-link text-center">
     <%= link_to 'New User?', new_user_path %> |
     <%= link_to 'Forgot Password', reset_password_path %>
   </div>
 <% end %>
+</div>
+

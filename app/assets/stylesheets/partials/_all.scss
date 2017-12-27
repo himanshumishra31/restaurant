@@ -1,0 +1,21 @@
+@import "partials/base";
+body {
+  font-family: '#{$google-font}', sans-serif;
+  font-size: $base-font-size;
+}
+
+.btn-primary {
+  background-color: $primary-color;
+  border:0;
+  height: 50px;
+  &:hover {
+    background-color : $primary-heading-color;
+  }
+  &:focus {
+    background-color : $primary-heading-color;
+  }
+}
+
+.padding-5 {
+  padding: 5px;
+}

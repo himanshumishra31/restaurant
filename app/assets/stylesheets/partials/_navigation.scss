@@ -1,0 +1,46 @@
+.links {
+  @include link-colors(transparent,$navigation-link-color,transparent,$primary-color);
+}
+
+.navigation {
+  background-color: $navigation-background-color;
+  border-bottom:none;
+  margin-bottom:0;
+  padding: 10px 0;
+
+  .navbar-nav {
+    .links a {
+      @extend .links;
+      font-size: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .active a {
+      .active-link {
+        @include link-colors($navigation-background-color,$primary-color,transparent,$primary-color);
+      }
+    }
+  }
+}
+/*
+.logo {
+  margin-right: $margin-brand;
+  padding:5px 15px;
+}
+
+.icons {
+  height: $icon-height;
+  width: $icon-width;
+  margin-right:10px;
+  display:inline-block;
+  vertical-align:text-top;
+}
+
+.cart-badge {
+  border-radius: 50%;
+  left:17px;
+  position: absolute;
+  top:0;
+}
+
+*/
