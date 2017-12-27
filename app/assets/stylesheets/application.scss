@@ -4,13 +4,12 @@
  *= require bootstrap.min
  *= require_self
  */
-
-.banner {
-  margin: 50px 0 0 190px;
-}
-
-.top_bar {
-  margin: 200px 0 100px 500px;
+ @import "main";
+.traversal-link {
+  a:hover {
+    color: $primary-color;
+    text-decoration: none;
+  }
 }
 
 .error-explanation {
@@ -23,21 +22,19 @@
   }
 }
 
-.checkbox {
+/*.checkbox {
   margin: 50px 0 10px 255px;
   span {
     margin-left: 10px;
     font-weight: normal;
   }
-}
+}*/
 
-.current_user {
+/*.current_user {
   p {
-    color: red;
-    margin-left: 350px;
     font-size: 30px;
   }
-}
+}*/
 
 .form-horizontal {
   h1 {
@@ -46,6 +43,5 @@
 }
 
 .container-page {
-  padding: 0 15px;
-  margin: 100px auto 0 auto;
+  margin: $standard-margin auto;
 }

@@ -4,13 +4,13 @@ class User < ApplicationRecord
   #validations
   validates :name, :email, presence: true
   validates :email, uniqueness: true, format: { with: Email_Validation_Regex }, allow_blank: true
-  validates :password, length: { minimum: 6 }, allow_blank: true
+  validates :password, length: { minimum: 6 }
+  has_secure_password
 
   # callbacks
   before_create :confirmation_token
   after_save :send_email_verification_mail
 
-  has_secure_password
 
   def activate_email
     self.update_attributes(email_confirmed: true, confirm_token: nil)
