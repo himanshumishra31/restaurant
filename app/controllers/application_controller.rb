@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= load_current_user
+    # to ask: without remember me...session[:id] = nil
   end
 
   def load_current_user
@@ -41,5 +42,9 @@ class ApplicationController < ActionController::Base
   def redirect_with_flash(type, message_name, path = nil)
     flash[type] = t(message_name, scope: [:controller, params[:controller], params[:action], :flash, type])
     redirect_to path if path
+  end
+
+  def set_current_branch
+
   end
 end

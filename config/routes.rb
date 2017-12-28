@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   end
   namespace :admin do
     resources :branches, :ingredients
+    resources :inventories
   end
   resources :users do
     member do

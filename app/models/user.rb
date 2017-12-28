@@ -1,16 +1,19 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
 
+  has_secure_password
+
   #validations
   validates :name, :email, presence: true
   validates :email, uniqueness: true, format: { with: Email_Validation_Regex }, allow_blank: true
-  validates :password, length: { minimum: 6 }, allow_blank: true
+  validates :password, length: { minimum: 6 }
 
   # callbacks
   before_create :confirmation_token
   after_save :send_email_verification_mail
 
-  has_secure_password
+  # assosciations
+  has_many :comments, dependent: :destroy
 
   def activate_email
     self.update_attributes(email_confirmed: true, confirm_token: nil)

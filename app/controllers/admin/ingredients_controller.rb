@@ -6,11 +6,9 @@ class Admin::IngredientsController < Admin::BaseController
   end
 
   def create
-    debugger
-    @ingredient = Ingredient.new(permitted_ingredient_params)
+    @ingredient = Ingredient.new(permitted_params)
     if @ingredient.save
-      flash_message("success", "ingredient_created")
-      redirect_to admin_ingredients_url
+      redirect_with_flash("success", "ingredient_created", admin_ingredients_url)
     else
       render 'new'
     end
@@ -21,26 +19,23 @@ class Admin::IngredientsController < Admin::BaseController
   end
 
   def update
-    if @ingredient.update(permitted_ingredient_params)
-      flash_message("success", "successfully_saved")
-      redirect_to admin_ingredients_url
+    if @ingredient.update(permitted_params)
+      redirect_with_flash("success", "successfully_saved", admin_ingredients_url)
     else
       render 'edit'
     end
   end
 
   def destroy
-    @ingredient.destroy
-    redirect_to admin_ingredients_url
+    redirect_with_flash("success", "successfully_destroyed", admin_ingredients_url) if @ingredient.destroy
   end
 
   private
-    def permitted_ingredient_params
+    def permitted_params
       params.require(:ingredient).permit(:name, :price, :category, :extra_allowed)
     end
 
     def set_ingredient
       @ingredient = Ingredient.find_by(id: params[:id])
     end
-
 end

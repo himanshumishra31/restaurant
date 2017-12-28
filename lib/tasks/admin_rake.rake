@@ -13,7 +13,6 @@ begin
         admin.role = 'admin'
         admin.email_confirmed = true
       end
-      debugger
       if @admin.save
         puts "The admin was created successfully"
       else
