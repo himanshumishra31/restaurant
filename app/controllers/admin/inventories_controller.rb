@@ -43,6 +43,6 @@ class Admin::InventoriesController < Admin::BaseController
     end
 
     def set_comments
-      @comments = @inventory.comments.includes(:user).limit(10).order(created_at: :desc)
+      @comments = @inventory.comments.includes(:user).limit(ENV["COMMENT_LIMIT"]).order(created_at: :desc)
     end
 end
