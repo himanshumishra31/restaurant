@@ -1,8 +1,6 @@
 .byebug_history
 /.bundle
-/config/secrets.yml
-/config/cable.yml
-/config/database.yml
+/config/*.yml
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /log/*

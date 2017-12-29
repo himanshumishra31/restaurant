@@ -1,0 +1,23 @@
+<h1>Branches</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Opening Time</th>
+      <th>Closing Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @branches.each do |branch| %>
+      <tr>
+        <td><%= branch.name %></td>
+        <td><%= branch.opening_time.strftime("%I:%M %p") %></td>
+        <td><%= branch.closing_time.strftime("%I:%M %p") %></td>
+        <td><%= link_to 'Edit', edit_admin_branch_path(branch) %></td>
+        <td><%= link_to 'Destroy', admin_branch_url(branch), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<%= link_to 'New Branch', new_admin_branch_url %>

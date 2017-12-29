@@ -12,6 +12,10 @@ Rails.application.routes.draw do
     post 'login' => :create
     delete 'logout' => :destroy
   end
+  namespace :admin do
+    resources :branches, :ingredients
+    resources :inventories
+  end
   resources :users do
     member do
       get :confirm_email

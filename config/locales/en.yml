@@ -60,3 +60,77 @@ en:
           danger:
             other_account: "Can't edit others account"
 
+    admin/branches:
+      new:
+        flash:
+          danger:
+            access_restricted: "Sorry, you don't have authority to access this section"
+
+      index:
+        flash:
+          danger:
+            access_restricted: "Sorry, you don't have authority to access this section"
+
+      create:
+        flash:
+          success:
+            branch_created: 'Branch has been successfully created'
+            access_restricted: "Sorry, you don't have authority to access this section"
+
+      update:
+        flash:
+          success:
+            successfully_saved: "Changes have been successfully saved"
+            access_restricted: "Sorry, you don't have authority to access this section"
+          danger:
+            branch_not_found: 'Branch not found. Please try again'
+
+      destroy:
+        flash:
+          success:
+            successfully_destroyed: 'Branch has been successfully destroyed'
+          danger:
+            access_restricted: "Sorry, you don't have authority to access this section"
+            error_destroy: 'Some error occured. Please try again'
+            branch_not_found: 'Branch not found. Please try again'
+      edit:
+        flash:
+          danger:
+            branch_not_found: 'Branch not found. Please try again'
+
+
+    admin/ingredients:
+      new:
+        flash:
+          danger:
+            access_restricted: "Sorry, you don't have authority to access this section"
+
+      index:
+        flash:
+          danger:
+            access_restricted: "Sorry, you don't have authority to access this section"
+
+      create:
+        flash:
+          success:
+            ingredient_created: 'Ingredient has been successfully created'
+            access_restricted: "Sorry, you don't have authority to access this section"
+
+      update:
+        flash:
+          success:
+            successfully_saved: "Changes have been successfully saved"
+            access_restricted: "Sorry, you don't have authority to access this section"
+
+      destroy:
+        flash:
+          success:
+            successfully_destroyed: 'Ingredient has been successfully destroyed'
+          danger:
+            access_restricted: "Sorry, you don't have authority to access this section"
+
+    admin/inventories:
+      update:
+        flash:
+          success:
+            successfully_updated: "Changes have been successfully saved"
