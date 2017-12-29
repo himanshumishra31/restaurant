@@ -82,6 +82,8 @@ en:
           success:
             successfully_saved: "Changes have been successfully saved"
             access_restricted: "Sorry, you don't have authority to access this section"
+          danger:
+            branch_not_found: 'Branch not found. Please try again'
 
       destroy:
         flash:
@@ -89,6 +91,13 @@ en:
             successfully_destroyed: 'Branch has been successfully destroyed'
           danger:
             access_restricted: "Sorry, you don't have authority to access this section"
+            error_destroy: 'Some error occured. Please try again'
+            branch_not_found: 'Branch not found. Please try again'
+      edit:
+        flash:
+          danger:
+            branch_not_found: 'Branch not found. Please try again'
+
 
     admin/ingredients:
       new:
@@ -125,8 +134,3 @@ en:
         flash:
           success:
             successfully_updated: "Changes have been successfully saved"
-
-
-
-
-

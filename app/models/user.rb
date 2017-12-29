@@ -21,7 +21,7 @@ class User < ApplicationRecord
   end
 
   def send_email_verification_mail
-    UserMailer.verify_email(self).deliver unless self.email_confirmed
+    UserMailer.verify_email(self).deliver unless email_confirmed?
   end
 
   def create_reset_digest
@@ -64,5 +64,9 @@ class User < ApplicationRecord
   def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
+  end
+
+  def admin?
+    role.eql? 'admin'
   end
 end

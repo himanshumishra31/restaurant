@@ -9,10 +9,10 @@ class Inventory < ApplicationRecord
   # validations
   validates :branch_id, uniqueness: { scope: :ingredient_id }
   validates :quantity, presence: true
-  validate :quantity_should_be_positive, if: :quantity?
+  validate :validate_quantity, if: :quantity?
 
   private
-    def quantity_should_be_positive
+    def validate_quantity
       errors.add(:quantity, ' cannot be a negative number') if quantity < 0
     end
 end

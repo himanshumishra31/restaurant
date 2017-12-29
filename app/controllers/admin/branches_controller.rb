@@ -28,7 +28,11 @@ class Admin::BranchesController < Admin::BaseController
   end
 
   def destroy
-    redirect_with_flash("success", "successfully_destroyed", admin_branches_url) if @branch.destroy
+    if @branch.destroy
+      redirect_with_flash("success", "successfully_destroyed", admin_branches_url)
+    else
+      redirect_with_flash("danger", "error_destroy", admin_branches_url)
+    end
   end
 
   private
@@ -38,6 +42,7 @@ class Admin::BranchesController < Admin::BaseController
 
     def set_branch
       @branch = Branch.find_by(id: params[:id])
+      redirect_with_flash("danger", "branch_not_found", admin_branches_url) unless @branch
     end
 
     def set_inventories
