@@ -69,18 +69,4 @@ class Admin::MealsController < Admin::BaseController
         end
       end
     end
-
-    def save_product_images
-      3.times do |index|
-        image = params[:product]["image#{ index + 1 }"]
-        if image.present?
-          path = File.join Rails.root, 'public', 'images'
-          FileUtils.mkdir_p(path) unless File.exist?(path)
-          File.open(File.join(path, image.original_filename), 'wb') do |file|
-            file.puts image.read
-          end
-        end
-      end
-    end
-
 end
