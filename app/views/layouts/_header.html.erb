@@ -13,6 +13,7 @@
           <% if @current_user.role.eql? 'admin' %>
             <li><%= link_to "Branches", admin_branches_path %></li>
             <li><%= link_to "Ingredients", admin_ingredients_path %></li>
+            <li><%= link_to "Meals", admin_meals_path %></li>
           <% end %>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Account <span class="caret"></span></a>

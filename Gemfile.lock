@@ -95,6 +95,11 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.10.3)
     multi_json (1.12.2)
+    nested_form (0.3.2)
+    nested_form_fields (0.8.2)
+      coffee-rails (>= 3.2.1)
+      jquery-rails
+      rails (>= 3.2.0)
     nio4r (2.1.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
@@ -188,6 +193,8 @@ DEPENDENCIES
   jquery-ui-rails (~> 6.0.1)
   letter_opener (>= 1.4.1)
   listen (>= 3.0.5, < 3.2)
+  nested_form
+  nested_form_fields
   puma (~> 3.7)
   rails (~> 5.1.4)
   sass-rails (~> 5.0)

@@ -7,7 +7,7 @@ class User < ApplicationRecord
   validates :name, :email, presence: true
   validates :email, uniqueness: true, format: { with: Email_Validation_Regex }, allow_blank: true
   validates :password, length: { minimum: 6 }, allow_blank: true
-  validates :password, presence: true, on: :update
+  validates :password, presence: true
 
   # callbacks
   before_create :confirmation_token
@@ -17,7 +17,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   def activate_email
-    self.update_attributes(email_confirmed: true, confirm_token: nil)
+    self.update_columns(email_confirmed: true, confirm_token: nil)
   end
 
   def send_email_verification_mail
