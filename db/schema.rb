@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171229125724) do
+ActiveRecord::Schema.define(version: 20180103063722) do
 
   create_table "branches", force: :cascade do |t|
     t.string "name"
@@ -62,11 +62,14 @@ ActiveRecord::Schema.define(version: 20171229125724) do
 
   create_table "meals", force: :cascade do |t|
     t.string "name"
-    t.integer "price"
-    t.string "image_url"
+    t.integer "price", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "active"
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
   end
 
   create_table "users", force: :cascade do |t|
@@ -81,6 +84,7 @@ ActiveRecord::Schema.define(version: 20171229125724) do
     t.datetime "reset_password_sent_at"
     t.string "remember_digest"
     t.string "role", default: "customer"
+    t.string "image"
   end
 
 end

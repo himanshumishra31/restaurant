@@ -1,8 +1,5 @@
 class Admin::MealsController < Admin::BaseController
   before_action :set_meal, only: [:destroy, :edit, :update]
-  before_action :save_image, only: [:create, :update]
-  before_action :set_image_url, only: [:create, :update]
-  after_action :set_price, only: [:create, :update]
 
   def index
     @meals = Meal.all
@@ -37,36 +34,12 @@ class Admin::MealsController < Admin::BaseController
     end
   end
 
-
   private
     def permitted_params
-      params.require(:meal).permit(:name, :active,:image_url, meal_items_attributes: [:ingredient_id, :quantity])
+      params.require(:meal).permit(:name, :active, :picture, meal_items_attributes: [:id, :ingredient_id, :quantity, :_destroy])
     end
 
     def set_meal
       @meal = Meal.find_by(id: params[:id])
-    end
-
-    def set_price
-      price = 0
-      params[:meal][:meal_items_attributes].each do |attribute_id|
-        price += Ingredient.find_by(id: params[:meal][:meal_items_attributes][attribute_id][:ingredient_id]).price.to_i * params[:meal][:meal_items_attributes][attribute_id][:quantity].to_i
-      end
-      @meal.update_attributes(price: price)
-    end
-
-    def set_image_url
-      params[:meal][:image_url] = params[:meal][:image_url].original_filename
-    end
-
-    def save_image
-      image = params[:meal][:image_url]
-      if image.present?
-        path = File.join Rails.root, 'public', 'images'
-        FileUtils.mkdir_p(path) unless File.exist?(path)
-        File.open(File.join(path, image.original_filename), 'wb') do |file|
-          file.puts image.read
-        end
-      end
     end
 end
