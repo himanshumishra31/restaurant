@@ -6,6 +6,7 @@
 /log/*
 !/log/.keep
 /node_modules
+/public/*
 /tmp/*
 !/tmp/.keep
 /yarn-error.log

@@ -5,6 +5,11 @@ class Ingredient < ApplicationRecord
   validate :validate_price, if: :price?
   validates :category, inclusion: [true, false]
 
+  # assosciations
+  has_many :meal_items, dependent: :destroy
+  has_many :meals, through: :meal_items
+  has_many :inventories, dependent: :destroy
+
   private
     def validate_price
       errors.add(:price, 'Should be positive') if price < 0

@@ -12,7 +12,7 @@
     <% @ingredients.each do |ingredient| %>
       <tr>
         <td><%= ingredient.name %></td>
-        <td><%= ingredient.price %></td>
+        <td><%= number_to_currency(ingredient.price) %></td>
         <% unless ingredient.category %>
           <td>Veg</td>
         <% else %>

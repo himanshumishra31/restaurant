@@ -1,0 +1,27 @@
+<% if @meals.any? %>
+  <table class="table">
+    <thead>
+      <th>Name</th>
+      <th>Ingredient(Quanity)</th>
+      <th>Price</th>
+      <th></th>
+    </thead>
+    <% @meals.each do |meal| %>
+      <tr>
+        <td><%= meal.name %></td>
+        <td>
+          <% meal.ingredients.each do |ingredient| %>
+            <%= ingredient.name %>(<%= MealItem.find_by(ingredient_id: ingredient.id, meal_id: meal.id).quantity
+%>)
+          <% end %>
+        </td>
+        <td><%= number_to_currency(meal.price) %></td>
+        <td><%= link_to 'Edit', edit_admin_meal_path(meal) %></td>
+        <td><%= link_to 'Destroy', admin_meal_path(meal) ,method: :delete, data: { confirm: 'Are you sure?' }%></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p><strong>No meals present</strong></p>
+<% end %>
+<%= link_to "Create New Meal", new_admin_meal_path %>

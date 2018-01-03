@@ -13,8 +13,7 @@ Rails.application.routes.draw do
     delete 'logout' => :destroy
   end
   namespace :admin do
-    resources :branches, :ingredients
-    resources :inventories
+    resources :branches, :ingredients, :inventories, :meals
   end
   resources :users do
     member do
