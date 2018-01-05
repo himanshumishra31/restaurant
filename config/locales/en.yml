@@ -8,6 +8,11 @@ en:
             invalid_password: 'Invalid Password'
             email_not_found: 'Email address Not found'
 
+      new:
+        flash:
+          danger:
+            already_logged_in: 'Already logged in. Please Log out to login from different account'
+
       reset_password_link:
         flash:
           info:

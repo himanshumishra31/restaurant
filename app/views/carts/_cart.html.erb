@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-10 col-md-offset-1">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th class="text-center">Price</th>
+            <th class="text-center">Total</th>
+            <th> </th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render(cart.line_items) %>
+          <tr>
+            <td>  </td>
+            <td>   </td>
+            <td>   </td>
+            <td><h3>Total</h3></td>
+            <td class="text-right total_cell"><h3><strong><%= number_to_currency(cart.total_price) %></strong></h3></td>
+          </tr>
+          <tr>
+            <td>   </td>
+            <td>   </td>
+            <td>   </td>
+            <td>
+              <button type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+              </button></td>
+            <td>
+              <%= button_to 'empty', cart, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-success'  %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

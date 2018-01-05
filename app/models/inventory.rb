@@ -1,6 +1,7 @@
 class Inventory < ApplicationRecord
   # assosciations
-  belongs_to :ingredient
+  # belongs_to :ingredient
+  belongs_to :stock, polymorphic: true
   belongs_to :branch
   has_many :comments, dependent: :destroy
 

@@ -1,0 +1,44 @@
+<div id="cart" class="cart">
+  <% if @cart %>
+    <% hidden_div_if(@cart.line_items.empty? ,id: 'cart') do %>
+      <%= render @cart %>
+    <% end %>
+  <% end %>
+</div>
+<div class="container">
+  <strong>Location: <%= session[:current_location]%></strong>
+  <br>
+  <br>
+  <% if @available_non_veg_meals.any? || @available_veg_meals.any? %>
+    <%= form_tag store_index_path, method: :get do %>
+      <%= label_tag 'Only Veg' %>
+      <%= check_box_tag 'Only Veg', 1 , session[:only_veg], { onclick: 'this.form.submit()' } %>
+    <% end %>
+    <br>
+    <br>
+    <% @available_veg_meals.each do |available_meal| %>
+      <div class="col-md-4">
+        <%= image_tag(available_meal.picture, size: "150x150") %>
+        <p>
+          <div class="foo green"></div>
+          <%= available_meal.name %></p>
+        <p><strong><%= number_to_currency(available_meal.price) %></strong></p>
+        <p><%= button_to 'Add To Cart', line_items_path(meal_id: available_meal), remote: true, class: 'btn btn-primary'  %></p>
+      </div>
+    <% end %>
+    <% unless session[:only_veg] %>
+      <% @available_non_veg_meals.each do |available_meal| %>
+        <div class="col-md-4">
+          <%= image_tag(available_meal.picture, size: "150x150") %>
+          <p>
+            <div class="foo red"></div>
+            <%= available_meal.name %></p>
+          <strong><%= number_to_currency(available_meal.price) %></strong>
+            <p><%= button_to 'Add To Cart', line_items_path(meal_id: available_meal), remote: true, class: 'btn btn-primary' %></p>
+        </div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <strong> No Available Meals</strong>
+  <% end %>
+</div>

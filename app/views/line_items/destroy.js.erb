@@ -1,0 +1,9 @@
+$('#cart tr#<%= @line_item.id %>').hide(500, function() {
+  $(this).remove();
+  var lineItems = $("#cart tr").length;
+  if(lineItems == 3) {
+    $('.cart').hide();
+  } else {
+    $('.total_cell').html("<h3><strong><%= number_to_currency(@line_item.cart.total_price) %></strong></h3>")
+  }
+});

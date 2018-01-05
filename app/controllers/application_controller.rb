@@ -44,4 +44,33 @@ class ApplicationController < ActionController::Base
     flash[type] = t(message_name, scope: [:controller, params[:controller], params[:action], :flash, type])
     redirect_to path if path
   end
+
+  def set_branch
+    session[:current_location] = Branch.find_by(default_res: true).name unless session[:current_location]
+    @branch = Branch.find_by(name: session[:current_location])
+  end
+
+  def available_meals
+    @available_non_veg_meals = []
+    @available_veg_meals = []
+    Meal.all.each do |meal|
+      check = true
+      isnonveg = false
+      meal.meal_items.each do |meal_item|
+        if @branch.inventories.find_by(ingredient_id: meal_item.ingredient_id)
+          check &&= @branch.inventories.find_by(ingredient_id: meal_item.ingredient_id).quantity >= meal_item.quantity
+          isnonveg ||= Ingredient.find_by(id: meal_item.ingredient_id).category
+        else
+          check = false
+        end
+      end
+      if check
+        if isnonveg
+          @available_non_veg_meals << meal
+        else
+          @available_veg_meals << meal
+        end
+      end
+    end
+  end
 end
