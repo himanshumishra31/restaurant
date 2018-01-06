@@ -1,5 +1,7 @@
 class Admin::IngredientsController < Admin::BaseController
   before_action :set_ingredient, only: [:destroy, :edit, :update]
+  after_action :set_ingredient_to_inventory, only: [:create]
+  after_action :update_meal_price, only: [:update]
 
   def new
     @ingredient = Ingredient.new
@@ -37,5 +39,17 @@ class Admin::IngredientsController < Admin::BaseController
 
     def set_ingredient
       @ingredient = Ingredient.find_by(id: params[:id])
+    end
+
+    def set_ingredient_to_inventory
+      Branch.all.each do |branch|
+        branch.inventories.find_or_initialize_by(ingredient_id: @ingredient.id, branch_id: branch.id).save
+      end
+    end
+
+    def update_meal_price
+      Meal.all.each do |meal|
+        meal.set_price
+      end
     end
 end

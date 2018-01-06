@@ -1,7 +1,11 @@
 <%= render 'shared/errors', model: @inventory %>
 <strong> Location: <%= session[:current_location] %> </strong>
 <br/>
-<strong> Ingredient: <%= @inventory.ingredient.name %> </strong>
+<% if @inventory.ingredient_id %>
+  <strong> Ingredient: <%= Ingredient.find(@inventory.ingredient_id).name %> </strong>
+<% else %>
+  <strong> Meal: <%= Meal.find(@inventory.stock_id).name %> </strong>
+<% end %>
 <br/>
 <div>
   <%= form_for [:admin, @inventory], url: admin_inventory_path, html: { class: 'form-horizontal'} do |form| %>

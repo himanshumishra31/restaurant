@@ -8,7 +8,6 @@ class Inventory < ApplicationRecord
   accepts_nested_attributes_for :comments
 
   # validations
-  validates :branch_id, uniqueness: { scope: :ingredient_id }
   validates :quantity, presence: true
   validate :validate_quantity, if: :quantity?
 

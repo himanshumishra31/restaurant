@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180105113255) do
+ActiveRecord::Schema.define(version: 20180105142247) do
 
   create_table "branches", force: :cascade do |t|
     t.string "name"
@@ -53,7 +53,9 @@ ActiveRecord::Schema.define(version: 20180105113255) do
     t.datetime "updated_at", null: false
     t.string "stock_type"
     t.integer "stock_id"
+    t.integer "ingredient_id"
     t.index ["branch_id"], name: "index_inventories_on_branch_id"
+    t.index ["ingredient_id"], name: "index_inventories_on_ingredient_id"
     t.index ["stock_type", "stock_id"], name: "index_inventories_on_stock_type_and_stock_id"
   end
 

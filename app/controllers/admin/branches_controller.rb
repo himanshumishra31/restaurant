@@ -47,7 +47,7 @@ class Admin::BranchesController < Admin::BaseController
 
     def set_inventories
       Ingredient.all.each do |ingredient|
-        @branch.inventories.build(stock_id: ingredient.id).save
+        @branch.inventories.build(ingredient_id: ingredient.id, branch_id: @branch.id).save
       end
     end
 end

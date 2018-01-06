@@ -7,3 +7,7 @@ $('#cart tr#<%= @line_item.id %>').hide(500, function() {
     $('.total_cell').html("<h3><strong><%= number_to_currency(@line_item.cart.total_price) %></strong></h3>")
   }
 });
+$('div[data-name="item_div"]').hide();
+<% @available_meals.each do |id| %>
+  $("#<%=id%>").show();
+<% end %>

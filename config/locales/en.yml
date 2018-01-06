@@ -139,6 +139,10 @@ en:
         flash:
           success:
             successfully_updated: "Changes have been successfully saved"
+          danger:
+            stock_unavailable: "Insufficient Stock. Please add ingredients to Inventory"
+            invalid_quantity: 'Quantity cannot be negative'
+
 
     admin/meals:
       create:

@@ -17,7 +17,7 @@
     <br>
     <br>
     <% @available_veg_meals.each do |available_meal| %>
-      <div class="col-md-4">
+      <div class="col-md-4" id="<%= available_meal.id %>" data-name ="item_div">
         <%= image_tag(available_meal.picture, size: "150x150") %>
         <p>
           <div class="foo green"></div>
@@ -28,7 +28,7 @@
     <% end %>
     <% unless session[:only_veg] %>
       <% @available_non_veg_meals.each do |available_meal| %>
-        <div class="col-md-4">
+        <div class="col-md-4" id="<%= available_meal.id %>" data-name ="item_div">
           <%= image_tag(available_meal.picture, size: "150x150") %>
           <p>
             <div class="foo red"></div>

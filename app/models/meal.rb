@@ -16,7 +16,6 @@ class Meal < ApplicationRecord
 
   accepts_nested_attributes_for :meal_items, allow_destroy: true
 
-  private
     def set_price
       self.price = 0
       self.meal_items.each do |meal_item|

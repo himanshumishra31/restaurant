@@ -1,6 +1,7 @@
 class Admin::MealsController < Admin::BaseController
   before_action :set_meal, only: [:destroy, :edit, :update]
-
+  after_action :set_inventories, only: [:create]
+  after_action :update_meal_price, only: [:update]
 
   def index
     @meals = Meal.all
@@ -8,8 +9,7 @@ class Admin::MealsController < Admin::BaseController
 
   def create
     @meal = Meal.new(permitted_params)
-    stock_available = check_stocks
-    if @meal.save && stock_available
+    if @meal.save
       redirect_with_flash("success", "meal_created", admin_meals_path)
     else
       redirect_with_flash("danger", "stock_unavailable", admin_meals_path)
@@ -45,16 +45,18 @@ class Admin::MealsController < Admin::BaseController
       @meal = Meal.find_by(id: params[:id])
     end
 
-    def check_stocks
-      debugger
-      if params[:meal][:active]
-        @branch = Branch.find_by(name: session[:current_location])
-        stock_available = true
-        params[:meal][:meal_items_attributes].each do |attribute|
-          @inventory = @branch.inventories.find_by(stock_id: params[:meal][:meal_items_attributes][attribute][:ingredient_id])
-          stock_available &&= @inventory.quantity < params[:meal][:meal_items_attributes][attribute][:quantity]
+    def set_inventories
+      if params[:meal][:active].eql? "1"
+        Branch.all.each do |branch|
+          @inventory = @meal.inventories.build(stock_id: @meal.id, branch_id: branch.id).save
         end
+      else
+        @branch = Branch.find_by(name: session[:current_location])
+        @inventory = @meal.inventories.build(stock_id: @meal.id, branch_id: @branch.id).save
       end
-      stock_available
+    end
+
+    def update_meal_price
+      debugger
     end
 end
