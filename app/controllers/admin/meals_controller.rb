@@ -1,7 +1,6 @@
 class Admin::MealsController < Admin::BaseController
   before_action :set_meal, only: [:destroy, :edit, :update]
   after_action :set_inventories, only: [:create]
-  after_action :update_meal_price, only: [:update]
 
   def index
     @meals = Meal.all
@@ -54,9 +53,5 @@ class Admin::MealsController < Admin::BaseController
         @branch = Branch.find_by(name: session[:current_location])
         @inventory = @meal.inventories.build(stock_id: @meal.id, branch_id: @branch.id).save
       end
-    end
-
-    def update_meal_price
-      debugger
     end
 end

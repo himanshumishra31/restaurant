@@ -13,7 +13,6 @@ class Admin::InventoriesController < Admin::BaseController
   end
 
   def update
-    # add feature to reduce quantity
     stock_available = check_stocks
     if stock_available && @inventory.update(permitted_params)
       @inventory.increment!(:quantity, params[:inventory][:quantity].to_i)
