@@ -51,24 +51,21 @@ class ApplicationController < ActionController::Base
   end
 
   def available_meals
-    @branch = Branch.find_by(name: session[:current_location])
     @available_veg_meals = []
     @available_non_veg_meals = []
     Inventory.where(branch_id: @branch.id, stock_type: 'Meal').each do |meal_inventory|
-      meal = Meal.find_by(id: meal_inventory.stock_id)
-      isnonveg = false
-      meal.meal_items.each do |meal_item|
-        isnonveg ||= Ingredient.find_by(id: meal_item.ingredient_id).category
-      end
-      if meal_inventory.quantity > 0
-        if isnonveg
-          @available_non_veg_meals << meal
-        else
-          @available_veg_meals << meal if meal_inventory.quantity > 0
-        end
-      end
+      meal_category(meal_inventory)
     end
   end
 
-
+  def meal_category(meal_inventory)
+    @meal = Meal.find_by(id: meal_inventory.stock_id)
+    if meal_inventory.quantity > 0
+      if @meal.meal_items.any? { |meal_item| Ingredient.find_by(id: meal_item.ingredient_id).category }
+        @available_non_veg_meals << @meal
+      else
+        @available_veg_meals << @meal
+      end
+    end
+  end
 end

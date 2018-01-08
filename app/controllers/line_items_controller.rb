@@ -3,6 +3,7 @@ class LineItemsController < ApplicationController
   before_action :set_cart
   before_action :set_line_item, only: [:reduce_quantity, :destroy]
   before_action :set_available_meal_array
+  before_action :set_branch, only: [:create, :destroy, :reduce_quantity]
   before_action :update_stock, only: [:destroy, :reduce_quantity]
 
   def create
@@ -22,7 +23,6 @@ class LineItemsController < ApplicationController
   def destroy
     @line_item.destroy
     respond_to do |format|
-      format.html { redirect_with_flash("success", "line_item_destroyed", @line_item.cart) }
       format.js { @available_meals = @available_meals_id }
     end
   end
@@ -30,7 +30,6 @@ class LineItemsController < ApplicationController
   def reduce_quantity
     @line_item.update_attributes(quantity: @line_item.quantity - 1)
     respond_to do |format|
-      format.html { redirect_with_flash("success", "line_item_destroyed", @line_item.cart) }
       format.js { @available_meals = @available_meals_id }
     end
   end
