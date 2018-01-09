@@ -5,10 +5,6 @@
  *= require_self
  */
 
-.login-form {
-  background-color: red;
-}
-
 .banner {
   margin: 50px 0 0 190px;
 }
@@ -20,7 +16,6 @@
 .error-explanation {
   li {
     color: red;
-    margin-left: 200px;
   }
   h2 {
     margin-left: 190px;
@@ -52,4 +47,19 @@
 .container-page {
   padding: 0 15px;
   margin: 100px auto 0 auto;
+}
+.foo {
+  float: left;
+  width: 10px;
+  height: 10px;
+  margin: 5px;
+  border: 1px solid rgba(0, 0, 0, .2);
+}
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: red;
 }

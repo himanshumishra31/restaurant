@@ -44,4 +44,9 @@ class ApplicationController < ActionController::Base
     flash[type] = t(message_name, scope: [:controller, params[:controller], params[:action], :flash, type])
     redirect_to path if path
   end
+
+  def set_branch
+    session[:current_location] = Branch.find_by(default_res: true).name unless session[:current_location]
+    @branch = Branch.find_by(name: session[:current_location])
+  end
 end

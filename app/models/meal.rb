@@ -14,11 +14,11 @@ class Meal < ApplicationRecord
 
   accepts_nested_attributes_for :meal_items, allow_destroy: true
 
-  private
-    def set_price
-      self.meal_items.each do |meal_item|
-        self.price += meal_item.quantity * Ingredient.find_by(id: meal_item.ingredient_id).price
-      end
-      self.update_columns(price: self.price)
+  def set_price
+    self.price = 0
+    self.meal_items.each do |meal_item|
+      self.price += meal_item.quantity * Ingredient.find_by(id: meal_item.ingredient_id).price
     end
+    self.update_columns(price: ((ENV["PROFIT_PERCENT"].to_i + 100) * 0.01 * self.price))
+  end
 end
