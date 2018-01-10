@@ -15,6 +15,7 @@ class User < ApplicationRecord
 
   # assosciations
   has_many :comments, dependent: :destroy
+  has_many :orders, dependent: :destroy
 
   def activate_email
     self.update_columns(email_confirmed: true, confirm_token: nil)

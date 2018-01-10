@@ -1,5 +1,11 @@
 en:
   controller:
+    orders:
+      new:
+        flash:
+          danger:
+            login: 'Please Log In to Place Order'
+
     sessions:
       create:
         flash:

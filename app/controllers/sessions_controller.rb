@@ -67,6 +67,6 @@ class SessionsController < ApplicationController
     def create_user(user)
       session[:user_id] = user.id
       params[:remember_me] == 'on' ? remember_user(user) : forget_user(user)
-      redirect_to new_user_path
+      redirect_to store_index_path
     end
 end

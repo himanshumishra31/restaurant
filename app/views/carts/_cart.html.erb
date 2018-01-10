@@ -26,9 +26,7 @@
             <td>   </td>
             <td>   </td>
             <td>
-              <button type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
-              </button></td>
+              <%= button_to 'Place Order', new_order_path, method: :get,  class: 'btn btn-success' %>
             <td>
               <%= button_to 'empty', cart, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-success'  %>
             </td>

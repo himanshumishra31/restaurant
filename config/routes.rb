@@ -26,4 +26,5 @@ Rails.application.routes.draw do
   post '/line_items/:id', to: 'line_items#reduce_quantity'
   resources :carts
   resources :line_items
+  resources :orders
 end

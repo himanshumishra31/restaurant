@@ -7,6 +7,7 @@ class Branch < ApplicationRecord
   # assosciations
   has_many :inventories, dependent: :destroy
   has_many :ingredients, through: :inventories
+  has_many :orders, dependent: :destroy
 
   def validate_timings
     errors.add(:opening_time, "should be before closing time") if closing_time < opening_time

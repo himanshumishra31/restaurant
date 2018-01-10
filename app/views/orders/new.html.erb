@@ -1,0 +1,28 @@
+<br><br><br><br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">Please Enter Order Details</h4>
+        </div>
+        <div class="panel-body">
+          <%= form_for @order do |form| %>
+            <fieldset>
+              <%= render 'shared/errors', model: @order %>
+              <div class="form-group">
+                <%= form.number_field :phone_number, class: 'form-control', placeholder: "Phone Number"%>
+              </div>
+              <div class="form-group">
+                <%= form.time_field :pick_up, class: 'form-control', placeholder: 'Pick Up Time' %>
+              </div>
+              <%= form.submit 'Place Order', class: 'btn btn-lg btn-success btn-block' %>
+            </fieldset>
+          <% end %>
+          <hr/>
+          <center><h4><%= link_to 'Store', store_index_path %></h4></center>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
