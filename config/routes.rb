@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   end
   resources :users
   root 'store#index', as: 'store_index', via: :all
-  get '/', to: 'store#category'
+  get '/category', to: 'store#category', as: 'store_category'
   post '/line_items/:id', to: 'line_items#reduce_quantity'
   resources :carts
   resources :line_items

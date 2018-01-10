@@ -1,3 +1,4 @@
+<%= javascript_include_tag 'store.js' %>
 <div id="cart" class="cart">
   <% if @cart %>
     <% unless @cart.line_items.empty? %>
@@ -5,7 +6,7 @@
     <% end %>
   <% end %>
 </div>
-<div class="container">
+<div class="container", data-name="meal-container">
   <strong>Location: <%= session[:current_location]%></strong>
   <br>
   <br>
