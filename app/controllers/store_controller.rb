@@ -21,7 +21,7 @@ class StoreController < ApplicationController
   end
 
   def category
-    output = render_to_string "store/index"
+    output = render_to_string partial: "store/meals"
     render json: { output: output }
   end
 

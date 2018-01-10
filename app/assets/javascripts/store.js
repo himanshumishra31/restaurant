@@ -7,7 +7,7 @@ Store.prototype.clearMealContainer = function() {
 };
 
 Store.prototype.updateStore = function(response) {
-  $('html').html(response.output);
+  this.mealContainerDiv.html(response.output);
 };
 
 Store.prototype.fetchMeals = function() {
@@ -25,7 +25,7 @@ Store.prototype.fetchMeals = function() {
 
       }
     })
-  }, 30000);
+  }, 20000);
 };
 
 Store.prototype.init = function() {
@@ -34,7 +34,7 @@ Store.prototype.init = function() {
 
 $(function() {
   var data = {
-    mealContainerDiv: $('.container-page')
+    mealContainerDiv: $('div[data-name="meal-container"]')
   },
       storeObject = new Store(data);
   storeObject.init();
