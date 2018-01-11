@@ -8,6 +8,10 @@ class LineItem < ApplicationRecord
   validates :meal_id, uniqueness: { scope: :cart_id, message: "duplicate entry" }
 
   def total_price
-    meal.price * quantity
+    if extra_ingredient.blank?
+      meal.price * quantity
+    else
+      meal.price * quantity + Ingredient.find_by(name: extra_ingredient).price * quantity
+    end
   end
 end

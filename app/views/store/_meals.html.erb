@@ -28,7 +28,7 @@
         <div class="foo red"></div>
         <%= available_meal.name %></p>
       <strong><%= number_to_currency(available_meal.price) %></strong>
-        <p><%= button_to 'Add To Cart', line_items_path(meal_id: available_meal), remote: true, class: 'btn btn-primary' %></p>
+      <p><%= button_to 'Add To Cart', line_items_path(meal_id: available_meal), remote: true, class: 'btn btn-primary' %></p>
     </div>
   <% end %>
 <% end %>

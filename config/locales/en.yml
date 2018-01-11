@@ -1,5 +1,10 @@
 en:
   controller:
+    line_items:
+      update:
+        flash:
+          success:
+            insufficient_stock: 'Sorry Ingredient is not left. Please try again after some time'
     orders:
       new:
         flash:

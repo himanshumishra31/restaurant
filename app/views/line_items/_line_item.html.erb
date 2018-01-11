@@ -6,7 +6,14 @@
       <div class="media-body">
         <h4 class="media-heading"><%= line_item.meal.name %></h4>
       </div>
+      <%= form_for line_item , method: :patch do |form| %>
+        <%= form.select :extra_ingredient, Ingredient.where(extra_allowed: true).pluck('name'), prompt: "Any Extra Ingredient" %>
+        <%= form.submit 'Add' %>
+      <% end %>
     </div>
+    <% if line_item.extra_ingredient %>
+      <strong>Extra-Ingredient<%= line_item.extra_ingredient %></strong>
+    <% end %>
   </td>
   <td class="col-sm-1 col-md-1 text-center price_line_item"><strong><%= line_item.reload.quantity %></strong></td>
   <td class="col-sm-1 col-md-1 text-center"><strong><%= number_to_currency(line_item.meal.price) %></strong></td>
