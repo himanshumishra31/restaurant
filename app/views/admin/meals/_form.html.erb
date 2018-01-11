@@ -1,44 +1,45 @@
 <%= javascript_include_tag 'jquery_nested_form' %>
-<%= nested_form_for [:admin, @meal], html: { class: 'form-horizontal'} do |form| %>
-  <fieldset>
-    <legend class="top_bar">Enter Meal Details</legend>
-    <%= render 'shared/errors', model: @meal %>
-    <div class="form-group">
-      <%= form.label :name, class: "col-lg-2 control-label" %>
-      <div class="col-lg-10">
-        <%= form.text_field :name, size: 40, class: 'form-control' %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= form.label :active, class: "col-lg-2 control-label" %>
-      <div class="col-lg-10">
-        <%= form.check_box :active, size: 40, class: 'form-control' %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= form.label :picture, class: "col-lg-2 control-label" %>
-      <div class="col-lg-10">
-        <%= form.file_field :picture, class: 'form-control' %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= form.fields_for :meal_items do |meal_item| %>
-        <%= meal_item.link_to_remove 'remove' %>
-        <%= meal_item.label :ingredient_id, 'Select Ingredient', class: "col-lg-2 control-label"  %>
-        <div class="">
-          <%= meal_item.select :ingredient_id, Ingredient.all.pluck(:name, :id), prompt: 'Select an ingredient', class: 'form-control'  %>
-          <%= meal_item.label :quantity %>
-            <%= meal_item.number_field :quantity %>
+<br><br><br><br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">Meal Details</h4>
         </div>
-      <% end %>
-      <div class="col-lg-10 col-lg-offset-2">
-        <%= form.link_to_add "Add an Ingredient", :meal_items %>
+        <div class="panel-body">
+          <%= nested_form_for [:admin, @meal], html: { class: 'form-horizontal'} do |form| %>
+            <fieldset>
+            <%= render 'shared/errors', model: @ingredient %>
+              <div class="form-group">
+                <%= form.text_field :name, size: 40, class: 'form-control', placeholder: 'Name' %>
+              </div>
+              <div class="form-group">
+                <%= form.label :active %>
+                <%= form.check_box :active %>
+              </div>
+              <div class="form-group">
+                <%= form.file_field :picture %>
+              </div>
+              <div class="form-group">
+                <%= form.fields_for :meal_items do |meal_item| %>
+                  <%= meal_item.link_to_remove 'remove' %>
+                  <div class="form-group">
+                    <%= meal_item.select :ingredient_id, Ingredient.all.pluck(:name, :id), prompt: 'Select an ingredient'%>
+                    <%= meal_item.number_field :quantity %>
+                  </div>
+                <% end %>
+                <div class="col-lg-10">
+                  <%= form.link_to_add "Add an Ingredient", :meal_items %>
+                </div>
+              </div>
+              <%= form.submit 'Submit', class: 'btn btn-lg btn-success btn-block' %>
+            </fieldset>
+          <% end %>
+          <hr/>
+          <center><h4><%= link_to 'Back', admin_meals_url %></h4></center>
+        </div>
       </div>
     </div>
-    <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-        <%= form.submit 'Submit', class: 'btn btn-primary' %>
-      </div>
-    </div>
-  </fieldset>
-<% end %>
+  </div>
+</div>

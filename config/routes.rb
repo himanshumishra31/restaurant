@@ -21,5 +21,9 @@ Rails.application.routes.draw do
     end
   end
   resources :users
-  root 'sessions#new', as: 'login_index', via: :all
+  root 'store#index', as: 'store_index', via: :all
+  get '/category', to: 'store#category', as: 'store_category'
+  post '/line_items/:id', to: 'line_items#reduce_quantity'
+  resources :carts
+  resources :line_items
 end
