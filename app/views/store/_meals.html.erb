@@ -1,12 +1,12 @@
 <br>
 <br>
 <% if @available_non_veg_meals.any? || @available_veg_meals.any? %>
+  <%= form_tag store_index_path, method: :get do %>
+    <%= label_tag 'Only Veg' %>
+    <%= check_box_tag 'Only Veg', 1 , session[:only_veg], { onclick: 'this.form.submit()' } %>
+  <% end %>
 <% else %>
   <strong> No Available Meals</strong>
-<% end %>
-<%= form_tag store_index_path, method: :get do %>
-  <%= label_tag 'Only Veg' %>
-  <%= check_box_tag 'Only Veg', 1 , session[:only_veg], { onclick: 'this.form.submit()' } %>
 <% end %>
 <br>
 <br>

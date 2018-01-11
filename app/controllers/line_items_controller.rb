@@ -53,7 +53,7 @@ class LineItemsController < ApplicationController
       quantity_used = 0
       @cart.line_items.each do |line_item|
         quantity_used += line_item.quantity  if line_item.extra_ingredient.eql? ingredient.name
-        cart_meal = Meal.find_by(id: line_item.meal_id)
+        cart_meal = line_item.meal
         ingredient_used = cart_meal.meal_items.find_by(ingredient_id: ingredient.id)
         quantity_used += ingredient_used.quantity * line_item.quantity if ingredient_used
       end
@@ -69,7 +69,7 @@ class LineItemsController < ApplicationController
         ingredient_quantity_required = meal_item.quantity
         ingredient_quantity_used = 0
         @cart.line_items.each do |line_item|
-          cart_meal = Meal.find_by(id: line_item.meal_id)
+          cart_meal = line_item.meal
           ingredient = cart_meal.meal_items.find_by(ingredient_id: meal_item.ingredient_id)
           ingredient_quantity_used += line_item.quantity * ingredient.quantity if ingredient
           if line_item.extra_ingredient.eql? Ingredient.find_by(id: meal_item.ingredient_id).name

@@ -1,5 +1,10 @@
 en:
   controller:
+    charges:
+      create:
+        flash:
+          success:
+            payment_success: 'Payment Successful. You Can see your orders under myorders section.'
     line_items:
       update:
         flash:
@@ -10,6 +15,20 @@ en:
         flash:
           danger:
             login: 'Please Log In to Place Order'
+
+      destroy:
+        flash:
+          success:
+            order_cancelled: "Order successfully cancelled"
+          danger:
+            time_up: "Order is prepared now. Cannot cancel now"
+
+      create:
+        flash:
+          danger:
+            insufficient_stock: 'Sorry Ingredient is not in sufficient quantity. Please again create your cart'
+          success:
+            successfully_placed: 'Order is successfully placed.'
 
     sessions:
       create:

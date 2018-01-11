@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180110123804) do
+ActiveRecord::Schema.define(version: 20180111093452) do
 
   create_table "branches", force: :cascade do |t|
     t.string "name"
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 20180110123804) do
     t.integer "line_items_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "charges", force: :cascade do |t|
+    t.integer "order_id"
+    t.integer "customer_id"
+    t.integer "amount"
+    t.integer "last4"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_charges_on_order_id"
   end
 
   create_table "comments", force: :cascade do |t|

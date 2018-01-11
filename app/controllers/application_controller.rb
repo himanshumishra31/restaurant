@@ -49,4 +49,18 @@ class ApplicationController < ActionController::Base
     session[:current_location] = Branch.find_by(default_res: true).name unless session[:current_location]
     @branch = Branch.find_by(name: session[:current_location])
   end
+
+  def affect_ingredient(action)
+    @order.cart.line_items.each do |line_item|
+      meal = Meal.find_by(id: line_item.meal_id)
+      meal.meal_items.each do |meal_item|
+        branch = @order.branch.inventories.find_by(ingredient_id: meal_item.ingredient_id)
+        if action.eql? "reduce"
+          branch.update_columns(quantity: branch.quantity - meal_item.quantity * line_item.quantity)
+        elsif action.eql? "increase"
+          branch.update_columns(quantity: branch.quantity + meal_item.quantity * line_item.quantity)
+        end
+      end
+    end
+  end
 end

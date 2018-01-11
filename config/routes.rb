@@ -24,7 +24,9 @@ Rails.application.routes.draw do
   root 'store#index', as: 'store_index', via: :all
   get '/category', to: 'store#category', as: 'store_category'
   post '/line_items/:id', to: 'line_items#reduce_quantity'
+  get '/myorders', to: 'users#myorders'
   resources :carts
   resources :line_items
   resources :orders
+  resources :charges
 end
