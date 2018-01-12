@@ -6,10 +6,12 @@ class StoreController < ApplicationController
   before_action :available_meals, only: [:index, :category]
 
   def index
-    if params["Only Veg"]
-      session[:only_veg] = true
+    if params["category"].eql? 'veg'
+      session[:category] = 'veg'
+    elsif params["category"].eql? 'non_veg'
+      session[:category] = 'non_veg'
     else
-      session[:only_veg] = false
+      session[:category] = 'both'
     end
   end
 

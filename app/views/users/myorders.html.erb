@@ -13,7 +13,7 @@
           <td><%= order.id %></td>
           <td>
             <% order.cart.line_items.each do |line_item| %>
-              <%= line_item.meal.name %>(<%= line_item.quantity %>)
+              <%= line_item.meal.name %>(<%= line_item.quantity %>)<br>
             <% end %>
           </td>
           <td><%= order.pick_up.strftime("%I:%M %p") %></td>

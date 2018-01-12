@@ -30,7 +30,12 @@
             </fieldset>
           <% end %>
           <hr/>
-          <center><h4><%= link_to 'Login', login_path %> | <%= link_to 'Forgot Password', reset_password_path %></h4></center>
+          <center><h4>
+          <% unless @current_user %>
+            <%= link_to 'Login', login_path %> |
+           <%= link_to 'Forgot Password', reset_password_path %>
+          <% end %>
+          </h4></center>
         </div>
       </div>
     </div>

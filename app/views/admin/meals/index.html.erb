@@ -12,7 +12,7 @@
         <td>
           <% meal.ingredients.each do |ingredient| %>
             <%= ingredient.name %>(<%= MealItem.find_by(ingredient_id: ingredient.id, meal_id: meal.id).quantity
-%>)
+%>)<br>
           <% end %>
         </td>
         <td><%= number_to_currency(meal.price) %></td>

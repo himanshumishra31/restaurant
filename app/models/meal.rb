@@ -8,6 +8,8 @@ class Meal < ApplicationRecord
   # validatons
   validates :name, presence: true
   validates_attachment :picture, content_type: { content_type: /\Aimage\/.*\z/ }
+  validate :ingredient_quantity_valid?
+  validate :atleast_one_ingredient?
 
   # callbacks
   after_commit :set_price, on: [:create, :update]
@@ -20,5 +22,13 @@ class Meal < ApplicationRecord
       self.price += meal_item.quantity * Ingredient.find_by(id: meal_item.ingredient_id).price
     end
     self.update_columns(price: ((ENV["PROFIT_PERCENT"].to_i + 100) * 0.01 * self.price))
+  end
+
+  def ingredient_quantity_valid?
+    errors.add(:meal_items, " quantity cannot be negative") if meal_items.any? { |meal| meal.quantity.to_i < 0 }
+  end
+
+  def atleast_one_ingredient?
+    errors.add(:meal_items, " atleast one must present") unless meal_items.present?
   end
 end

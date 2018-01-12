@@ -31,6 +31,10 @@ en:
             successfully_placed: 'Order is successfully placed.'
 
     sessions:
+      new:
+        flash:
+          danger:
+            already_login: "Already logged in. Please Log out to login from another account."
       create:
         flash:
           danger:
@@ -188,6 +192,5 @@ en:
           success:
             successfully_saved: "Changes have been successfully saved"
             access_restricted: "Sorry, you don't have authority to access this section"
-
-
-
+          danger:
+            only_one_ingredient: 'Cannot delete only ingredient. One Ingredient must exist'

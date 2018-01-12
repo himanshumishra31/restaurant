@@ -10,7 +10,7 @@
         <div class="panel-body">
           <%= nested_form_for [:admin, @meal], html: { class: 'form-horizontal'} do |form| %>
             <fieldset>
-            <%= render 'shared/errors', model: @ingredient %>
+            <%= render 'shared/errors', model: @meal %>
               <div class="form-group">
                 <%= form.text_field :name, size: 40, class: 'form-control', placeholder: 'Name' %>
               </div>

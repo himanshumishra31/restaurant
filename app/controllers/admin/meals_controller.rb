@@ -1,5 +1,6 @@
 class Admin::MealsController < Admin::BaseController
   before_action :set_meal, only: [:destroy, :edit, :update]
+  before_action :ingredient_exists?, only: [:update]
 
   def index
     @meals = Meal.all
@@ -35,6 +36,15 @@ class Admin::MealsController < Admin::BaseController
   end
 
   private
+
+    def ingredient_exists?
+      if @meal.meal_items.count.eql? 1
+        if params[:meal][:meal_items_attributes]["0"][:_destroy].eql? '1'
+          redirect_with_flash("danger", "only_one_ingredient", admin_meals_path)
+        end
+      end
+    end
+
     def permitted_params
       params.require(:meal).permit(:name, :active, :picture, meal_items_attributes: [:id, :ingredient_id, :quantity, :_destroy])
     end

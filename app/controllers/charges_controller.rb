@@ -10,7 +10,7 @@ class ChargesController < ApplicationController
     charge = @order.build_charge.create_new_charge(params[:stripeToken])
     if charge.errors.blank?
       session[:cart_id] = nil
-      affect_ingredients("reduce")
+      affect_ingredient("reduce")
       redirect_with_flash("success", "payment_success", store_index_path)
     else
       flash[:danger] = charge.errors.messages.values.split.join(', ')

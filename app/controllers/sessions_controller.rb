@@ -4,6 +4,12 @@ class SessionsController < ApplicationController
   before_action :reset_link_expired?, only: [:update_user_password]
   before_action :password_empty?, only: [:update_user_password]
 
+  def new
+    if current_user
+      redirect_with_flash("danger", "already_login", store_index_path)
+    end
+  end
+
   def create
     if @user.authenticate(params[:password])
       if @user.email_confirmed

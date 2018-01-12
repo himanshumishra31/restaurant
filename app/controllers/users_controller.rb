@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(permitted_params)
-      redirect_with_flash("success", "successfully_saved", login_url)
+      redirect_with_flash("success", "successfully_saved", store_index_url)
     else
       render 'edit'
     end
