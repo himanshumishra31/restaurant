@@ -26,9 +26,7 @@ class LineItemsController < ApplicationController
 
   def reduce_quantity
     @line_item.update_attributes(quantity: @line_item.quantity - 1)
-    respond_to do |format|
-      format.js { @status = true }
-    end
+    @status = true
   end
 
   def update
