@@ -41,7 +41,7 @@ class SessionsController < ApplicationController
 
 
   def destroy
-    logout_user if @current_user
+    logout_user if current_user
     redirect_to login_url
   end
 

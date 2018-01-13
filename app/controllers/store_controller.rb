@@ -3,7 +3,8 @@ class StoreController < ApplicationController
   before_action :set_session_branch, only: [:index, :category]
   before_action :set_branch, only: [:index, :category]
   before_action :set_cart, only: [:index, :category]
-  before_action :available_meals, only: [:index, :category]
+  before_action :load_available_meals, only: [:index, :category]
+  before_action :categorize_available_meals, only: [:index, :category]
 
   def index
     if params["category"].eql? 'veg'
@@ -27,25 +28,19 @@ class StoreController < ApplicationController
     render json: { output: output }
   end
 
-  def available_meals
-    @available_veg_meals = []
-    @available_non_veg_meals = []
-    Meal.all.each do |meal|
-      if sufficient_stock?(meal)
-        if meal.meal_items.any? { |meal_item| Ingredient.find_by(id: meal_item.ingredient_id).category }
-          @available_non_veg_meals << meal
-        else
-          @available_veg_meals << meal
-        end
-      end
-    end
+  def load_available_meals
+    @available_meals = @branch.available_meals
   end
 
-  def sufficient_stock?(meal)
-    meal.meal_items.each do |meal_item|
-      branch_ingredient_quantity = @branch.inventories.find_by(ingredient_id: meal_item.ingredient_id).quantity
-      return false if branch_ingredient_quantity < meal_item.quantity
+  def categorize_available_meals
+    @available_veg_meals = []
+    @available_non_veg_meals = []
+    @available_meals.each do |meal|
+      if meal.isnonveg?
+        @available_non_veg_meals << meal
+      else
+        @available_veg_meals << meal
+      end
     end
-    true
   end
 end

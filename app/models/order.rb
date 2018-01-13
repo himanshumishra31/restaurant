@@ -16,4 +16,15 @@ class Order < ApplicationRecord
       errors.add(:pick_up, " should be between branch timings" )
     end
   end
+
+  def sufficient_stock
+    cart.line_items.each do |line_item|
+      line_item.meal.meal_items.each do |meal_item|
+        ingredient_required = meal_item.quantity * line_item.quantity
+        branch_ingredient = branch.inventories.find_by(ingredient_id: meal_item.ingredient_id)
+        return false if ingredient_required > branch_ingredient
+      end
+    end
+    true
+  end
 end

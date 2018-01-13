@@ -1,41 +1,30 @@
 function Store(data) {
-  this.mealContainerDiv = data.mealContainerDiv;
+  this.$mealContainerDiv = data.$mealContainerDiv;
 }
-
-Store.prototype.clearMealContainer = function() {
-  this.mealContainerDiv.empty();
-};
-
-Store.prototype.updateStore = function(response) {
-  this.mealContainerDiv.html(response.output);
-};
 
 Store.prototype.fetchMeals = function() {
   var _this = this;
+  const POLLING_TIME = 20000;
   setInterval(function(){
-    _this.clearMealContainer();
+    _this.$mealContainerDiv.empty();
     $.ajax({
       url: "/category",
       method: 'GET',
       dataType: 'JSON',
       success: function(response) {
-        _this.updateStore(response);
+        _this.$mealContainerDiv.html(response.output);
       },
       error: function() {
-
+        console.log('Error occured');
       }
     })
-  }, 20000);
-};
-
-Store.prototype.init = function() {
-  this.fetchMeals();
+  }, POLLING_TIME);
 };
 
 $(function() {
   var data = {
-    mealContainerDiv: $('div[data-name="meal-container"]')
+    $mealContainerDiv: $('div[data-name="meal-container"]')
   },
       storeObject = new Store(data);
-  storeObject.init();
+  storeObject.fetchMeals();
 });

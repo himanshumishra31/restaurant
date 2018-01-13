@@ -11,5 +11,4 @@ class CartsController < ApplicationController
     def set_cart
       @cart = Cart.find_by(id: params[:id])
     end
-
 end

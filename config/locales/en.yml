@@ -8,8 +8,12 @@ en:
     line_items:
       update:
         flash:
-          success:
+          danger:
             insufficient_stock: 'Sorry Ingredient is not left. Please try again after some time'
+            no_select: 'Please select any extra ingredient'
+          success:
+            extra_ingredient_added: 'Extra Ingredient Added'
+
     orders:
       new:
         flash:

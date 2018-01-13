@@ -1,22 +1,25 @@
 class OrdersController < ApplicationController
   include CurrentCart
-  before_action :current_user, only: [:create, :new]
   before_action :set_branch, only: [:create, :new]
   before_action :set_cart, only: [:create, :new]
+  before_action :check_sufficient_stock, only: [:create]
 
   def create
-    @order = Order.new(permitted_params)
-    if sufficient_stock
-      if @order.save
-        redirect_with_flash("success", "successfully_placed", new_charge_path)
-      else
-        render 'new'
-      end
+    if @order.save
+      redirect_with_flash("success", "successfully_placed", new_charge_path)
     else
+      render 'new'
+    end
+  end
+
+  def check_sufficient_stock
+    @order = Order.new(permitted_params)
+    unless @order.sufficient_stock
       session[:cart_id] = nil
       redirect_with_flash("danger", "insufficient_stock", store_index_path)
     end
   end
+
 
   def new
     if @current_user
@@ -35,21 +38,6 @@ class OrdersController < ApplicationController
     else
       redirect_with_flash("danger", "time_up", myorders_url)
     end
-  end
-
-  def sufficient_stock
-    Ingredient.all.each do |ingredient|
-      quantity_used = 0
-      branch_quantity = @branch.inventories.find_by(ingredient_id: ingredient.id).quantity
-      @cart.line_items.each do |line_item|
-        quantity_used += line_item.quantity if line_item.extra_ingredient.eql? ingredient.name
-        cart_meal = Meal.find_by(id: line_item.meal_id)
-        ingredient_used = cart_meal.meal_items.find_by(ingredient_id: ingredient.id)
-        quantity_used += line_item.quantity * ingredient_used.quantity if ingredient_used
-      end
-      return false if branch_quantity < quantity_used
-    end
-    true
   end
 
   private
