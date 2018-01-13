@@ -31,7 +31,8 @@ class OrdersController < ApplicationController
 
   def destroy
     @order = Order.find_by(id: params[:id])
-    if @order.pick_up - Time.current > 30
+    debugger
+    if Time.parse(@order.pick_up.strftime("%I:%M%p")) - Time.now > 1800
       @order.destroy
       @order.affect_ingredient("+")
       redirect_with_flash("success", "order_cancelled", myorders_url)

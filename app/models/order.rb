@@ -11,10 +11,17 @@ class Order < ApplicationRecord
   validates :pick_up, presence: true
   validate :valid_pick_up_time?, if: :pick_up?
 
+  #callbacks
+  after_save :send_confirmation_mail
+
   def valid_pick_up_time?
     unless pick_up.between?(branch.opening_time, branch.closing_time)
       errors.add(:pick_up, " should be between branch timings" )
     end
+  end
+
+  def send_confirmation_mail
+    OrderMailer.confirmation_mail(self).deliver
   end
 
   def sufficient_stock
