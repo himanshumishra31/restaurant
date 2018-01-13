@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   before_action :authorize, only: [:edit, :update]
   before_action :validate_user, only: [:show, :edit, :update]
   before_action :load_user, only: [:confirm_email]
-  before_action :current_user, only: [:myorders]
 
   def new
     @user = User.new
@@ -31,7 +30,7 @@ class UsersController < ApplicationController
   end
 
   def myorders
-    @orders = @current_user.orders
+    @orders = current_user.orders
   end
 
   private

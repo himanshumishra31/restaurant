@@ -19,7 +19,7 @@ class LineItem < ApplicationRecord
     quantity_used = 0
     cart.line_items.each do |line_item|
       quantity_used += line_item.quantity  if line_item.extra_ingredient.eql? ingredient.name
-      ingredient_used = meal.meal_items.find_by(ingredient_id: ingredient.id)
+      ingredient_used = line_item.meal.meal_items.find_by(ingredient_id: ingredient.id)
       quantity_used += ingredient_used.quantity * line_item.quantity if ingredient_used
     end
     branch.inventories.find_by(ingredient_id: ingredient.id).quantity - quantity_used >= quantity
@@ -39,7 +39,7 @@ class LineItem < ApplicationRecord
   end
 
   def ingredient_used(line_item, meal_item)
-    ingredient = meal.meal_items.find_by(ingredient_id: meal_item.ingredient_id)
+    ingredient = line_item.meal.meal_items.find_by(ingredient_id: meal_item.ingredient_id)
     @ingredient_quantity_used += line_item.quantity * ingredient.quantity if ingredient
     if line_item.extra_ingredient.eql? Ingredient.find_by(id: meal_item.ingredient_id).name
       @ingredient_quantity_used += line_item.quantity

@@ -18,13 +18,26 @@ class Order < ApplicationRecord
   end
 
   def sufficient_stock
-    cart.line_items.each do |line_item|
-      line_item.meal.meal_items.each do |meal_item|
-        ingredient_required = meal_item.quantity * line_item.quantity
-        branch_ingredient = branch.inventories.find_by(ingredient_id: meal_item.ingredient_id)
-        return false if ingredient_required > branch_ingredient
+    Ingredient.all.each do |ingredient|
+      quantity_used = 0
+      branch_quantity = branch.inventories.find_by(ingredient_id: ingredient.id).quantity
+      cart.line_items.each do |line_item|
+        quantity_used += line_item.quantity if line_item.extra_ingredient.eql? ingredient.name
+        ingredient_used = line_item.meal.meal_items.find_by(ingredient_id: ingredient.id)
+        quantity_used += line_item.quantity * ingredient_used.quantity if ingredient_used
       end
+      return false if branch_quantity < quantity_used
     end
     true
+  end
+
+  def affect_ingredient(action)
+    cart.line_items.each do |line_item|
+      meal = Meal.find_by(id: line_item.meal_id)
+      meal.meal_items.each do |meal_item|
+        branch_inventory = branch.inventories.find_by(ingredient_id: meal_item.ingredient_id)
+        branch_inventory.update_columns(quantity: branch_inventory.quantity.send(action.to_sym, (meal_item.quantity * line_item.quantity) ))
+      end
+    end
   end
 end

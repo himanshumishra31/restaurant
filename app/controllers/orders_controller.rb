@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
 
 
   def new
-    if @current_user
+    if current_user
       @order = Order.new
     else
       redirect_with_flash("danger", "login", login_path)
@@ -33,7 +33,7 @@ class OrdersController < ApplicationController
     @order = Order.find_by(id: params[:id])
     if @order.pick_up - Time.current > 30
       @order.destroy
-      affect_ingredient("increase")
+      @order.affect_ingredient("+")
       redirect_with_flash("success", "order_cancelled", myorders_url)
     else
       redirect_with_flash("danger", "time_up", myorders_url)

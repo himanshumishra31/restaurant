@@ -6,16 +6,9 @@ class Charge < ApplicationRecord
 
   def create_new_charge(token)
     customer = create_stripe_customer(token)
-    if errors.any?
-      return self
-    end
     charge = create_stripe_charge(customer.id)
-    if errors.any?
-      return self
-    end
-
+    return self if errors.any?
     add_fields_to_charge(charge)
-    save!
     self
   end
 
@@ -54,5 +47,6 @@ class Charge < ApplicationRecord
     self.amount = charge.amount
     self.status = charge.status
     self.last4 = charge.source.last4
+    save!
   end
 end

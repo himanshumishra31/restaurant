@@ -36,20 +36,17 @@ class Admin::MealsController < Admin::BaseController
   end
 
   private
-
-    def ingredient_exists?
-      if @meal.meal_items.count.eql? 1
-        if params[:meal][:meal_items_attributes]["0"][:_destroy].eql? '1'
-          redirect_with_flash("danger", "only_one_ingredient", admin_meals_path)
-        end
-      end
-    end
-
     def permitted_params
       params.require(:meal).permit(:name, :active, :picture, meal_items_attributes: [:id, :ingredient_id, :quantity, :_destroy])
     end
 
     def set_meal
       @meal = Meal.find_by(id: params[:id])
+    end
+
+    def ingredient_exists?
+      if (@meal.meal_items.count.eql? 1) && (params[:meal][:meal_items_attributes]["0"][:_destroy].eql? '1')
+        redirect_with_flash("danger", "only_one_ingredient", admin_meals_path)
+      end
     end
 end

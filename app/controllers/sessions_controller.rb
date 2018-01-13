@@ -3,24 +3,24 @@ class SessionsController < ApplicationController
   before_action :email_verified?, only: [:reset_password_link]
   before_action :reset_link_expired?, only: [:update_user_password]
   before_action :password_empty?, only: [:update_user_password]
+  before_action :authenticate?, only: [:create]
 
   def new
-    if current_user
-      redirect_with_flash("danger", "already_login", store_index_path)
-    end
+    redirect_with_flash("danger", "already_login", store_index_path) if current_user
   end
 
   def create
-    if @user.authenticate(params[:password])
-      if @user.email_confirmed
-        create_user(@user)
-      else
-        redirect_with_flash("danger", "activate_your_account", new_user_url)
-      end
+    if @user.email_confirmed
+      create_user(@user)
     else
-      redirect_with_flash("danger", "invalid_password", login_url)
+      redirect_with_flash("danger", "activate_your_account", new_user_url)
     end
   end
+
+  def authenticate?
+    redirect_with_flash("danger", "invalid_password", login_url) unless @user.authenticate(params[:password])
+  end
+
 
   def reset_password_link
     if @user

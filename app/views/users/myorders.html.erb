@@ -17,7 +17,7 @@
             <% end %>
           </td>
           <td><%= order.pick_up.strftime("%I:%M %p") %></td>
-          <td><%= order.charge.amount %></td>
+          <td><%= number_to_currency(order.charge.amount) %></td>
           <td><%= link_to 'Cancel', order_url(order), method: :delete, data: { confirm: 'Are you Sure?' } %></td>
         </tr>
       <% end %>

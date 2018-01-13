@@ -7,13 +7,7 @@ class StoreController < ApplicationController
   before_action :categorize_available_meals, only: [:index, :category]
 
   def index
-    if params["category"].eql? 'veg'
-      session[:category] = 'veg'
-    elsif params["category"].eql? 'non_veg'
-      session[:category] = 'non_veg'
-    else
-      session[:category] = 'both'
-    end
+    session[:category] = (params["category"] || "both" )
   end
 
   def set_session_branch

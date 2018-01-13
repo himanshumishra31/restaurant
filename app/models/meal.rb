@@ -29,7 +29,7 @@ class Meal < ApplicationRecord
   end
 
   def ingredient_quantity_valid?
-    errors.add(:meal_items, " quantity cannot be negative") if meal_items.any? { |meal| meal.quantity.to_i < 0 }
+    errors.add(:meal_items, " quantity must be positive") if meal_items.any? { |meal| meal.quantity.to_i < 1 }
   end
 
   def atleast_one_ingredient?
