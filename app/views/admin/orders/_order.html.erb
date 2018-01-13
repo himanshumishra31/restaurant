@@ -1,0 +1,23 @@
+<% @orders.each do |order| %>
+  <% if order.charge && (order.charge.status.eql? 'succeeded') && !order.picked %>
+    <tr>
+      <td><%= order.id %></td>
+      <td>
+        <% order.cart.line_items.each do |line_item| %>
+          <%= line_item.meal.name %>(<%= line_item.quantity %>)<br>
+        <% end %>
+      </td>
+      <td><%= order.pick_up.strftime("%I:%M %p") %></td>
+      <td><%= number_to_currency(order.charge.amount) %></td>
+      <td>
+        <%= order.ready %>
+        <%= link_to 'Edit', toggle_ready_status_admin_order_path(order), method: :patch, class: 'btn btn-primary btn-xs' %>
+      </td>
+      <td>
+        <%= order.picked %>
+        <%= link_to 'Edit', toggle_pick_up_status_admin_order_path(order), method: :patch, class: 'btn btn-primary btn-xs' %>
+      </td>
+      <td><%= link_to 'Cancel', order_url(order), method: :delete, data: { confirm: 'Are you Sure?' },class: 'btn btn-primary btn-xs' %></td>
+    </tr>
+  <% end %>
+<% end %>

@@ -7,6 +7,7 @@ Store.prototype.fetchMeals = function() {
   const POLLING_TIME = 60000;
   setInterval(function(){
     _this.$mealContainerDiv.empty();
+    debugger
     $.ajax({
       url: "/category",
       method: 'GET',
@@ -17,7 +18,7 @@ Store.prototype.fetchMeals = function() {
       error: function() {
         console.log('Error occured');
       }
-    })
+    });
   }, POLLING_TIME);
 };
 
