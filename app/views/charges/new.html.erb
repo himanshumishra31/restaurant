@@ -9,6 +9,6 @@
           data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
           data-description="Enter Card Details"
           data-email="<%= @order.user.email %>"
-          data-amount="<%= @order.cart.total_price %>"
+          data-amount="<%= @order.cart.total_price * 100 %>"
           data-locale="auto"></script>
 <% end %>

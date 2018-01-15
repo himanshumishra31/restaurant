@@ -34,7 +34,6 @@ class Charge < ApplicationRecord
           order_number: order.id
         }
       )
-
     rescue Stripe::CardError => e
       errors[:card] << e.message
     rescue Stripe::StripeError => e
