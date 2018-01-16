@@ -10,6 +10,12 @@ en:
           success:
             status_changed: 'Order status has been successfully updated'
 
+    ratings:
+      rate_meals:
+        flash:
+          success:
+            thanks: 'Thank you. Your review has been successfully saved.'
+
     charges:
       create:
         flash:
@@ -43,6 +49,11 @@ en:
             insufficient_stock: 'Sorry Ingredient is not in sufficient quantity. Please again create your cart'
           success:
             successfully_placed: 'Order is successfully placed.'
+
+      feedback:
+        flash:
+          danger:
+            login: 'Login first and then access the link to provide feedback'
 
     sessions:
       new:

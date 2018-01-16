@@ -24,6 +24,36 @@ class Order < ApplicationRecord
     OrderMailer.confirmation_mail(self).deliver
   end
 
+  def delivered
+    update_columns(picked: !picked)
+    feedback_token
+    OrderMailer.feedback_mail(self).deliver
+  end
+
+  def prepared
+    update_columns(ready: !ready)
+  end
+
+  def feedback_token
+    update_columns(feedback_digest: Order.new_token, feedback_email_sent_at: Time.current)
+  end
+
+  def feedback_submitted
+    update_attributes(feedback_digest: nil, feedback_email_sent_at: nil)
+  end
+
+  def feedback_link_expired?
+    feedback_email_sent_at < 1.day.ago
+  end
+
+  def cancellable?
+    Time.parse(pick_up.strftime("%I:%M%p")) - Time.now > 1800
+  end
+
+  def self.new_token
+    SecureRandom.urlsafe_base64
+  end
+
   def sufficient_stock
     Ingredient.all.each do |ingredient|
       quantity_used = 0

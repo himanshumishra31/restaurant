@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  scope '/account' do
-    get '/confirm_email', to: 'users#confirm_email'
-  end
   get '/edit_user_password', to: 'sessions#reset_password'
   patch '/edit_user_password', to: 'sessions#update_user_password'
   get '/reset_password', to: 'sessions#forgot_password'
@@ -27,6 +24,12 @@ Rails.application.routes.draw do
       get :confirm_email
     end
   end
+
+  resources :orders do
+    member do
+      get :feedback
+    end
+  end
   resources :users
   root 'store#index', as: 'store_index', via: :all
   get '/category', to: 'store#category', as: 'store_category'
@@ -36,4 +39,9 @@ Rails.application.routes.draw do
   resources :line_items
   resources :orders
   resources :charges
+  resources :ratings do
+    collection do
+      put :rate_meals
+    end
+  end
 end
