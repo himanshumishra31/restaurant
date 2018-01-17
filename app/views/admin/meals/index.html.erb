@@ -4,6 +4,9 @@
       <th>Name</th>
       <th>Ingredient(Quanity)</th>
       <th>Price</th>
+      <th>Rating</th>
+      <th>Show Comments</th>
+      <th></th>
       <th></th>
     </thead>
     <% @meals.each do |meal| %>
@@ -16,6 +19,8 @@
           <% end %>
         </td>
         <td><%= number_to_currency(meal.price) %></td>
+        <td><%= meal.ratings.average(:value) %></td>
+        <td><%= link_to 'Comments', show_comments_admin_meal_url(meal.id) %></td>
         <td><%= link_to 'Edit', edit_admin_meal_path(meal) %></td>
         <td><%= link_to 'Destroy', admin_meal_path(meal) ,method: :delete, data: { confirm: 'Are you sure?' }%></td>
       </tr>

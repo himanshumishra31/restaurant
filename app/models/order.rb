@@ -14,6 +14,8 @@ class Order < ApplicationRecord
   #callbacks
   after_save :send_confirmation_mail
 
+  scope :by_date, -> (from = Time.current.midnight, to = Time.current.end_of_day) { where created_at: from..to }
+
   def valid_pick_up_time?
     unless pick_up.between?(branch.opening_time, branch.closing_time)
       errors.add(:pick_up, " should be between branch timings" )
@@ -32,6 +34,14 @@ class Order < ApplicationRecord
 
   def prepared
     update_columns(ready: !ready)
+  end
+
+  def self.most_sold_meal(orders)
+    cart_ids = orders.pluck(:cart_id)
+    line_items = LineItem.where(cart_id: cart_ids)
+    meal_sold = line_items.select(:meal_id, :quantity).group_by(&:meal_id)
+    meal_sold_with_quantity = meal_sold.each { |id, ls| meal_sold[id] = ls.pluck(:quantity).sum }
+    meal_sold_with_quantity.key(meal_sold_with_quantity.values.max)
   end
 
   def feedback_token

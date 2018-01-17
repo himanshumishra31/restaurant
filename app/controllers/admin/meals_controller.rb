@@ -1,5 +1,5 @@
 class Admin::MealsController < Admin::BaseController
-  before_action :set_meal, only: [:destroy, :edit, :update]
+  before_action :set_meal, only: [:destroy, :edit, :update, :show_comments]
   before_action :ingredient_exists?, only: [:update]
 
   def index
@@ -21,6 +21,10 @@ class Admin::MealsController < Admin::BaseController
     else
       render 'edit'
     end
+  end
+
+  def show_comments
+    @comments = Rating.where(meal_id: @meal.id)
   end
 
   def new
