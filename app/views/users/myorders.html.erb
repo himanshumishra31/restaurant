@@ -1,0 +1,28 @@
+<table class="table">
+  <thead>
+    <th>Order Number</th>
+    <th>Items (Quantity)</th>
+    <th>Pick Up Time</th>
+    <th>Total Price</th>
+    <th>Branch </th>
+    <th>Cancel Order</th>
+  </thead>
+<% @orders.each do |order| %>
+    <tbody>
+      <% if order.charge && (order.charge.status.eql? 'succeeded') %>
+        <tr>
+          <td><%= order.id %></td>
+          <td>
+            <% order.cart.line_items.each do |line_item| %>
+              <%= line_item.meal.name %>(<%= line_item.quantity %>)<br>
+            <% end %>
+          </td>
+          <td><%= order.pick_up.strftime("%I:%M %p") %></td>
+          <td><%= number_to_currency(order.charge.amount) %></td>
+          <td><%= order.branch.name %></td>
+          <td><%= link_to 'Cancel', order_url(order), method: :delete, data: { confirm: 'Are you Sure?' },class: 'btn btn-primary btn-xs' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+<% end %>
+</table>

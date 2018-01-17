@@ -1,0 +1,19 @@
+<h3>Feedback for <%= @meal.name %></h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Customer Name</th>
+      <th>Rated</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @comments.each do |comment| %>
+      <tr>
+        <td><%= comment.user.name %> </td>
+        <td><%= comment.value %></td>
+        <td><%= comment.review %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

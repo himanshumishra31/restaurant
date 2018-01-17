@@ -23,13 +23,27 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(permitted_params)
-      redirect_with_flash("success", "successfully_saved", login_url)
+      redirect_with_flash("success", "successfully_saved", store_index_url)
     else
       render 'edit'
     end
   end
 
+  def myorders
+    @orders = current_user.orders
+  end
+
+  def feedback
+    @user = User.find_by(verify_digest: params[:id])
+    debugger
+  end
+
   private
+
+    def link_expired?
+      redirect_with_flash("danger", "link_expired", store_index_path) if @user.feedback_link_expired?
+    end
+
     def permitted_params
       params.require(:user).permit(:name, :password, :password_confirmation, :email)
     end
@@ -40,7 +54,7 @@ class UsersController < ApplicationController
     end
 
     def load_user
-      @user = User.find_by(id: params[:id])
+      @user = User.find_by(confirm_token: params[:id])
       redirect_with_flash("danger", 'user_not_exist', new_user_url) unless @user
     end
 end

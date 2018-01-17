@@ -1,0 +1,11 @@
+if ($('.container-page div.alert').length < 1) {
+  flashdiv = $('<div>',{ class: 'alert alert-success'})
+  $('.container-page').prepend(flashdiv);
+}
+<% if @status %>
+  $('.alert-success').text("Line Item Added");
+  $('.cart').html("<%=j render(@cart) %>");
+<% else %>
+  $('.alert-success').text("Sorry. Insufficient Stock. Please Try after some time");
+<% end %>
+$('.cart').show();

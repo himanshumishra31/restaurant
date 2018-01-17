@@ -1,0 +1,30 @@
+<% line_items.each do |line_item| %>
+<tr id="<%= line_item.id %>">
+  <td class="col-sm-8 col-md-6">
+    <div class="media">
+      <%= image_tag(line_item.meal.picture, size: "50x50") %>
+      <div class="media-body">
+        <h4 class="media-heading"><%= line_item.meal.name %></h4>
+      </div>
+      <%= form_for line_item , method: :patch do |form| %>
+        <%= form.select :extra_ingredient, Ingredient.where(extra_allowed: true).pluck('name'), prompt: "Any Extra Ingredient" %>
+        <%= form.submit 'Add' %>
+      <% end %>
+    </div>
+    <% if line_item.extra_ingredient %>
+      <strong>Extra-Ingredient<%= line_item.extra_ingredient %></strong>
+    <% end %>
+  </td>
+  <td class="col-sm-1 col-md-1 text-center price_line_item"><strong><%= line_item.reload.quantity %></strong></td>
+  <td class="col-sm-1 col-md-1 text-center"><strong><%= number_to_currency(line_item.meal.price) %></strong></td>
+  <td class="col-sm-1 col-md-1 text-center item_price"><strong><%= number_to_currency(line_item.total_price) %></strong></td>
+  <td class="col-sm-1 col-md-1">
+    <%= button_to 'Remove', line_item, method: :delete, remote: true, class: "btn btn-danger"%>
+  </td>
+  <td class="col-sm-1 col-md-1">
+    <% if line_item.quantity > 1 %>
+      <%= button_to 'Reduce 1', line_item, method: :reduce_quantity, remote: true, class: 'btn btn-danger reduce_button' %>
+    <% end %>
+  </td>
+</tr>
+<% end %>

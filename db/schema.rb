@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180103063722) do
+ActiveRecord::Schema.define(version: 20180116120348) do
 
   create_table "branches", force: :cascade do |t|
     t.string "name"
@@ -19,6 +19,23 @@ ActiveRecord::Schema.define(version: 20180103063722) do
     t.boolean "default_res", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.integer "line_items_count", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "charges", force: :cascade do |t|
+    t.integer "order_id"
+    t.integer "customer_id"
+    t.integer "amount"
+    t.integer "last4"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_charges_on_order_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -50,6 +67,17 @@ ActiveRecord::Schema.define(version: 20180103063722) do
     t.index ["ingredient_id"], name: "index_inventories_on_ingredient_id"
   end
 
+  create_table "line_items", force: :cascade do |t|
+    t.integer "meal_id"
+    t.integer "cart_id"
+    t.integer "quantity", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "extra_ingredient"
+    t.index ["cart_id"], name: "index_line_items_on_cart_id"
+    t.index ["meal_id"], name: "index_line_items_on_meal_id"
+  end
+
   create_table "meal_items", force: :cascade do |t|
     t.integer "meal_id"
     t.integer "ingredient_id"
@@ -72,6 +100,34 @@ ActiveRecord::Schema.define(version: 20180103063722) do
     t.datetime "picture_updated_at"
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.time "pick_up"
+    t.string "phone_number"
+    t.integer "cart_id"
+    t.integer "user_id"
+    t.integer "branch_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "ready", default: false
+    t.boolean "picked", default: false
+    t.string "feedback_digest"
+    t.datetime "feedback_email_sent_at"
+    t.index ["branch_id"], name: "index_orders_on_branch_id"
+    t.index ["cart_id"], name: "index_orders_on_cart_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.decimal "value", precision: 2, scale: 1
+    t.string "review"
+    t.integer "user_id"
+    t.integer "meal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meal_id"], name: "index_ratings_on_meal_id"
+    t.index ["user_id"], name: "index_ratings_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -84,7 +140,8 @@ ActiveRecord::Schema.define(version: 20180103063722) do
     t.datetime "reset_password_sent_at"
     t.string "remember_digest"
     t.string "role", default: "customer"
-    t.string "image"
+    t.string "verify_digest"
+    t.datetime "verify_email_sent_at"
   end
 
 end

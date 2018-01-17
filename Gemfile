@@ -18,6 +18,7 @@ gem 'nested_form_fields',          '0.8.2'
 gem "paperclip",                   "~> 5.0.0"
 gem 'puma',                        '~> 3.7'
 gem 'sass-rails',                  '~> 5.0'
+gem 'stripe',                      '3.9.1'
 gem 'sqlite3',                     '~> 1.3.13'
 gem 'turbolinks',                  '~> 5.0.1'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

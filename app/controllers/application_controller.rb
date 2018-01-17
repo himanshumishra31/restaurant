@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
   def remember_user(user)
     user.remember
     cookies.permanent.encrypted[:user_id] = user.id
-    cookies.permanent[:remember_token] = user.remember_token
+    cookies.permanent[:remember_token] = user.remember_digest
   end
 
   def forget_user(user)
@@ -43,5 +43,10 @@ class ApplicationController < ActionController::Base
   def redirect_with_flash(type, message_name, path = nil)
     flash[type] = t(message_name, scope: [:controller, params[:controller], params[:action], :flash, type])
     redirect_to path if path
+  end
+
+  def set_branch
+    session[:current_location] = Branch.find_by(default_res: true).name unless session[:current_location]
+    @branch = Branch.find_by(name: session[:current_location])
   end
 end

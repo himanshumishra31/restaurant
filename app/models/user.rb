@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  attr_accessor :remember_token, :activation_token, :reset_token
-
   has_secure_password
 
   #validations
@@ -15,6 +13,7 @@ class User < ApplicationRecord
 
   # assosciations
   has_many :comments, dependent: :destroy
+  has_many :orders, dependent: :destroy
 
   def activate_email
     self.update_columns(email_confirmed: true, confirm_token: nil)
@@ -25,8 +24,7 @@ class User < ApplicationRecord
   end
 
   def create_reset_digest
-    self.reset_token = User.new_token
-    update_attributes(reset_digest: User.digest(reset_token), reset_password_sent_at: Time.zone.now)
+    update_columns(reset_digest: User.new_token, reset_password_sent_at: Time.current)
   end
 
   def send_password_reset_email
@@ -38,12 +36,11 @@ class User < ApplicationRecord
   end
 
   def confirmation_token
-    self.confirm_token = SecureRandom.urlsafe_base64.to_s if self.confirm_token.blank?
+    self.confirm_token = User.new_token if confirm_token.blank?
   end
 
   def remember
-    self.remember_token = User.new_token
-    update_attribute(:remember_digest, User.digest(remember_token))
+    update_attribute(:remember_digest, User.new_token)
   end
 
   def authenticated?(attribute, token)
@@ -51,7 +48,6 @@ class User < ApplicationRecord
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
   end
-
 
   def forget_digest
     update_attribute(:remember_digest, nil)

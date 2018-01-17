@@ -1,0 +1,11 @@
+<strong>Location: <%= session[:current_location]%></strong>
+<div id="cart" class="cart">
+  <% if @cart %>
+    <% unless @cart.line_items.empty? %>
+      <%= render @cart %>
+    <% end %>
+  <% end %>
+</div>
+<div class="container", data-name="meal-container">
+  <%= render "meals" %>
+</div>
