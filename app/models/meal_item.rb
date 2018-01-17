@@ -6,4 +6,5 @@ class MealItem < ApplicationRecord
 
   # validations
   validates :quantity, presence: true
+  validates :ingredient_id, uniqueness: { scope: :meal_id }, allow_blank: true
 end

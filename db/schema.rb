@@ -10,13 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180103063722) do
+ActiveRecord::Schema.define(version: 20180105142247) do
 
   create_table "branches", force: :cascade do |t|
     t.string "name"
     t.time "opening_time"
     t.time "closing_time"
     t.boolean "default_res", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.integer "line_items_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -42,12 +48,25 @@ ActiveRecord::Schema.define(version: 20180103063722) do
 
   create_table "inventories", force: :cascade do |t|
     t.integer "branch_id"
-    t.integer "ingredient_id"
     t.integer "quantity", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stock_type"
+    t.integer "stock_id"
+    t.integer "ingredient_id"
     t.index ["branch_id"], name: "index_inventories_on_branch_id"
     t.index ["ingredient_id"], name: "index_inventories_on_ingredient_id"
+    t.index ["stock_type", "stock_id"], name: "index_inventories_on_stock_type_and_stock_id"
+  end
+
+  create_table "line_items", force: :cascade do |t|
+    t.integer "meal_id"
+    t.integer "cart_id"
+    t.integer "quantity", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_line_items_on_cart_id"
+    t.index ["meal_id"], name: "index_line_items_on_meal_id"
   end
 
   create_table "meal_items", force: :cascade do |t|

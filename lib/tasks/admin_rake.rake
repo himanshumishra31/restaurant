@@ -7,7 +7,6 @@ begin
       email = STDIN.gets.chomp
       puts "Enter a password:"
       password = STDIN.gets.chomp
-      debugger
       @admin = User.find_or_create_by(email: email) do |admin|
         admin.name = name
         admin.password = password

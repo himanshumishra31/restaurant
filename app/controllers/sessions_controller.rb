@@ -3,13 +3,14 @@ class SessionsController < ApplicationController
   before_action :email_verified?, only: [:reset_password_link]
   before_action :reset_link_expired?, only: [:update_user_password]
   before_action :password_empty?, only: [:update_user_password]
+  before_action :already_logged_in?, only: [:new]
 
   def create
     if @user.authenticate(params[:password])
       if @user.email_confirmed
         create_user(@user)
       else
-        redirect_with_flash("danger", "activate_your_account", new_user_url)
+        redirect_with_flash("danger", "activate_your_account", store_index_url)
       end
     else
       redirect_with_flash("danger", "invalid_password", login_url)
@@ -67,6 +68,10 @@ class SessionsController < ApplicationController
     def create_user(user)
       session[:user_id] = user.id
       params[:remember_me] == 'on' ? remember_user(user) : forget_user(user)
-      redirect_to new_user_path
+      redirect_to store_index_path
+    end
+
+    def already_logged_in?
+      redirect_with_flash("danger", "already_logged_in", edit_user_path(current_user.id)) if current_user
     end
 end

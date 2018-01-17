@@ -1,0 +1,12 @@
+$('#cart tr#<%= @line_item.id %> .price_line_item').html("<strong><%= @line_item.quantity %></strong>");
+$('tr#<%= @line_item.id %> .item_price').html("<strong><%= number_to_currency(@line_item.total_price) %><strong>")
+$('.total_cell').html("<h3><strong><%= number_to_currency(@line_item.cart.total_price) %></strong></h3>");
+<% if @line_item.quantity < 2 %>
+  $('tr#<%= @line_item.id %> .reduce_button').hide();
+<% else %>
+  $('tr#<%= @line_item.id %> .reduce_button').show();
+<% end %>
+$('div[data-name="item_div"]').hide();
+<% @available_meals.each do |id| %>
+  $("#<%=id%>").show();
+<% end %>

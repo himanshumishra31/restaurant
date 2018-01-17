@@ -8,7 +8,7 @@ class Ingredient < ApplicationRecord
   # assosciations
   has_many :meal_items, dependent: :destroy
   has_many :meals, through: :meal_items
-  has_many :inventories, dependent: :destroy
+  has_many :inventories, as: :stock, dependent: :destroy
 
   private
     def validate_price

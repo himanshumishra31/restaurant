@@ -1,6 +1,7 @@
 class Admin::BranchesController < Admin::BaseController
   before_action :set_branch, only: [:destroy, :edit, :update]
   after_action :set_inventories, only: [:create]
+  after_action :set_meals, only: [:create]
 
   def new
     @branch = Branch.new
@@ -46,8 +47,10 @@ class Admin::BranchesController < Admin::BaseController
     end
 
     def set_inventories
-      Ingredient.all.each do |ingredient|
-        @branch.inventories.build(ingredient_id: ingredient.id).save
-      end
+      Ingredient.all.map { |ingredient| @branch.inventories.build(ingredient_id: ingredient.id, branch_id: @branch.id).save }
+    end
+
+    def set_meals
+      Meal.all.map { |meal| meal.inventories.build(stock_id: meal.id, branch_id: @branch.id).save if meal.active }
     end
 end

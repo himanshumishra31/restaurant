@@ -5,7 +5,7 @@ class Branch < ApplicationRecord
   validate :validate_timings, if: (:opening_time? && :closing_time?)
 
   # assosciations
-  has_many :inventories, dependent: :destroy
+  has_many :inventories, as: :stock, dependent: :destroy
   has_many :ingredients, through: :inventories
 
   def validate_timings

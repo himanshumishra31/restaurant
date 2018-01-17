@@ -1,7 +1,15 @@
 <% inventories.each do |inventory| %>
   <tr>
-    <td> <%= inventory.ingredient.name %> </td>
+    <% if inventory.ingredient_id %>
+      <td> <%= Ingredient.find(inventory.ingredient_id).name %> (Ingredient) </td>
+    <% else %>
+      <td> <%= Meal.find(inventory.stock_id).name %> (Meal)</td>
+    <% end %>
     <td> <%= inventory.quantity %> </td>
-    <td><%= link_to 'Edit', edit_admin_inventory_path(inventory), class: 'btn btn-primary btn-xs' %></td>
+    <% if inventory.ingredient_id %>
+      <td><%= link_to 'Edit', edit_admin_inventory_path(inventory), class: 'btn btn-primary btn-xs' %></td>
+    <% else %>
+      <td><%= link_to 'Edit', edit_admin_inventory_path(inventory), class: 'btn btn-primary btn-xs' %></td>
+    <% end %>
   </tr>
 <% end %>

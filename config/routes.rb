@@ -20,6 +20,10 @@ Rails.application.routes.draw do
       get :confirm_email
     end
   end
+  root 'store#index', as: 'store_index', via: :all
+  get '/', to: 'store#category'
+  post '/line_items/:id', to: 'line_items#reduce_quantity'
+  resources :carts
+  resources :line_items
   resources :users
-  root 'sessions#new', as: 'login_index', via: :all
 end

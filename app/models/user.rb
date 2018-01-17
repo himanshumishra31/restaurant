@@ -26,7 +26,7 @@ class User < ApplicationRecord
 
   def create_reset_digest
     self.reset_token = User.new_token
-    update_attributes(reset_digest: User.digest(reset_token), reset_password_sent_at: Time.zone.now)
+    self.update_columns(reset_digest: User.digest(reset_token), reset_password_sent_at: Time.zone.now)
   end
 
   def send_password_reset_email
@@ -43,7 +43,7 @@ class User < ApplicationRecord
 
   def remember
     self.remember_token = User.new_token
-    update_attribute(:remember_digest, User.digest(remember_token))
+    self.update_attribute(:remember_digest, User.digest(remember_token))
   end
 
   def authenticated?(attribute, token)

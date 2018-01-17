@@ -8,6 +8,11 @@ en:
             invalid_password: 'Invalid Password'
             email_not_found: 'Email address Not found'
 
+      new:
+        flash:
+          danger:
+            already_logged_in: 'Already logged in. Please Log out to login from different account'
+
       reset_password_link:
         flash:
           info:
@@ -134,6 +139,10 @@ en:
         flash:
           success:
             successfully_updated: "Changes have been successfully saved"
+          danger:
+            stock_unavailable: "Insufficient Stock. Please add ingredients to Inventory"
+            invalid_quantity: 'Quantity cannot be negative'
+
 
     admin/meals:
       create:
