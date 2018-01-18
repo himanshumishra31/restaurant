@@ -9,6 +9,9 @@ class Branch < ApplicationRecord
   has_many :ingredients, through: :inventories
   has_many :orders, dependent: :destroy
 
+  # callbacks
+  after_save :set_inventories, only: [:create]
+
   def validate_timings
     errors.add(:opening_time, "should be before closing time") if closing_time < opening_time
   end
@@ -25,5 +28,9 @@ class Branch < ApplicationRecord
       return false if branch_ingredient_quantity < meal_item.quantity
     end
     true
+  end
+
+  def set_inventories
+    Ingredient.all.map { |ingredient| inventories.build(ingredient_id: ingredient.id).save }
   end
 end

@@ -1,6 +1,5 @@
 class Admin::BranchesController < Admin::BaseController
   before_action :set_branch, only: [:destroy, :edit, :update]
-  after_action :set_inventories, only: [:create]
 
   def new
     @branch = Branch.new
@@ -43,9 +42,5 @@ class Admin::BranchesController < Admin::BaseController
     def set_branch
       @branch = Branch.find_by(id: params[:id])
       redirect_with_flash("danger", "branch_not_found", admin_branches_url) unless @branch
-    end
-
-    def set_inventories
-      Ingredient.all.map { |ingredient| @branch.inventories.build(ingredient_id: ingredient.id, branch_id: @branch.id).save }
     end
 end
