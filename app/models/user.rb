@@ -3,6 +3,8 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  enum role: [:customer, :admin]
+
   #validations
   validates :name, :email, presence: true
   validates :email, uniqueness: true, format: { with: Email_Validation_Regex }, allow_blank: true

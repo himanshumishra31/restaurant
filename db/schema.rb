@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180111093452) do
+ActiveRecord::Schema.define(version: 20180118113050) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "branches", force: :cascade do |t|
     t.string "name"
@@ -28,7 +31,7 @@ ActiveRecord::Schema.define(version: 20180111093452) do
   end
 
   create_table "charges", force: :cascade do |t|
-    t.integer "order_id"
+    t.bigint "order_id"
     t.integer "customer_id"
     t.integer "amount"
     t.integer "last4"
@@ -40,8 +43,8 @@ ActiveRecord::Schema.define(version: 20180111093452) do
 
   create_table "comments", force: :cascade do |t|
     t.string "body"
-    t.integer "user_id"
-    t.integer "inventory_id"
+    t.bigint "user_id"
+    t.bigint "inventory_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["inventory_id"], name: "index_comments_on_inventory_id"
@@ -58,8 +61,8 @@ ActiveRecord::Schema.define(version: 20180111093452) do
   end
 
   create_table "inventories", force: :cascade do |t|
-    t.integer "branch_id"
-    t.integer "ingredient_id"
+    t.bigint "branch_id"
+    t.bigint "ingredient_id"
     t.integer "quantity", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -68,8 +71,8 @@ ActiveRecord::Schema.define(version: 20180111093452) do
   end
 
   create_table "line_items", force: :cascade do |t|
-    t.integer "meal_id"
-    t.integer "cart_id"
+    t.bigint "meal_id"
+    t.bigint "cart_id"
     t.integer "quantity", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -79,8 +82,8 @@ ActiveRecord::Schema.define(version: 20180111093452) do
   end
 
   create_table "meal_items", force: :cascade do |t|
-    t.integer "meal_id"
-    t.integer "ingredient_id"
+    t.bigint "meal_id"
+    t.bigint "ingredient_id"
     t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -103,9 +106,9 @@ ActiveRecord::Schema.define(version: 20180111093452) do
   create_table "orders", force: :cascade do |t|
     t.time "pick_up"
     t.string "phone_number"
-    t.integer "cart_id"
-    t.integer "user_id"
-    t.integer "branch_id"
+    t.bigint "cart_id"
+    t.bigint "user_id"
+    t.bigint "branch_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["branch_id"], name: "index_orders_on_branch_id"
@@ -124,7 +127,10 @@ ActiveRecord::Schema.define(version: 20180111093452) do
     t.string "reset_digest"
     t.datetime "reset_password_sent_at"
     t.string "remember_digest"
-    t.string "role", default: "customer"
+    t.integer "role", default: 0
   end
 
+  add_foreign_key "line_items", "carts"
+  add_foreign_key "line_items", "meals"
+  add_foreign_key "orders", "users"
 end
