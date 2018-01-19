@@ -10,12 +10,17 @@ Rails.application.routes.draw do
     delete 'logout' => :destroy
   end
   namespace :admin do
-    resources :branches, :ingredients, :meals, :inventories
+    resources :branches, :ingredients, :inventories, :reports
     get :update_orders, to: 'orders#update_orders'
     resources :orders do
       member do
         patch :toggle_ready_status
         patch :toggle_pick_up_status
+      end
+    end
+    resources :meals do
+      member do
+        get :show_comments
       end
     end
   end
@@ -30,7 +35,6 @@ Rails.application.routes.draw do
       get :feedback
     end
   end
-  resources :users
   root 'store#index', as: 'store_index', via: :all
   get '/category', to: 'store#category', as: 'store_category'
   post '/line_items/:id', to: 'line_items#reduce_quantity'
