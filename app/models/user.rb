@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
 
+  enum role: [:customer, :admin]
+
   #validations
   validates :name, :email, presence: true
   validates :email, uniqueness: true, format: { with: Email_Validation_Regex }, allow_blank: true
@@ -11,7 +13,7 @@ class User < ApplicationRecord
   before_create :confirmation_token
   after_save :send_email_verification_mail
 
-  # assosciations
+  # associations
   has_many :comments, dependent: :destroy
   has_many :orders, dependent: :destroy
 

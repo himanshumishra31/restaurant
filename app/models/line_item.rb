@@ -1,6 +1,6 @@
 class LineItem < ApplicationRecord
 
-  #assosciations
+  #associations
   belongs_to :meal
   belongs_to :cart, counter_cache: :line_items_count
 

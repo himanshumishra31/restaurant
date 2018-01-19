@@ -1,7 +1,7 @@
 class LineItemsController < ApplicationController
   include CurrentCart
   before_action :set_cart
-  before_action :set_line_item, only: [:reduce_quantity, :destroy, :update]
+  before_action :set_line_item, only: [:update_quantity, :destroy, :update]
   before_action :set_branch, only: [:create, :update]
   before_action :extra_ingredient, only: [:update]
 
@@ -15,7 +15,7 @@ class LineItemsController < ApplicationController
     @status = @line_item.destroy
   end
 
-  def reduce_quantity
+  def update_quantity
     @status = @line_item.update_attributes(quantity: @line_item.quantity - 1)
   end
 

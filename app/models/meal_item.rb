@@ -1,6 +1,6 @@
 class MealItem < ApplicationRecord
 
-  # assosciations
+  # associations
   belongs_to :ingredient
   belongs_to :meal
 

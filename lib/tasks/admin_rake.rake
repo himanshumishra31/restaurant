@@ -1,5 +1,5 @@
 namespace :admin do
-  task :new :environment do
+  task new: :environment do
     puts "Hi Admin. Please Enter Your name"
     name = STDIN.gets.chomp
     puts "Enter an email address:"
@@ -9,7 +9,7 @@ namespace :admin do
     @admin = User.find_or_create_by(email: email) do |admin|
       admin.name = name
       admin.password = password
-      admin.role = 'admin'
+      admin.role = 1
       admin.email_confirmed = true
     end
     if @admin.save

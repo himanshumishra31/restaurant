@@ -1,0 +1,19 @@
+postgresql: &postgresql
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+  username: vinssd
+  password:
+
+development:
+  <<: *postgresql
+  database: restaurant_development
+
+test:
+  <<: *postgresql
+  database: restaurant_test
+
+production:
+  <<: *postgresql
+  database: restaurant_production
+

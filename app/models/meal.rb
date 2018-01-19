@@ -1,6 +1,6 @@
 class Meal < ApplicationRecord
 
-  # assosciations
+  # associations
   has_many :meal_items, dependent: :destroy
   has_many :ingredients, through: :meal_items
   has_many :ratings
@@ -8,6 +8,7 @@ class Meal < ApplicationRecord
 
   # validatons
   validates :name, presence: true
+  validates_uniqueness_of :name, case_sensitive: false
   validates_attachment :picture, content_type: { content_type: /\Aimage\/.*\z/ }
   validate :ingredient_quantity_valid?
   validate :atleast_one_ingredient?
