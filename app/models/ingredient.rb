@@ -6,14 +6,15 @@ class Ingredient < ApplicationRecord
   validate :validate_price, if: :price?
   validates :category, inclusion: [true, false]
 
+
   # associations
   has_many :meal_items, dependent: :destroy
   has_many :meals, through: :meal_items
   has_many :inventories, dependent: :destroy
 
   # callbacks
-  after_save :set_inventory, only: [:create]
-  after_save :update_meal_price, only: [:update]
+  after_create :set_inventory
+  after_update :update_meal_price
 
   private
     def validate_price

@@ -22,6 +22,14 @@ class Meal < ApplicationRecord
     meal_items.any? { |meal_item| Ingredient.find_by(id: meal_item.ingredient_id).category }
   end
 
+  def set_price
+    self.price = 0
+    meal_items.each do |meal_item|
+      self.price += meal_item.quantity * Ingredient.find_by(id: meal_item.ingredient_id).price
+    end
+    update_columns(price: ((ENV["PROFIT_PERCENT"].to_i + 100) * 0.01 * self.price))
+  end
+
   private
 
     def atleast_one_ingredient?
@@ -32,11 +40,4 @@ class Meal < ApplicationRecord
       errors.add(:meal_items, " quantity must be positive") if meal_items.any? { |meal| meal.quantity.to_i < 1 }
     end
 
-    def set_price
-      self.price = 0
-      meal_items.each do |meal_item|
-        self.price += meal_item.quantity * Ingredient.find_by(id: meal_item.ingredient_id).price
-      end
-      update_columns(price: ((ENV["PROFIT_PERCENT"].to_i + 100) * 0.01 * self.price))
-    end
 end
