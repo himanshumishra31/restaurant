@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag 'errors', media: 'all' %>
 <% if model && model.errors.any? %>
   <div class="error-explanation">
     <h5 class="errors-heading"><%= pluralize(model.errors.count, "error") %> prohibted this user from being saved </h5>

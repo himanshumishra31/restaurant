@@ -35,7 +35,6 @@ class UsersController < ApplicationController
 
   def feedback
     @user = User.find_by(verify_digest: params[:id])
-    debugger
   end
 
   private

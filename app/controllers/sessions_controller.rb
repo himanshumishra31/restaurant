@@ -22,7 +22,6 @@ class SessionsController < ApplicationController
     redirect_with_flash("danger", "invalid_password", login_url) unless @user.authenticate(params[:password])
   end
 
-
   def reset_password_link
     if @user
       @user.create_reset_digest

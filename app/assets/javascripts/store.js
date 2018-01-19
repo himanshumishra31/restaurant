@@ -4,7 +4,7 @@ function Store(data) {
 
 Store.prototype.fetchMeals = function() {
   var _this = this;
-  const POLLING_TIME = 120000;
+  const POLLING_TIME = 10000;
   setInterval(function(){
     _this.$mealContainerDiv.empty();
     $.ajax({
