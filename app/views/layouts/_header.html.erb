@@ -9,6 +9,7 @@
             <li><%= link_to "Ingredients", admin_ingredients_path %></li>
             <li><%= link_to "Meals", admin_meals_path %></li>
             <li><%= link_to "Orders", admin_orders_path %></li>
+            <li><%= link_to "Reports", admin_reports_path %></li>
           <% else %>
             <li><%= link_to "My orders", myorders_path %></li>
           <% end %>
@@ -23,6 +24,7 @@
           </li>
         <% else %>
           <li><%= link_to "Log in", login_path %></li>
+          <li><%= link_to 'Home',  store_index_path %></li>
         <% end %>
         <% if @current_user && (@current_user.role.eql? 'admin') %>
           <li>

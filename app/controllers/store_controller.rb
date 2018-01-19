@@ -5,6 +5,7 @@ class StoreController < ApplicationController
   before_action :set_cart, only: [:index, :category]
   before_action :load_available_meals, only: [:index, :category]
   before_action :categorize_available_meals, only: [:index, :category]
+  before_action :current_user
 
   def index
     session[:category] = (params["category"] || "both" )

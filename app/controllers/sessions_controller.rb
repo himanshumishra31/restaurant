@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
-  before_action :get_user, only: [:reset_password_link, :update_user_password, :reset_password, :create]
+  before_action :get_user_by_email, only: [:reset_password_link, :create, :update_user_password]
+  before_action :get_user_by_token, only: [:reset_password]
   before_action :email_verified?, only: [:reset_password_link]
   before_action :reset_link_expired?, only: [:update_user_password]
   before_action :password_empty?, only: [:update_user_password]
@@ -53,13 +54,18 @@ class SessionsController < ApplicationController
       end
     end
 
-    def get_user
+    def get_user_by_token
+      @user = User.find_by(reset_digest: params[:token])
+      redirect_with_flash("danger", "email_not_found", login_url) unless @user
+    end
+
+    def get_user_by_email
       @user = User.find_by(email: params[:email])
       redirect_with_flash("danger", "email_not_found", login_url) unless @user
     end
 
     def email_verified?
-      redirect_with_flash("danger", "email_not_verified", login_url) unless (@user.email_confirmed)
+      redirect_with_flash("danger", "email_not_verified", login_url) unless @user.email_confirmed
     end
 
     def reset_link_expired?

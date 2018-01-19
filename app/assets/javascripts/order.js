@@ -4,7 +4,7 @@ function Order(data) {
 
 Order.prototype.fetchOrders = function() {
   var _this = this;
-  const POLLING_TIME = 10000;
+  const POLLING_TIME = 60000;
   setInterval(function(){
     _this.$ordertablebody.empty();
     $.ajax({

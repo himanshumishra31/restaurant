@@ -20,9 +20,17 @@
       <%= image_tag(available_meal.picture, size: "150x150") %>
       <p>
         <div class="foo green"></div>
-        <%= available_meal.name %></p>
+        <%= available_meal.name %>
+      </p>
       <p><strong><%= number_to_currency(available_meal.price) %></strong></p>
       <p><%= button_to 'Add To Cart', line_items_path(meal_id: available_meal), remote: true, class: 'btn btn-primary'  %></p>
+      <p><strong>Rating:
+        <% if available_meal.ratings.blank? %>
+          Not Yet Rated
+        <% else %>
+          <%= available_meal.ratings.average(:value) %>
+        <% end %>
+      </strong></p>
     </div>
   <% end %>
 <% end %>
@@ -32,9 +40,17 @@
       <%= image_tag(available_meal.picture, size: "150x150") %>
       <p>
         <div class="foo red"></div>
-        <%= available_meal.name %></p>
+        <%= available_meal.name %>
+      </p>
       <strong><%= number_to_currency(available_meal.price) %></strong>
       <p><%= button_to 'Add To Cart', line_items_path(meal_id: available_meal), remote: true, class: 'btn btn-primary' %></p>
+      <p><strong>Rating:
+        <% if available_meal.ratings.blank? %>
+          Not Yet Rated
+        <% else %>
+          <%= available_meal.ratings.average(:value) %>
+        <% end %>
+      </strong></p>
     </div>
   <% end %>
 <% end %>
