@@ -4,7 +4,8 @@
     <th>Items (Quantity)</th>
     <th>Pick Up Time</th>
     <th>Total Price</th>
-    <th></th>
+    <th>Branch </th>
+    <th>Cancel Order</th>
   </thead>
 <% @orders.each do |order| %>
     <tbody>
@@ -18,7 +19,8 @@
           </td>
           <td><%= order.pick_up.strftime("%I:%M %p") %></td>
           <td><%= number_to_currency(order.charge.amount) %></td>
-          <td><%= link_to 'Cancel', order_url(order), method: :delete, data: { confirm: 'Are you Sure?' } %></td>
+          <td><%= order.branch.name %></td>
+          <td><%= link_to 'Cancel', order_url(order), method: :delete, data: { confirm: 'Are you Sure?' },class: 'btn btn-primary btn-xs' %></td>
         </tr>
       <% end %>
     </tbody>

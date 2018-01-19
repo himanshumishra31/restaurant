@@ -11,10 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20180119070724) do
-
-  # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
   create_table "branches", force: :cascade do |t|
     t.string "name"
     t.time "opening_time"
@@ -111,9 +108,24 @@ ActiveRecord::Schema.define(version: 20180119070724) do
     t.bigint "branch_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "ready", default: false
+    t.boolean "picked", default: false
+    t.string "feedback_digest"
+    t.datetime "feedback_email_sent_at"
     t.index ["branch_id"], name: "index_orders_on_branch_id"
     t.index ["cart_id"], name: "index_orders_on_cart_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.decimal "value", precision: 2, scale: 1
+    t.string "review"
+    t.integer "user_id"
+    t.integer "meal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meal_id"], name: "index_ratings_on_meal_id"
+    t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

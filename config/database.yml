@@ -16,4 +16,3 @@ test:
 production:
   <<: *postgresql
   database: restaurant_production
-

@@ -3,6 +3,7 @@ class Meal < ApplicationRecord
   # associations
   has_many :meal_items, dependent: :destroy
   has_many :ingredients, through: :meal_items
+  has_many :ratings
   has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/public/images/10.jpg"
 
   # validatons

@@ -1,4 +1,4 @@
-<h2>Your Order has been successfully saved. Please Complete payment process to place it.</h2>
+<h2>Thank You for ordering from our restaurant.</h2>
 <h3>Order Amount <strong><%= number_to_currency(@order.cart.total_price) %></strong></h3>
 <strong>Order Details</strong>
 <table border="1">
@@ -29,3 +29,4 @@
     </tr>
   </tbody>
 </table>
+<h4> Please Provide your valuable <%= link_to 'Feedback', feedback_order_url(@order.feedback_digest) %></h4>
