@@ -18,14 +18,14 @@
           <td>None</td>
         <% end %>
         <td><%= line_item.quantity %></td>
-        <td><%= line_item.total_price %></td>
+        <td><%= number_to_currency(line_item.total_price) %></td>
       </tr>
     <% end %>
     <tr>
       <td><strong>Total Price</strong></td>
       <td></td>
       <td></td>
-      <td><%= @order.cart.total_price %></td>
+      <td><%= number_to_currency(@order.cart.total_price) %></td>
     </tr>
   </tbody>
 </table>

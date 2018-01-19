@@ -1,6 +1,6 @@
 class Comment < ApplicationRecord
 
-  # assosciations
+  # associations
   belongs_to :user
   belongs_to :inventory
 

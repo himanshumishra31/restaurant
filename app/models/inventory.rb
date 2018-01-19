@@ -1,5 +1,5 @@
 class Inventory < ApplicationRecord
-  # assosciations
+  # associations
   belongs_to :ingredient
   belongs_to :branch
   has_many :comments, dependent: :destroy

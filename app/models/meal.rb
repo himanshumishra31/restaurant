@@ -1,12 +1,13 @@
 class Meal < ApplicationRecord
 
-  # assosciations
+  # associations
   has_many :meal_items, dependent: :destroy
   has_many :ingredients, through: :meal_items
   has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/public/images/10.jpg"
 
   # validatons
   validates :name, presence: true
+  validates_uniqueness_of :name, case_sensitive: false
   validates_attachment :picture, content_type: { content_type: /\Aimage\/.*\z/ }
   validate :ingredient_quantity_valid?
   validate :atleast_one_ingredient?

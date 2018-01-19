@@ -1,5 +1,5 @@
 class Cart < ApplicationRecord
-  # assosciations
+  # associations
   has_many :line_items, dependent: :destroy
   has_many :meals, through: :line_items
 

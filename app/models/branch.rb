@@ -1,10 +1,10 @@
 class Branch < ApplicationRecord
   # validations
   validates :name, :opening_time, :closing_time, presence: true
-  validates :name, uniqueness: true
+  validates_uniqueness_of :name, case_sensitive: false
   validate :validate_timings, if: (:opening_time? && :closing_time?)
 
-  # assosciations
+  # associations
   has_many :inventories, dependent: :destroy
   has_many :ingredients, through: :inventories
   has_many :orders, dependent: :destroy
