@@ -10,11 +10,7 @@ class Branch < ApplicationRecord
   has_many :orders, dependent: :destroy
 
   # callbacks
-  after_save :set_inventories, only: [:create]
-
-  def validate_timings
-    errors.add(:opening_time, "should be before closing time") if closing_time < opening_time
-  end
+  after_create :set_inventories
 
   def available_meals
     available_meals = []
@@ -30,7 +26,13 @@ class Branch < ApplicationRecord
     true
   end
 
-  def set_inventories
-    Ingredient.all.map { |ingredient| inventories.build(ingredient_id: ingredient.id).save }
-  end
+  private
+
+    def validate_timings
+      errors.add(:opening_time, "should be before closing time") if closing_time < opening_time
+    end
+
+    def set_inventories
+      Ingredient.all.map { |ingredient| inventories.build(ingredient_id: ingredient.id).save }
+    end
 end

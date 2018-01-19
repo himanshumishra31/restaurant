@@ -1,2 +1,3 @@
-Email_Validation_Regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-Phone_Number_Validation_Regex = /^([9,8,7])(\d{9})$/
+EMAIL_VALIDATION_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+PHONE_NUMBER_VALIDATION_REGEX = /^([9,8,7])(\d{9})$/
+PAPERCLIP_CONTENT_TYPE_REGEX = /\Aimage\/.*\z/

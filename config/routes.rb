@@ -15,23 +15,45 @@ Rails.application.routes.draw do
     resources :ingredients, except: [:show]
     resources :inventories, except: [:show]
     resources :meals, except: [:show]
+    resources :reports, only: [:index]
+    get :update_orders, to: 'orders#update_orders'
+    resources :orders do
+      member do
+        patch :toggle_ready_status
+        patch :toggle_pick_up_status
+      end
+    end
+    resources :meals do
+      member do
+        get :show_comments
+      end
+    end
   end
   resources :users, except: [:destroy, :index] do
     member do
       get :confirm_email
     end
   end
+
+  resources :orders do
+    member do
+      get :feedback
+    end
+  end
   root 'store#index', as: 'store_index', via: :all
   get :category, to: 'store#category', as: 'store_category'
   get :myorders, to: 'users#myorders'
-  resources :carts, only: [:update, :destroy]
-
   resources :line_items do
     member do
       patch :update_quantity
     end
   end
-
+  resources :carts, only: [:update, :destroy]
   resources :orders, only: [:create, :new, :destroy ]
   resources :charges, only: [:create, :new]
+  resources :ratings, only: [] do
+    collection do
+      put :rate_meals
+    end
+  end
 end

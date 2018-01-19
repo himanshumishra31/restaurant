@@ -10,8 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180119070724) do
+ActiveRecord::Schema.define(version: 20180119111612) do
+
+  # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
   create_table "branches", force: :cascade do |t|
     t.string "name"
     t.time "opening_time"
@@ -30,7 +33,7 @@ ActiveRecord::Schema.define(version: 20180119070724) do
   create_table "charges", force: :cascade do |t|
     t.bigint "order_id"
     t.integer "customer_id"
-    t.integer "amount"
+    t.float "amount"
     t.integer "last4"
     t.string "status"
     t.datetime "created_at", null: false
@@ -120,8 +123,8 @@ ActiveRecord::Schema.define(version: 20180119070724) do
   create_table "ratings", force: :cascade do |t|
     t.decimal "value", precision: 2, scale: 1
     t.string "review"
-    t.integer "user_id"
-    t.integer "meal_id"
+    t.bigint "user_id"
+    t.bigint "meal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["meal_id"], name: "index_ratings_on_meal_id"
@@ -140,6 +143,8 @@ ActiveRecord::Schema.define(version: 20180119070724) do
     t.datetime "reset_password_sent_at"
     t.string "remember_digest"
     t.integer "role", default: 0
+    t.string "verify_digest"
+    t.datetime "verify_email_sent_at"
   end
 
   add_foreign_key "line_items", "carts"

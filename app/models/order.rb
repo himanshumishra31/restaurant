@@ -1,4 +1,5 @@
 class Order < ApplicationRecord
+  extend ConfirmationToken
   # associations
   belongs_to :cart
   belongs_to :user
@@ -7,7 +8,7 @@ class Order < ApplicationRecord
 
   # validations
   validates :phone_number, presence: true
-  validates :phone_number, format: { with: /^([9,8,7])(\d{9})$/,  multiline: true }, allow_blank: true
+  validates :phone_number, format: { with: PHONE_NUMBER_VALIDATION_REGEX,  multiline: true }, allow_blank: true
   validates :pick_up, presence: true
   validate :valid_pick_up_time?, if: :pick_up?
 
@@ -15,16 +16,6 @@ class Order < ApplicationRecord
   after_save :send_confirmation_mail
 
   scope :by_date, -> (from = Time.current.midnight, to = Time.current.end_of_day) { where created_at: from..to }
-
-  def valid_pick_up_time?
-    unless pick_up.between?(branch.opening_time, branch.closing_time)
-      errors.add(:pick_up, " should be between branch timings" )
-    end
-  end
-
-  def send_confirmation_mail
-    OrderMailer.confirmation_mail(self).deliver
-  end
 
   def delivered
     update_columns(picked: !picked)
@@ -44,9 +35,6 @@ class Order < ApplicationRecord
     meal_sold_with_quantity.key(meal_sold_with_quantity.values.max)
   end
 
-  def feedback_token
-    update_columns(feedback_digest: Order.new_token, feedback_email_sent_at: Time.current)
-  end
 
   def feedback_submitted
     update_attributes(feedback_digest: nil, feedback_email_sent_at: nil)
@@ -58,10 +46,6 @@ class Order < ApplicationRecord
 
   def cancellable?
     Time.parse(pick_up.strftime("%I:%M%p")) - Time.now > 1800
-  end
-
-  def self.new_token
-    SecureRandom.urlsafe_base64
   end
 
   def sufficient_stock
@@ -87,4 +71,20 @@ class Order < ApplicationRecord
       end
     end
   end
+
+  private
+
+    def valid_pick_up_time?
+      unless pick_up.between?(branch.opening_time, branch.closing_time)
+        errors.add(:pick_up, " should be between branch timings" )
+      end
+    end
+
+    def send_confirmation_mail
+      OrderMailer.confirmation_mail(self).deliver
+    end
+
+    def feedback_token
+      update_columns(feedback_digest: Order.set_confirmation_token, feedback_email_sent_at: Time.current)
+    end
 end
