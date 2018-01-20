@@ -11,6 +11,8 @@ class Order < ApplicationRecord
   validates :phone_number, format: { with: PHONE_NUMBER_VALIDATION_REGEX,  multiline: true }, allow_blank: true
   validates :pick_up, presence: true
   validate :valid_pick_up_time?, if: :pick_up?
+  validate :sufficient_preparation_time?, if: :pick_up?
+  validate :future_pick_up?, if: :pick_up?
 
   #callbacks
   after_save :send_confirmation_mail
@@ -74,9 +76,17 @@ class Order < ApplicationRecord
 
   private
 
+    def sufficient_preparation_time?
+      errors.add(:pick_up, "require half an hour to prepare order") if Time.now - Time.parse(pick_up.strftime("%I:%M%p")) < 1800
+    end
+
+    def future_pick_up?
+      errors.add(:pick_up, "already past this time. Enter future time") if Time.now > Time.parse(pick_up.strftime("%I:%M%p"))
+    end
+
     def valid_pick_up_time?
       unless pick_up.between?(branch.opening_time, branch.closing_time)
-        errors.add(:pick_up, " should be between branch timings" )
+        errors.add(:pick_up, "should be between branch timings" )
       end
     end
 
