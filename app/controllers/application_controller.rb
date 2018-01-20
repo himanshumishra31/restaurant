@@ -11,33 +11,15 @@ class ApplicationController < ActionController::Base
   end
 
   def load_current_user
-    if (user_id = session[:user_id])
-      @current_user = User.find_by(id: user_id)
-    elsif (user_id = cookies.encrypted[:user_id])
-      user = User.find_by(id: user_id)
-      if user && user.authenticated?(:remember, cookies[:remember_token])
+    if cookies.encrypted[:user_id]
+      user = User.find_by(id: cookies.encrypted[:user_id])
+      if user
         session[:user_id] = user.id
         @current_user = user
       end
+    elsif session[:user_id]
+      @current_user = User.find_by(id: session[:user_id])
     end
-  end
-
-  def logout_user
-    forget_user(@current_user)
-    session.delete(:user_id)
-    @current_user = nil
-  end
-
-  def remember_user(user)
-    user.remember
-    cookies.permanent.encrypted[:user_id] = user.id
-    cookies.permanent[:remember_token] = user.remember_token
-  end
-
-  def forget_user(user)
-    user.forget_digest
-    cookies.delete(:user_id)
-    cookies.delete(:remember_token)
   end
 
   def redirect_with_flash(type, message_name, path = nil)
@@ -46,7 +28,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_branch
-    session[:current_location] = Branch.find_by(default: true).name unless session[:current_location]
-    @branch = Branch.find_by(name: session[:current_location])
+    cookies[:current_location] = Branch.find_by(default: true).name unless cookies[:current_location]
+    @branch = Branch.find_by(name: cookies[:current_location])
   end
 end

@@ -4,8 +4,12 @@ class Admin::OrdersController < Admin::BaseController
   before_action :set_order, only: [:toggle_pick_up_status, :toggle_ready_status]
 
   def toggle_pick_up_status
-    @order.delivered
-    redirect_with_flash("success", "status_changed", admin_orders_path)
+   unless @order.ready
+      redirect_with_flash("danger", "order_not_prepared", admin_orders_path)
+    else
+      @order.delivered
+      redirect_with_flash("success", "status_changed", admin_orders_path)
+    end
   end
 
   def toggle_ready_status

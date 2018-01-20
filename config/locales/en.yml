@@ -5,6 +5,8 @@ en:
         flash:
           success:
             status_changed: 'Order status has been successfully updated'
+          danger:
+            order_not_prepared: 'Order is not prepared yet'
       toggle_ready_status:
         flash:
           success:

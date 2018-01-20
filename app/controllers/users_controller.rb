@@ -33,10 +33,6 @@ class UsersController < ApplicationController
     @orders = current_user.orders
   end
 
-  def feedback
-    @user = User.find_by(verify_digest: params[:id])
-  end
-
   private
 
     def link_expired?
@@ -56,4 +52,5 @@ class UsersController < ApplicationController
       @user = User.find_by(confirm_token: params[:id])
       redirect_with_flash("danger", 'user_not_exist', new_user_url) unless @user
     end
+
 end

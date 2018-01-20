@@ -6,6 +6,6 @@ class OrderMailer < ApplicationMailer
 
   def feedback_mail(order)
     @order = order
-    mail(to: @order.user.email, subject: 'Registration Confirmation')
+    mail(to: @order.user.email, subject: 'feedback Mail')
   end
 end

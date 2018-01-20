@@ -30,7 +30,7 @@ class Admin::InventoriesController < Admin::BaseController
     end
 
     def set_session_branch
-      session[:current_location] = params[:branch] if params[:branch]
+      cookies[:current_location] = session[:current_location] = params[:branch] if params[:branch]
     end
 
     def permitted_params

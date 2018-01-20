@@ -80,4 +80,18 @@ class SessionsController < ApplicationController
       params[:remember_me] == 'on' ? remember_user(user) : forget_user(user)
       redirect_to store_index_path
     end
+
+    def logout_user
+      session.delete(:user_id)
+      @current_user = nil
+    end
+
+    def remember_user(user)
+      cookies.permanent.encrypted[:user_id] = user.id
+    end
+
+    def forget_user(user)
+      cookies.delete(:user_id)
+    end
+
 end

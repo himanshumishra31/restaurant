@@ -34,25 +34,6 @@ class User < ApplicationRecord
     reset_password_sent_at < 2.hours.ago
   end
 
-  def remember
-    update_attribute(:remember_digest, User.set_confirmation_token )
-  end
-
-  def authenticated?(attribute, token)
-    digest = send("#{attribute}_digest")
-    return false if digest.nil?
-    BCrypt::Password.new(digest).is_password?(token)
-  end
-
-  def forget_digest
-    update_attribute(:remember_digest, nil)
-  end
-
-  def self.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
-    BCrypt::Password.create(string, cost: cost)
-  end
-
   def admin?
     role.eql? 'admin'
   end
