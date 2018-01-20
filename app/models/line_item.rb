@@ -8,11 +8,9 @@ class LineItem < ApplicationRecord
   validates :meal_id, uniqueness: { scope: :cart_id, message: "duplicate entry" }
 
   def total_price
-    if extra_ingredient.blank?
-      meal.price * quantity
-    else
-      meal.price * quantity + Ingredient.find_by(name: extra_ingredient).price * quantity
-    end
+    meal_price = meal.price * quantity
+    meal_price += Ingredient.find_by(name: extra_ingredient).price * quantity if extra_ingredient.present?
+    meal_price
   end
 
   def ingredient_left(ingredient, branch)
