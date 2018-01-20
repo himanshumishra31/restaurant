@@ -9,12 +9,13 @@
         <div class="panel-body">
           <%= form_for @order do |form| %>
             <fieldset>
-              <%= render 'shared/errors', model: @order %>
               <div class="form-group">
                 <%= form.number_field :phone_number, class: 'form-control', placeholder: "Phone Number"%>
+                <%= display_error(:phone_number, @order) %>
               </div>
               <div class="form-group"><strong>Pick Up Time</strong>
                 <%= form.time_field :pick_up, class: 'form-control' %>
+                <%= display_error(:phone_number, @order) %>
                 <%= form.hidden_field :user_id, value: @current_user.id %>
                 <%= form.hidden_field :branch_id, value: @branch.id %>
                 <%= form.hidden_field :cart_id, value: @cart.id %>

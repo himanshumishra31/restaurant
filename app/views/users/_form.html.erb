@@ -9,21 +9,25 @@
         <div class="panel-body">
           <%= form_for user do |form| %>
             <fieldset>
-            <%= render 'shared/errors', model: @user %>
               <div class="form-group">
                 <%= form.text_field :name, size: 40, class: 'form-control', placeholder: 'Name' %>
+                <%= display_error(:name, user) %>
               </div>
               <div class="form-group">
                 <%= form.password_field :password, size: 40, class: 'form-control', placeholder: 'Password' %>
+                <%= display_error(:password, user) %>
               </div>
               <div class="form-group">
                 <%= form.password_field :password_confirmation, size: 40, class: 'form-control', placeholder: ' Confirm Password' %>
+                <%= display_error(:password_confirmation, user) %>
               </div>
               <div class="form-group">
                 <% if params[:action].eql? 'edit' or params[:action].eql? 'update'%>
                   <%= form.email_field :email, size: 40, class: 'form-control', disabled: true %>
                 <% else %>
                   <%= form.email_field :email, size: 40, class: 'form-control', placeholder: "Email"%>
+                  <%= display_error(:email, user) %>
+
                 <% end %>
               </div>
               <%= form.submit 'Submit', class: 'btn btn-lg btn-success btn-block' %>
