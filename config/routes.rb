@@ -45,7 +45,7 @@ Rails.application.routes.draw do
     end
   end
 
-  root 'store#index', as: 'store_index', via: :all
+  root 'store#index', as: 'store_index'
   get :category, to: 'store#category', as: 'store_category'
 
   resources :line_items do
