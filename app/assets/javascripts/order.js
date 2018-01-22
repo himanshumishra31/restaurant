@@ -8,7 +8,7 @@ Order.prototype.fetchOrders = function() {
   setInterval(function(){
     _this.$ordertablebody.empty();
     $.ajax({
-      url: "/admin/update_orders",
+      url: "/admin/orders/update_orders",
       method: 'GET',
       datatype: 'JSON',
       success: function(response) {

@@ -1,5 +1,4 @@
 class ChargesController < ApplicationController
-
   before_action :set_order
 
   def new
@@ -18,8 +17,9 @@ class ChargesController < ApplicationController
     end
   end
 
-  def set_order
-    @order = Order.find_by(cart_id: session[:cart_id])
-  end
-
+  private
+    def set_order
+      @order = Order.find_by(cart_id: session[:cart_id])
+      redirect_with_flash("danger", "flash", store_index_path) unless @order
+    end
 end

@@ -17,18 +17,18 @@ class Admin::OrdersController < Admin::BaseController
     redirect_with_flash("success", "status_changed", admin_orders_path)
   end
 
-  # FIX_ME_PG:- Make methods private.
-  # FIX_ME_PG:- What if @order is nil? Check all over the code.
-  def set_order
-    @order = Order.find_by(id: params[:id])
-  end
-
   def update_orders
     output = render_to_string partial: "order"
     render json: { output: output }
   end
 
-  def set_orders
-    @orders = @branch.orders.includes(:charge).all
-  end
+  private
+    def set_order
+      @order = Order.find_by(id: params[:id])
+      redirect_with_flash("danger", "not_found", admin_orders_path) unless @order
+    end
+
+    def set_orders
+      @orders = @branch.orders.includes(:charge).all
+    end
 end

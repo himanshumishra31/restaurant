@@ -37,5 +37,6 @@ class LineItemsController < ApplicationController
 
     def set_line_item
       @line_item = LineItem.find_by(id: params[:id])
+      redirect_with_flash("danger", "not_found", store_index_url) unless @line_item
     end
 end

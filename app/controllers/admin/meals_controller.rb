@@ -46,6 +46,7 @@ class Admin::MealsController < Admin::BaseController
 
     def set_meal
       @meal = Meal.find_by(id: params[:id])
+      redirect_with_flash("danger", "not_found", admin_meals_path) unless @meal
     end
 
     def ingredient_exists?

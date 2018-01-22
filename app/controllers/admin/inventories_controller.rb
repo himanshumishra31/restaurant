@@ -1,4 +1,3 @@
-# FIX_ME_PG:- Can we not see the inventories crud on admin panel.
 class Admin::InventoriesController < Admin::BaseController
   before_action :set_session_branch, only: [:index, :edit, :update]
   before_action :set_branch, only: [:index, :edit, :update]
@@ -24,6 +23,7 @@ class Admin::InventoriesController < Admin::BaseController
 
     def set_inventory
       @inventory = Inventory.find_by(id: params[:id])
+      redirect_with_flash("danger", "not_found", admin_inventories_path) unless @inventory
     end
 
     def set_inventories

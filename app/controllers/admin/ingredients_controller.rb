@@ -8,7 +8,6 @@ class Admin::IngredientsController < Admin::BaseController
   def create
     @ingredient = Ingredient.new(permitted_params)
     if @ingredient.save
-      # FIX_ME_PG:- Be consistent when assigning keys for flash. Follow a pattern. Lets Discuss.
       redirect_with_flash("success", "ingredient_created", admin_ingredients_url)
     else
       render 'new'
@@ -36,8 +35,8 @@ class Admin::IngredientsController < Admin::BaseController
       params.require(:ingredient).permit(:name, :price, :category, :extra_allowed)
     end
 
-    # FIX_ME_PG:- What if invalid params[:id]?
     def set_ingredient
       @ingredient = Ingredient.find_by(id: params[:id])
+      redirect_with_flash("danger", "not_found", admin_ingredients_url) unless @ingredient
     end
 end

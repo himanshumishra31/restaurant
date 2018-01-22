@@ -1,5 +1,5 @@
 class Rating < ApplicationRecord
-  # assosciations
+  # associations
   belongs_to :user
   belongs_to :meal
 

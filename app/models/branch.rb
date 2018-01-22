@@ -1,8 +1,9 @@
 class Branch < ApplicationRecord
   # validations
-  validates :name, :opening_time, :closing_time, presence: true
+  validates :name, :opening_time, :closing_time, :contact, :address, presence: true
   validates_uniqueness_of :name, case_sensitive: false
   validate :validate_timings, if: (:opening_time? && :closing_time?)
+  validates :contact, format: { with: PHONE_NUMBER_VALIDATION_REGEX,  multiline: true }, allow_blank: true
 
   # associations
   has_many :inventories, dependent: :destroy

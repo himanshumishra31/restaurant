@@ -1,10 +1,5 @@
 class RatingsController < ApplicationController
 
-  def create_rating(value, review)
-    @rating.value = value
-    @rating.review = review
-    @rating.save
-  end
 
   def rate_meals
     params[:ratings].each do |rating_params|
@@ -18,7 +13,15 @@ class RatingsController < ApplicationController
         end
       end
     end
+    session[:feedback_url] = nil
     redirect_with_flash("success", "thanks", store_index_path)
   end
 
+  private
+
+    def create_rating(value, review)
+      @rating.value = value
+      @rating.review = review
+      @rating.save
+    end
 end

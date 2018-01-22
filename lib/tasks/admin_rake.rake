@@ -9,7 +9,7 @@ namespace :admin do
     @admin = User.find_or_create_by(email: email) do |admin|
       admin.name = name
       admin.password = password
-      admin.role = 1
+      admin.role = 'admin'
       admin.email_confirmed = true
     end
     if @admin.save

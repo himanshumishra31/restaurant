@@ -1,0 +1,191 @@
+en:
+  controller:
+    admin/orders:
+      toggle_pick_up_status:
+        success:
+          status_changed: 'Order status has been successfully updated'
+        danger:
+          order_not_prepared: 'Order is not prepared yet'
+      toggle_ready_status:
+        success:
+          status_changed: 'Order status has been successfully updated'
+
+    ratings:
+      rate_meals:
+        success:
+          thanks: 'Thank you. Your review has been successfully saved.'
+
+    charges:
+      create:
+        success:
+          payment_success: 'Payment Successful. You Can see your orders under myorders section.'
+
+    line_items:
+      update:
+        danger:
+          insufficient_stock: 'Sorry Ingredient is not left. Please try again after some time'
+          no_select: 'Please select any extra ingredient'
+        success:
+          extra_ingredient_added: 'Extra Ingredient Added'
+
+    orders:
+      new:
+        danger:
+          login: 'Please Log In to Place Order'
+
+      destroy:
+        success:
+          order_cancelled: "Order successfully cancelled"
+        danger:
+          time_up: "Order is prepared now. Cannot cancel now"
+
+      create:
+        danger:
+          insufficient_stock: 'Sorry Ingredient is not in sufficient quantity. Please again create your cart'
+        success:
+          successfully_placed: 'Order is successfully placed.'
+
+      feedback:
+        danger:
+          login: 'Login first and then access the link to provide feedback'
+
+    sessions:
+      new:
+        danger:
+          already_login: "Already logged in. Please Log out to login from another account."
+
+      create:
+        danger:
+          activate_your_account: 'Please activate your account by following instructions in the confirmation email that you received'
+          invalid_password: 'Invalid Password'
+          email_not_found: 'Email address Not found'
+
+      reset_password_link:
+        info:
+            password_reset_mail: 'Email sent with password reset instructions'
+        danger:
+          email_not_found: 'Email address Not found'
+          email_not_verified: 'Email id not verified.'
+
+      update_user_password:
+        success:
+          new_password_saved: 'Password has been reset'
+        danger:
+          email_not_found: 'Email address Not found'
+          reset_link_expired: 'Password Reset link is expired now. Please request again for new link'
+
+      reset_password:
+        danger:
+          email_not_found: 'Email address Not found'
+
+    users:
+      edit:
+        danger:
+          login_to_continue: 'Please Log in'
+          other_account: "Can't edit others account"
+
+      create:
+        success:
+          confirm_email: 'Please Confirm Your email'
+
+      confirm_email:
+        success:
+          email_confirmed: "Your email has been confirmed. Please sign in to continue."
+        danger:
+          user_not_exist: 'Sorry. User does not exist. Please sign up.'
+
+      update:
+        success:
+          successfully_saved: "Changes have been successfully saved"
+        danger:
+          other_account: "Can't edit others account"
+
+      show:
+        danger:
+          other_account: "Can't edit others account"
+
+    admin/branches:
+      new:
+        danger:
+          access_restricted: "Sorry, you don't have authority to access this section"
+
+      index:
+        danger:
+          access_restricted: "Sorry, you don't have authority to access this section"
+
+      create:
+        success:
+          branch_created: 'Branch has been successfully created'
+          access_restricted: "Sorry, you don't have authority to access this section"
+
+      update:
+        success:
+          successfully_saved: "Changes have been successfully saved"
+          access_restricted: "Sorry, you don't have authority to access this section"
+        danger:
+          branch_not_found: 'Branch not found. Please try again'
+
+      destroy:
+        success:
+          successfully_destroyed: 'Branch has been successfully destroyed'
+        danger:
+          access_restricted: "Sorry, you don't have authority to access this section"
+          error_destroy: 'Some error occured. Please try again'
+          branch_not_found: 'Branch not found. Please try again'
+      edit:
+        danger:
+          branch_not_found: 'Branch not found. Please try again'
+
+
+    admin/ingredients:
+      new:
+        danger:
+          access_restricted: "Sorry, you don't have authority to access this section"
+
+      index:
+        danger:
+          access_restricted: "Sorry, you don't have authority to access this section"
+
+      create:
+        success:
+          ingredient_created: 'Ingredient has been successfully created'
+          access_restricted: "Sorry, you don't have authority to access this section"
+
+      update:
+        success:
+          successfully_saved: "Changes have been successfully saved"
+          access_restricted: "Sorry, you don't have authority to access this section"
+
+      destroy:
+        success:
+          successfully_destroyed: 'Ingredient has been successfully destroyed'
+        danger:
+          access_restricted: "Sorry, you don't have authority to access this section"
+
+    admin/inventories:
+      update:
+        success:
+          successfully_updated: "Changes have been successfully saved"
+        danger:
+          invalid_quantity: 'Insufficent quantity'
+
+    admin/meals:
+      create:
+        success:
+          meal_created: "Meal has been successfully created"
+        danger:
+          access_restricted: "Sorry, you don't have authority to access this section"
+
+
+      destroy:
+        success:
+          successfully_destroyed: 'Ingredient has been successfully destroyed'
+        danger:
+          access_restricted: "Sorry, you don't have authority to access this section"
+
+      update:
+        success:
+          successfully_saved: "Changes have been successfully saved"
+          access_restricted: "Sorry, you don't have authority to access this section"
+        danger:
+          only_one_ingredient: 'Cannot delete only ingredient. One Ingredient must exist'

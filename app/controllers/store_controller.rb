@@ -8,7 +8,7 @@ class StoreController < ApplicationController
   before_action :current_user
 
   def index
-    session[:category] = (params["category"] || "both" )
+    session[:category] = params["category"] || "both"
   end
 
   def set_session_branch
@@ -23,19 +23,21 @@ class StoreController < ApplicationController
     render json: { output: output }
   end
 
-  def load_available_meals
-    @available_meals = @branch.available_meals
-  end
+  private
 
-  def categorize_available_meals
-    @available_veg_meals = []
-    @available_non_veg_meals = []
-    @available_meals.each do |meal|
-      if meal.isnonveg?
-        @available_non_veg_meals << meal
-      else
-        @available_veg_meals << meal
+    def load_available_meals
+      @available_meals = @branch.available_meals
+    end
+
+    def categorize_available_meals
+      @available_veg_meals = []
+      @available_non_veg_meals = []
+      @available_meals.each do |meal|
+        if meal.isnonveg?
+          @available_non_veg_meals << meal
+        else
+          @available_veg_meals << meal
+        end
       end
     end
-  end
 end

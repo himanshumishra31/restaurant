@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  extend ConfirmationToken
+  include TokenGenerator
   has_secure_password
 
   enum role: [:customer, :admin]
@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   # callbacks
   before_create :confirmation_token
-  after_create :send_email_confirmation, unless: :admin?
+  after_create :send_email_confirmation_mail, unless: :admin?
 
   # associations
   has_many :comments, dependent: :destroy
@@ -23,7 +23,7 @@ class User < ApplicationRecord
   end
 
   def create_reset_digest
-    update_columns(reset_digest: User.set_confirmation_token, reset_password_sent_at: Time.current)
+    update_columns(reset_digest: generate_token, reset_password_sent_at: Time.current)
   end
 
   def send_password_reset_email
@@ -39,11 +39,11 @@ class User < ApplicationRecord
   end
 
   private
-    def send_email_confirmation
+    def send_email_confirmation_mail
       UserMailer.verify_email(self).deliver
     end
 
     def confirmation_token
-      self.confirm_token = User.set_confirmation_token
+      self.confirm_token = generate_token
     end
 end

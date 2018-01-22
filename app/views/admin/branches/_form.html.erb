@@ -10,16 +10,24 @@
           <%= form_for [:admin, @branch], html: { class: 'form-horizontal'} do |form| %>
             <fieldset>
               <div class="form-group">
-                <%= form.text_field :name, size: 40, class: 'form-control', placeholder: 'Name' %>
+                <%= form.text_field :name, size: 40, class: 'form-control', placeholder: 'Name*' %>
                 <%= display_error(:name, @branch) %>
               </div>
-              <div class="form-group"><strong>Opening Time</strong>
+              <div class="form-group"><strong>Opening Time<sup>*</sup></strong>
                 <%= form.time_field :opening_time, size: 40, class: 'form-control' %>
                 <%= display_error(:opening_time, @branch) %>
               </div>
-              <div class="form-group"><strong>Closing Time</strong>
+              <div class="form-group"><strong>Closing Time<sup>*</sup></strong>
                 <%= form.time_field :closing_time, size: 40, class: 'form-control' %>
                 <%= display_error(:closing_time, @branch) %>
+              </div>
+              <div class="form-group">
+                <%= form.text_field :address, size: 40, class: 'form-control', placeholder: 'Address*' %>
+                <%= display_error(:address, @branch) %>
+              </div>
+              <div class="form-group">
+                <%= form.number_field :contact, class: 'form-control', placeholder: "Phone Number*"%>
+                <%= display_error(:contact, @branch) %>
               </div>
               <%= form.submit 'Submit', class: 'btn btn-lg btn-success btn-block' %>
             </fieldset>

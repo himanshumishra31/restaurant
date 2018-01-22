@@ -10,5 +10,6 @@ class CartsController < ApplicationController
   private
     def set_cart
       @cart = Cart.find_by(id: params[:id])
+      redirect_with_flash("danger", "not_found", store_index_url) unless @cart
     end
 end

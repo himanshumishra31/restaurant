@@ -1,5 +1,6 @@
 class Order < ApplicationRecord
-  extend ConfirmationToken
+  include TokenGenerator
+
   # associations
   belongs_to :cart
   belongs_to :user
@@ -17,7 +18,7 @@ class Order < ApplicationRecord
   #callbacks
   after_save :send_confirmation_mail
 
-  scope :by_date, -> (from = Time.current.midnight, to = Time.current.end_of_day) { where created_at: from..to }
+  scope :by_date, -> (from = 7.days.ago, to = Time.current) { where created_at: from..to }
 
   def delivered
     update_columns(picked: !picked)
@@ -95,6 +96,6 @@ class Order < ApplicationRecord
     end
 
     def feedback_token
-      update_columns(feedback_digest: Order.set_confirmation_token, feedback_email_sent_at: Time.current)
+      update_columns(feedback_digest: generate_token, feedback_email_sent_at: Time.current)
     end
 end

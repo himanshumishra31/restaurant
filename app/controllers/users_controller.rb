@@ -35,10 +35,6 @@ class UsersController < ApplicationController
 
   private
 
-    def link_expired?
-      redirect_with_flash("danger", "link_expired", store_index_path) if @user.feedback_link_expired?
-    end
-
     def permitted_params
       params.require(:user).permit(:name, :password, :password_confirmation, :email)
     end

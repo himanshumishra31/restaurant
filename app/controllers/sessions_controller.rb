@@ -13,6 +13,7 @@ class SessionsController < ApplicationController
   def create
     if @user.email_confirmed
       create_user(@user)
+      redirect_to session[:feedback_url] ? session[:feedback_url] : store_index_path
     else
       redirect_with_flash("danger", "activate_your_account", new_user_url)
     end
@@ -78,7 +79,6 @@ class SessionsController < ApplicationController
     def create_user(user)
       session[:user_id] = user.id
       params[:remember_me] == 'on' ? remember_user(user) : forget_user(user)
-      redirect_to store_index_path
     end
 
     def logout_user

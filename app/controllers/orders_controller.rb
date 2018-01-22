@@ -7,7 +7,6 @@ class OrdersController < ApplicationController
   before_action :link_expired?, only: [:feedback]
   before_action :is_user_logged_in?, only: [:feedback]
 
-
   def create
     if @order.save
       redirect_with_flash("success", "successfully_placed", new_charge_path)
@@ -38,9 +37,9 @@ class OrdersController < ApplicationController
     if @order.cancellable?
       @order.destroy
       @order.affect_ingredient("+")
-      redirect_with_flash("success", "order_cancelled", myorders_url)
+      redirect_with_flash("success", "order_cancelled", myorders_users_url)
     else
-      redirect_with_flash("danger", "time_up", myorders_url)
+      redirect_with_flash("danger", "time_up", myorders_users_url)
     end
   end
 
@@ -48,6 +47,7 @@ class OrdersController < ApplicationController
 
     def set_order
       @order = Order.find_by(feedback_digest: params[:id])
+      redirect_with_flash("danger", "not_found", store_index_path) unless @order
     end
 
     def link_expired?
@@ -55,7 +55,10 @@ class OrdersController < ApplicationController
     end
 
     def is_user_logged_in?
-      redirect_with_flash("danger", "login", login_path) unless @order.user.id.eql? session[:user_id]
+      unless @order.user.id.eql? session[:user_id]
+        session[:feedback_url] = request.url
+        redirect_with_flash("danger", "login", login_path)
+      end
     end
 
     def permitted_params

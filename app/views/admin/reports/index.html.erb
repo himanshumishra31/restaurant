@@ -13,7 +13,13 @@
   <%= submit_tag 'Filter', class: 'btn btn-success' %>
 <% end %>
 
-<h3><STRONG>Popular Meal: <%= @popular_meal.name %></STRONG></h3>
+<h3><STRONG>Popular Meal:
+<% if @popular_meal %>
+  <%= @popular_meal.name %>
+<% else %>
+  No orders placed
+<% end %>
+</STRONG></h3>
 <br />
 <br />
 <h4> Low Inventory </h4>

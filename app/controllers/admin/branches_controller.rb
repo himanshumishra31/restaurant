@@ -36,7 +36,7 @@ class Admin::BranchesController < Admin::BaseController
 
   private
     def permitted_params
-      params.require(:branch).permit(:name, :opening_time, :closing_time)
+      params.require(:branch).permit(:name, :opening_time, :closing_time, :address, :contact)
     end
 
     def set_branch
