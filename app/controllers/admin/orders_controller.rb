@@ -17,6 +17,8 @@ class Admin::OrdersController < Admin::BaseController
     redirect_with_flash("success", "status_changed", admin_orders_path)
   end
 
+  # FIX_ME_PG:- Make methods private.
+  # FIX_ME_PG:- What if @order is nil? Check all over the code.
   def set_order
     @order = Order.find_by(id: params[:id])
   end

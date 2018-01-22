@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
     @current_user ||= load_current_user
   end
 
+  # FIX_ME_PG:- Make this private method. Also refactor the code.
   def load_current_user
     if cookies.encrypted[:user_id]
       user = User.find_by(id: cookies.encrypted[:user_id])
@@ -27,6 +28,7 @@ class ApplicationController < ActionController::Base
     redirect_to path if path
   end
 
+  # FIX_ME_PG:- Refactor the code. Also, try to make this global per each user session.
   def set_branch
     cookies[:current_location] = Branch.find_by(default: true).name unless cookies[:current_location]
     @branch = Branch.find_by(name: cookies[:current_location])
