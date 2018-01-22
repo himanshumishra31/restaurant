@@ -1,0 +1,17 @@
+<%= javascript_include_tag 'order' %>
+<br>
+<h4>Orders</h4>
+<table class="table" data-name="order-table">
+  <thead>
+    <th>Order Number</th>
+    <th>Items (Quantity)</th>
+    <th>Pick Up Time</th>
+    <th>Total Price</th>
+    <th>Order Prepared</th>
+    <th>Order Picked</th>
+    <th>Cancel Order</th>
+  </thead>
+  <tbody>
+    <%= render "order" %>
+  </tbody>
+</table>

@@ -37,5 +37,6 @@ class Admin::IngredientsController < Admin::BaseController
 
     def set_ingredient
       @ingredient = Ingredient.find_by(id: params[:id])
+      redirect_with_flash("danger", "not_found", admin_ingredients_url) unless @ingredient
     end
 end

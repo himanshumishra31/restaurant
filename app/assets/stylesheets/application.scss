@@ -1,13 +1,8 @@
 /*
  *= require jquery-ui
- *= require bootstrap
  *= require bootstrap.min
  *= require_self
  */
-
-.login-form {
-  background-color: red;
-}
 
 .banner {
   margin: 50px 0 0 190px;
@@ -17,30 +12,13 @@
   margin: 200px 0 100px 500px;
 }
 
-.error-explanation {
-  li {
-    color: red;
-    margin-left: 200px;
-  }
-  h2 {
-    margin-left: 190px;
-  }
+.field-error {
+  color: red;
 }
 
-.checkbox {
-  margin: 50px 0 10px 255px;
-  span {
-    margin-left: 10px;
-    font-weight: normal;
-  }
-}
 
-.current_user {
-  p {
-    color: red;
-    margin-left: 350px;
-    font-size: 30px;
-  }
+.fields {
+  margin-left: 50px;
 }
 
 .form-horizontal {
@@ -49,7 +27,17 @@
   }
 }
 
+.panel-heading {
+  h4 {
+    text-align: center;
+  }
+}
+
 .container-page {
   padding: 0 15px;
   margin: 100px auto 0 auto;
+}
+
+.location {
+  margin-top: 14px;
 }

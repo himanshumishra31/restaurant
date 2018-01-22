@@ -1,19 +1,26 @@
 class SessionsController < ApplicationController
-  before_action :get_user, only: [:reset_password_link, :update_user_password, :reset_password, :create]
+  before_action :get_user_by_email, only: [:reset_password_link, :create, :update_user_password]
+  before_action :get_user_by_token, only: [:reset_password]
   before_action :email_verified?, only: [:reset_password_link]
   before_action :reset_link_expired?, only: [:update_user_password]
   before_action :password_empty?, only: [:update_user_password]
+  before_action :authenticate?, only: [:create]
+
+  def new
+    redirect_with_flash("danger", "already_login", store_index_path) if current_user
+  end
 
   def create
-    if @user.authenticate(params[:password])
-      if @user.email_confirmed
-        create_user(@user)
-      else
-        redirect_with_flash("danger", "activate_your_account", new_user_url)
-      end
+    if @user.email_confirmed
+      create_user(@user)
+      redirect_to session[:feedback_url] ? session[:feedback_url] : store_index_path
     else
-      redirect_with_flash("danger", "invalid_password", login_url)
+      redirect_with_flash("danger", "activate_your_account", new_user_url)
     end
+  end
+
+  def authenticate?
+    redirect_with_flash("danger", "invalid_password", login_url) unless @user.authenticate(params[:password])
   end
 
   def reset_password_link
@@ -35,7 +42,7 @@ class SessionsController < ApplicationController
 
 
   def destroy
-    logout_user if @current_user
+    logout_user if current_user
     redirect_to login_url
   end
 
@@ -47,13 +54,18 @@ class SessionsController < ApplicationController
       end
     end
 
-    def get_user
+    def get_user_by_token
+      @user = User.find_by(reset_digest: params[:token])
+      redirect_with_flash("danger", "email_not_found", login_url) unless @user
+    end
+
+    def get_user_by_email
       @user = User.find_by(email: params[:email])
       redirect_with_flash("danger", "email_not_found", login_url) unless @user
     end
 
     def email_verified?
-      redirect_with_flash("danger", "email_not_verified", login_url) unless (@user.email_confirmed)
+      redirect_with_flash("danger", "email_not_verified", login_url) unless @user.email_confirmed
     end
 
     def reset_link_expired?
@@ -67,6 +79,19 @@ class SessionsController < ApplicationController
     def create_user(user)
       session[:user_id] = user.id
       params[:remember_me] == 'on' ? remember_user(user) : forget_user(user)
-      redirect_to new_user_path
     end
+
+    def logout_user
+      session.delete(:user_id)
+      @current_user = nil
+    end
+
+    def remember_user(user)
+      cookies.permanent.encrypted[:user_id] = user.id
+    end
+
+    def forget_user(user)
+      cookies.delete(:user_id)
+    end
+
 end

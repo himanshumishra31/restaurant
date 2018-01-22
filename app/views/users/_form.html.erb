@@ -1,39 +1,47 @@
-<%= form_for user do |form| %>
-  <fieldset>
-    <legend class="top_bar">Enter Details</legend>
-    <%= render 'shared/errors', model: @user %>
-    <div class="form-group">
-      <%= form.label :name, class: "col-lg-2 control-label" %>
-      <div class="col-lg-10">
-        <%= form.text_field :name, size: 40, class: 'form-control' %>
+<br><br><br><br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">Profile Details</h4>
+        </div>
+        <div class="panel-body">
+          <%= form_for user do |form| %>
+            <fieldset>
+              <div class="form-group">
+                <%= form.text_field :name, size: 40, class: 'form-control', placeholder: 'Name*' %>
+                <%= display_error(:name, user) %>
+              </div>
+              <div class="form-group">
+                <%= form.password_field :password, size: 40, class: 'form-control', placeholder: 'Password*' %>
+                <%= display_error(:password, user) %>
+              </div>
+              <div class="form-group">
+                <%= form.password_field :password_confirmation, size: 40, class: 'form-control', placeholder: ' Confirm Password' %>
+                <%= display_error(:password_confirmation, user) %>
+              </div>
+              <div class="form-group">
+                <% if params[:action].eql? 'edit' or params[:action].eql? 'update'%>
+                  <%= form.email_field :email, size: 40, class: 'form-control', disabled: true %>
+                <% else %>
+                  <%= form.email_field :email, size: 40, class: 'form-control', placeholder: "Email*"%>
+                  <%= display_error(:email, user) %>
+
+                <% end %>
+              </div>
+              <%= form.submit 'Submit', class: 'btn btn-lg btn-success btn-block' %>
+            </fieldset>
+          <% end %>
+          <hr/>
+          <center><h4>
+          <% unless @current_user %>
+            <%= link_to 'Login', login_path %> |
+           <%= link_to 'Forgot Password', reset_password_path %>
+          <% end %>
+          </h4></center>
+        </div>
       </div>
     </div>
-    <div class="form-group">
-      <%= form.label :password, class: 'col-lg-2 control-label' %>
-      <div class="col-lg-10">
-        <%= form.password_field :password, size: 40, class: 'form-control' %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= form.label :password_confirmation, class: 'col-lg-2 control-label' %>
-      <div class="col-lg-10">
-        <%= form.password_field :password_confirmation, size: 40, class: 'form-control' %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= form.label :email, class: 'col-lg-2 control-label' %>
-      <div class="col-lg-10">
-        <% if params[:action].eql? 'edit' or params[:action].eql? 'update'%>
-          <%= form.email_field :email, size: 40, class: 'form-control', disabled: true%>
-        <% else %>
-          <%= form.email_field :email, size: 40, class: 'form-control'%>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-        <%= form.submit 'Submit', class: 'btn btn-primary' %>
-      </div>
-    </div>
-  </fieldset>
-<% end %>
+  </div>
+</div>

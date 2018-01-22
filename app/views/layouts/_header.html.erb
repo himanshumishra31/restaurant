@@ -1,38 +1,43 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <div class="current_user">
-      <% if @current_user %>
-        <p>Hi <%= @current_user.name %>. Welcome to Our <%= link_to "Restaurant", login_path, id: "logo" %></p>
-      <% else %>
-        <p> Welome to Our Restaurant</p>
-      <% end %>
-    </div>
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <% if @current_user %>
+          <li class="text-danger "><a href="#" class="text-left"><strong>Hi <%= @current_user.name %></strong></a></li>
           <% if @current_user.role.eql? 'admin' %>
             <li><%= link_to "Branches", admin_branches_path %></li>
             <li><%= link_to "Ingredients", admin_ingredients_path %></li>
             <li><%= link_to "Meals", admin_meals_path %></li>
+            <li><%= link_to "Orders", admin_orders_path %></li>
+            <li><%= link_to "Reports", admin_reports_path %></li>
+          <% else %>
+            <li><%= link_to "My orders", myorders_users_path %></li>
           <% end %>
+          <li><%= link_to "Home", store_index_path %></li>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Account <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><%= link_to "Profile", edit_user_path(@current_user) %></li>
-              <li><%= link_to "Settings", edit_user_path(@current_user) %></li>
+              <li><%= link_to "Edit Profile", edit_user_path(@current_user) %></li>
               <li class="divider"></li>
               <li><%= link_to "Log out", logout_path, method: :delete %></li>
             </ul>
           </li>
-          <% if @current_user.role.eql? 'admin' %>
-            <li>
-              <%= form_tag admin_inventories_path, method: :get, class: 'locale' do %>
-                <%= select_tag 'branch', options_for_select(Branch.all.pluck('name'), session[:current_location]), onchange: 'this.form.submit()' %>
-              <% end %>
-            </li>
-          <% end %>
         <% else %>
           <li><%= link_to "Log in", login_path %></li>
+          <li><%= link_to 'Home',  store_index_path %></li>
+        <% end %>
+        <% if @current_user && (@current_user.role.eql? 'admin') %>
+          <li>
+            <%= form_tag admin_inventories_path, method: :get do %>
+              <%= select_tag 'branch', options_for_select(Branch.all.pluck('name'), session[:current_location]), onchange: 'this.form.submit()', class: 'location' %>
+            <% end %>
+          </li>
+        <% else %>
+          <li>
+            <%= form_tag store_index_path, method: :get do %>
+              <%= select_tag 'branch', options_for_select(Branch.all.pluck('name'), session[:current_location]), onchange: 'this.form.submit()', class: 'location' %>
+            <% end %>
+          </li>
         <% end %>
       </ul>
     </nav>

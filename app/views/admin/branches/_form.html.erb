@@ -1,29 +1,41 @@
-<%= form_for [:admin, @branch], html: { class: 'form-horizontal'} do |form| %>
-  <fieldset>
-    <legend class="top_bar">Enter Restaurant Details</legend>
-    <%= render 'shared/errors', model: @branch %>
-    <div class="form-group">
-      <%= form.label :name, class: "col-lg-2 control-label" %>
-      <div class="col-lg-10">
-        <%= form.text_field :name, size: 40, class: 'form-control' %>
+<br><br><br><br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">Branch Details</h4>
+        </div>
+        <div class="panel-body">
+          <%= form_for [:admin, @branch], html: { class: 'form-horizontal'} do |form| %>
+            <fieldset>
+              <div class="form-group">
+                <%= form.text_field :name, size: 40, class: 'form-control', placeholder: 'Name*' %>
+                <%= display_error(:name, @branch) %>
+              </div>
+              <div class="form-group"><strong>Opening Time<sup>*</sup></strong>
+                <%= form.time_field :opening_time, size: 40, class: 'form-control' %>
+                <%= display_error(:opening_time, @branch) %>
+              </div>
+              <div class="form-group"><strong>Closing Time<sup>*</sup></strong>
+                <%= form.time_field :closing_time, size: 40, class: 'form-control' %>
+                <%= display_error(:closing_time, @branch) %>
+              </div>
+              <div class="form-group">
+                <%= form.text_field :address, size: 40, class: 'form-control', placeholder: 'Address*' %>
+                <%= display_error(:address, @branch) %>
+              </div>
+              <div class="form-group">
+                <%= form.number_field :contact, class: 'form-control', placeholder: "Phone Number*"%>
+                <%= display_error(:contact, @branch) %>
+              </div>
+              <%= form.submit 'Submit', class: 'btn btn-lg btn-success btn-block' %>
+            </fieldset>
+          <% end %>
+          <hr/>
+          <center><h4><%= link_to 'Back', admin_branches_url %></h4></center>
+        </div>
       </div>
     </div>
-    <div class="form-group">
-      <%= form.label :opening_time, class: 'col-lg-2 control-label' %>
-      <div class="col-lg-10">
-        <%= form.time_field :opening_time, size: 40, class: 'form-control' %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= form.label :closing_time, class: 'col-lg-2 control-label' %>
-      <div class="col-lg-10">
-        <%= form.time_field :closing_time, size: 40, class: 'form-control' %>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-        <%= form.submit 'Submit', class: 'btn btn-primary' %>
-      </div>
-    </div>
-  </fieldset>
-<% end %>
+  </div>
+</div>

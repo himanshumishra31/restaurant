@@ -1,0 +1,31 @@
+<h2>Your Order has been successfully saved. Please Complete payment process to place it.</h2>
+<h3>Order Amount <strong><%= number_to_currency(@order.cart.total_price) %></strong></h3>
+<strong>Order Details</strong>
+<table border="1">
+  <thead>
+    <th>Item</th>
+    <th>Extra Ingredient</th>
+    <th>Quantity</th>
+    <th>Amount</th>
+  </thead>
+  <tbody>
+    <% @order.cart.line_items.each do |line_item| %>
+      <tr>
+        <td><%= line_item.meal.name %></td>
+        <% if line_item.extra_ingredient %>
+          <td><%= line_item.extra_ingredient %></td>
+        <% else %>
+          <td>None</td>
+        <% end %>
+        <td><%= line_item.quantity %></td>
+        <td><%= number_to_currency(line_item.total_price) %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td><strong>Total Price</strong></td>
+      <td></td>
+      <td></td>
+      <td><%= number_to_currency(@order.cart.total_price) %></td>
+    </tr>
+  </tbody>
+</table>

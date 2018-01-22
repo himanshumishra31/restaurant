@@ -1,5 +1,6 @@
 class Admin::MealsController < Admin::BaseController
-  before_action :set_meal, only: [:destroy, :edit, :update]
+  before_action :set_meal, only: [:destroy, :edit, :update, :show_comments]
+  before_action :ingredient_exists?, only: [:update]
 
   def index
     @meals = Meal.all
@@ -22,6 +23,10 @@ class Admin::MealsController < Admin::BaseController
     end
   end
 
+  def show_comments
+    @comments = Rating.where(meal_id: @meal.id)
+  end
+
   def new
     @meal = Meal.new
   end
@@ -41,5 +46,12 @@ class Admin::MealsController < Admin::BaseController
 
     def set_meal
       @meal = Meal.find_by(id: params[:id])
+      redirect_with_flash("danger", "not_found", admin_meals_path) unless @meal
+    end
+
+    def ingredient_exists?
+      if (@meal.meal_items.count.eql? 1) && (params[:meal][:meal_items_attributes]["0"][:_destroy].eql? '1')
+        redirect_with_flash("danger", "only_one_ingredient", admin_meals_path)
+      end
     end
 end
