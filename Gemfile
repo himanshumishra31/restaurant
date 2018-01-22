@@ -15,7 +15,7 @@ gem 'jquery-rails',                '~> 4.3.1'
 gem 'jquery-ui-rails',             '~>6.0.1'
 gem "nested_form",                 '0.3.2'
 gem 'nested_form_fields',          '0.8.2'
-gem "paperclip",                   "~> 5.0.0"
+gem "paperclip",                   "5.0.0"
 gem 'puma',                        '~> 3.7'
 gem 'sass-rails',                  '~> 5.0'
 gem 'stripe',                      '3.9.1'
