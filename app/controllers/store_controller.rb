@@ -13,7 +13,7 @@ class StoreController < ApplicationController
 
   def set_session_branch
     if params[:branch]
-      cookies[:current_location] = session[:current_location] = params[:branch]
+      cookies[:current_location] = params[:branch]
       session[:cart_id] = nil
     end
   end

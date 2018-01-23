@@ -29,13 +29,13 @@
         <% if @current_user && (@current_user.role.eql? 'admin') %>
           <li>
             <%= form_tag admin_inventories_path, method: :get do %>
-              <%= select_tag 'branch', options_for_select(Branch.all.pluck('name'), session[:current_location]), onchange: 'this.form.submit()', class: 'location' %>
+              <%= select_tag 'branch', options_for_select(Branch.all.pluck('name'), cookies[:current_location]), onchange: 'this.form.submit()', class: 'location' %>
             <% end %>
           </li>
         <% else %>
           <li>
             <%= form_tag store_index_path, method: :get do %>
-              <%= select_tag 'branch', options_for_select(Branch.all.pluck('name'), session[:current_location]), onchange: 'this.form.submit()', class: 'location' %>
+              <%= select_tag 'branch', options_for_select(Branch.all.pluck('name'), cookies[:current_location]), onchange: 'this.form.submit()', class: 'location' %>
             <% end %>
           </li>
         <% end %>
