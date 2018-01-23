@@ -7,6 +7,8 @@ class PasswordsController < ApplicationController
 
   def create
     # to discuss. If we do this in after create callback then it will also run when we will create a new user.
+    @user.set_reset_password_token
+    @user.send_password_reset_email
     redirect_with_flash("info", "password_reset_mail", store_index_path)
   end
 

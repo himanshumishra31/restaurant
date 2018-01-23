@@ -15,10 +15,6 @@ class User < ApplicationRecord
   before_create :set_confirmation_token
   after_create :send_email_confirmation_mail, unless: :admin?
   after_update :reset_password_token_to_nil
-  with_options if: :reset_password_token? do
-    after_create :set_reset_password_token
-    after_create :send_password_reset_email
-  end
 
   # associations
   has_many :comments, dependent: :destroy
