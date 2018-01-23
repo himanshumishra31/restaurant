@@ -7,7 +7,7 @@ class PasswordsController < ApplicationController
 
   def create
     if @user
-      @user.create_reset_digest
+      @user.set_reset_password_token
       @user.send_password_reset_email
       redirect_with_flash("info", "password_reset_mail", store_index_path)
     end
@@ -15,7 +15,7 @@ class PasswordsController < ApplicationController
 
   def update
     if @user.update_attributes(user_params)
-      @user.update_attribute(:reset_digest, nil)
+      @user.update_attribute(:reset_password_token, nil)
       redirect_with_flash("success", "new_password_saved", login_url)
     else
       render 'new'
@@ -36,7 +36,7 @@ class PasswordsController < ApplicationController
     end
 
     def get_user_by_token
-      @user = User.find_by(reset_digest: params[:id])
+      @user = User.find_by(reset_password_token: params[:id])
       redirect_with_flash("danger", "already_used", store_index_path) unless @user
     end
 

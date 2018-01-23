@@ -22,8 +22,8 @@ class User < ApplicationRecord
     update_columns(confirm: true, confirmation_token: nil)
   end
 
-  def create_reset_digest
-    update_columns(reset_digest: generate_token, reset_password_sent_at: Time.current)
+  def set_reset_password_token
+    update_columns(reset_password_token: generate_token, reset_password_sent_at: Time.current)
   end
 
   def send_password_reset_email
