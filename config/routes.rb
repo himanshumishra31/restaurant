@@ -3,14 +3,18 @@ Rails.application.routes.draw do
     get :confirm_email, to: 'users#confirm_email'
   end
 
-  get :edit_user_password, to: 'sessions#reset_password'
-  patch :edit_user_password, to: 'sessions#update_user_password'
-  get :reset_password, to: 'sessions#forgot_password'
-  patch :reset_password, to: 'sessions#reset_password_link'
-  get :signup, to: 'users#new'
-  get :login, to: 'sessions#new'
-  post :login, to: 'sessions#create'
-  delete :logout, to: 'sessions#destroy'
+  controller :registrations do
+    get :signup, action: :new
+    post :signup, action: :create
+  end
+
+  resources :passwords, only: [:new, :edit, :create, :update]
+
+  controller :sessions do
+    get :login, action: :new
+    post :login, action: :create
+    delete :logout, action: :destroy
+  end
 
   namespace :admin do
     resources :branches, except: [:show]
@@ -32,11 +36,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, except: [:destroy, :index] do
-    member do
-      get :confirm_email
-    end
-  get :myorders, on: :collection
+  resources :users, only: [:edit, :update] do
+    get :confirm_email, on: :member
+    get :myorders, on: :collection
   end
 
   resources :orders do
@@ -58,10 +60,8 @@ Rails.application.routes.draw do
   resources :orders, only: [:create, :new, :destroy ]
   resources :charges, only: [:create, :new]
 
-  resources :ratings, only: [] do
-    collection do
-      put :rate_meals
-    end
+  controller :ratings do
+    put :rate_meals
   end
   match "*path" => redirect("/"), via: [:get]
 end

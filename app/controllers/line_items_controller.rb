@@ -4,9 +4,9 @@ class LineItemsController < ApplicationController
   before_action :set_line_item, only: [:update_quantity, :destroy, :update]
   before_action :set_branch, only: [:create, :update]
   before_action :extra_ingredient, only: [:update]
+  before_action :set_meal, only: [:create]
 
   def create
-    @meal = Meal.find(params[:meal_id])
     @line_item = @cart.add_meal(@meal)
     @status = (@line_item.sufficient_stock(@branch) && @line_item.save) ? @line_item.increment!(:quantity) : false
   end
@@ -29,8 +29,12 @@ class LineItemsController < ApplicationController
     end
   end
 
-
   private
+
+    def set_meal
+      @meal = Meal.find_by(id: params[:meal_id])
+      redirect_with_flash("danger", "not_found", store_index_url) unless @meal
+    end
     def extra_ingredient
       redirect_with_flash("danger", "no_select", store_index_path) unless params[:line_item][:extra_ingredient].present?
     end

@@ -1,1 +1,35 @@
-<%= render 'form', user: @user %>
+<br><br><br><br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">Edit Profile Details</h4>
+        </div>
+        <div class="panel-body">
+          <%= form_for @user do |form| %>
+            <fieldset>
+              <div class="form-group">
+                <%= form.text_field :name, size: 40, class: 'form-control', placeholder: 'Name*' %>
+                <%= display_error(:name, @user) %>
+              </div>
+              <div class="form-group">
+                <%= form.password_field :password, size: 40, class: 'form-control', placeholder: 'Password*' %>
+                <%= display_error(:password, @user) %>
+              </div>
+              <div class="form-group">
+                <%= form.password_field :password_confirmation, size: 40, class: 'form-control', placeholder: ' Confirm Password' %>
+                <%= display_error(:password_confirmation, @user) %>
+              </div>
+              <div class="form-group">
+                <%= form.email_field :email, size: 40, class: 'form-control', disabled: true %>
+              </div>
+              <%= form.submit 'Submit', class: 'btn btn-lg btn-success btn-block' %>
+            </fieldset>
+          <% end %>
+          <hr/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

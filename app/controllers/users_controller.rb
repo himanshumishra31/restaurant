@@ -1,20 +1,7 @@
 class UsersController < ApplicationController
   before_action :authorize, only: [:edit, :update]
-  before_action :validate_user, only: [:show, :edit, :update]
+  before_action :validate_user, only: [:edit, :update]
   before_action :load_user, only: [:confirm_email]
-
-  def new
-    @user = User.new
-  end
-
-  def create
-    @user = User.new(permitted_params)
-    if @user.save
-      redirect_with_flash("success", "confirm_email", login_url)
-    else
-      render 'new'
-    end
-  end
 
   def confirm_email
     @user.activate_email
@@ -45,8 +32,7 @@ class UsersController < ApplicationController
     end
 
     def load_user
-      @user = User.find_by(confirm_token: params[:id])
-      redirect_with_flash("danger", 'user_not_exist', new_user_url) unless @user
+      @user = User.find_by(confirmation_token: params[:id])
+      redirect_with_flash("danger", 'already_confirmed', login_url) unless @user
     end
-
 end

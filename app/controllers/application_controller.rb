@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= load_current_user
+    load_current_user
   end
 
   def redirect_with_flash(type, message_name, path)

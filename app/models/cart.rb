@@ -4,14 +4,10 @@ class Cart < ApplicationRecord
   has_many :meals, through: :line_items
 
   def add_meal(meal)
-    current_item = line_items.find_by(meal_id: meal.id)
-    unless current_item
-      current_item = line_items.build(meal_id: meal.id)
-    end
-    current_item
+    line_items.find_or_initialize_by(meal_id: meal.id)
   end
 
   def total_price
-    line_items.to_a.sum { |item| item.total_price }
+    line_items.sum(&:total_price)
   end
 end
