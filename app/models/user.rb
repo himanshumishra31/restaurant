@@ -11,7 +11,7 @@ class User < ApplicationRecord
   validates :password, presence: true
 
   # callbacks
-  before_create :confirmation_token
+  before_create :set_confirmation_token
   after_create :send_email_confirmation_mail, unless: :admin?
 
   # associations
@@ -19,7 +19,7 @@ class User < ApplicationRecord
   has_many :orders, dependent: :destroy
 
   def activate_email
-    update_columns(email_confirmed: true, confirm_token: nil)
+    update_columns(confirm: true, confirmation_token: nil)
   end
 
   def create_reset_digest
@@ -43,7 +43,7 @@ class User < ApplicationRecord
       UserMailer.verify_email(self).deliver
     end
 
-    def confirmation_token
-      self.confirm_token = generate_token
+    def set_confirmation_token
+      self.confirmation_token = generate_token
     end
 end

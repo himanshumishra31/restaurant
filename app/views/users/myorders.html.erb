@@ -23,7 +23,7 @@
           <td><%= number_to_currency(order.charge.amount) %></td>
           <td><%= order.branch.name %></td>
           <td><%= order.branch.address %></td>
-          <td><%= order.branch.contact %></td>
+          <td><%= order.branch.contact_number %></td>
           <td><%= link_to 'Cancel', order_url(order), method: :delete, data: { confirm: 'Are you Sure?' },class: 'btn btn-primary btn-xs' %></td>
         </tr>
       <% end %>

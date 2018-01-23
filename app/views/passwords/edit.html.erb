@@ -7,7 +7,7 @@
           <h4 class="panel-title">Reset Password</h4>
         </div>
         <div class="panel-body">
-          <%= form_for @user, url: edit_user_password_url, html: { class: "form-horizontal" } do |form| %>
+          <%= form_for @user, url: :password, method: :patch, html: { class: "form-horizontal" } do |form| %>
             <fieldset>
             <%= hidden_field_tag :email, @user.email %>
               <div class="form-group">
@@ -22,7 +22,7 @@
             </fieldset>
           <% end %>
           <hr/>
-          <center><h4><%= link_to 'New User?', new_user_path %> | <%= link_to 'Login', login_path %></h4></center>
+          <center><h4><%= link_to 'New User?', signup_path %> | <%= link_to 'Login', login_path %></h4></center>
         </div>
       </div>
     </div>

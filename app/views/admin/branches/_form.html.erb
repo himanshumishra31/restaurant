@@ -26,8 +26,8 @@
                 <%= display_error(:address, @branch) %>
               </div>
               <div class="form-group">
-                <%= form.number_field :contact, class: 'form-control', placeholder: "Phone Number*"%>
-                <%= display_error(:contact, @branch) %>
+                <%= form.number_field :contact_number, class: 'form-control', placeholder: "Phone Number*"%>
+                <%= display_error(:contact_number, @branch) %>
               </div>
               <%= form.submit 'Submit', class: 'btn btn-lg btn-success btn-block' %>
             </fieldset>

@@ -1,5 +1,33 @@
 en:
   controller:
+    registrations:
+      create:
+        success:
+          confirm_email: 'Please Confirm Your email'
+
+    passwords:
+      create:
+        info:
+          password_reset_mail: 'Email sent with password reset instructions'
+        danger:
+          email_not_found: 'Email address Not found'
+          email_not_verified: 'Email id not verified.'
+
+      update:
+        success:
+          new_password_saved: 'Password has been reset'
+        danger:
+          email_not_found: 'Email address Not found'
+          reset_link_expired: 'Password Reset link is expired now. Please request again for new link'
+
+      new:
+        danger:
+          email_not_found: 'Email address Not found'
+
+      edit:
+        danger:
+          already_used: 'Reset Link has been already used. '
+
     admin/orders:
       toggle_pick_up_status:
         success:
@@ -60,39 +88,17 @@ en:
           invalid_password: 'Invalid Password'
           email_not_found: 'Email address Not found'
 
-      reset_password_link:
-        info:
-            password_reset_mail: 'Email sent with password reset instructions'
-        danger:
-          email_not_found: 'Email address Not found'
-          email_not_verified: 'Email id not verified.'
-
-      update_user_password:
-        success:
-          new_password_saved: 'Password has been reset'
-        danger:
-          email_not_found: 'Email address Not found'
-          reset_link_expired: 'Password Reset link is expired now. Please request again for new link'
-
-      reset_password:
-        danger:
-          email_not_found: 'Email address Not found'
-
     users:
       edit:
         danger:
           login_to_continue: 'Please Log in'
           other_account: "Can't edit others account"
 
-      create:
-        success:
-          confirm_email: 'Please Confirm Your email'
-
       confirm_email:
         success:
           email_confirmed: "Your email has been confirmed. Please sign in to continue."
         danger:
-          user_not_exist: 'Sorry. User does not exist. Please sign up.'
+          already_confirmed: 'Your email has been already confirmed. Please log in.'
 
       update:
         success:
