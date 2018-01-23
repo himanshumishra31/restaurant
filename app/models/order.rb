@@ -50,7 +50,7 @@ class Order < ApplicationRecord
   end
 
   def cancellable?
-    Time.parse(pick_up.strftime("%I:%M%p")) - Time.current > 1800
+    Time.parse(pick_up.strftime(TIME_FORMAT)) - Time.current > PREPARATION_TIME
   end
 
   def sufficient_stock
