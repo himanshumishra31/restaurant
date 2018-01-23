@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  VALID_LINK_TIME = 2.hours.ago
+  VALID_RESET_PASSWORD_LINK_TIME = 2.hours.ago
   include TokenGenerator
   has_secure_password
 
@@ -37,7 +37,7 @@ class User < ApplicationRecord
   end
 
   def reset_password_token_expired?
-    reset_password_sent_at < VALID_LINK_TIME
+    reset_password_sent_at < VALID_RESET_PASSWORD_LINK_TIME
   end
 
   def admin?
