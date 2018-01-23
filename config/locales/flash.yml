@@ -85,7 +85,7 @@ en:
       create:
         danger:
           activate_your_account: 'Please activate your account by following instructions in the confirmation email that you received'
-          invalid_password: 'Invalid Password'
+          invalid_password: 'Invalid Email / Password'
           email_not_found: 'Email address Not found'
 
     users:

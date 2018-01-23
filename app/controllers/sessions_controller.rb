@@ -1,13 +1,12 @@
 class SessionsController < ApplicationController
-  before_action :get_user_by_email, only: [:create]
-  before_action :authenticate?, only: [:create]
+  before_action :authenticate_user, only: [:create]
 
   def new
     redirect_with_flash("danger", "already_login", store_index_path) if current_user
   end
 
   def create
-    if @user.confirm
+    if @user.confirmed
       create_user(@user)
       redirect_to session[:feedback_url] ? session[:feedback_url] : store_index_path
     else
@@ -22,13 +21,9 @@ class SessionsController < ApplicationController
 
   private
 
-    def authenticate?
-      redirect_with_flash("danger", "invalid_password", login_url) unless @user.authenticate(params[:password])
-    end
-
-    def get_user_by_email
+    def authenticate_user
       @user = User.find_by(email: params[:email])
-      redirect_with_flash("danger", "email_not_found", login_url) unless @user
+      redirect_with_flash("danger", "invalid_credentials", login_url) unless @user && @user.authenticate(params[:password])
     end
 
     def create_user(user)

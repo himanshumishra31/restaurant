@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  VALID_LINK_TIME = 2.hours.ago
   include TokenGenerator
   has_secure_password
 
@@ -19,7 +20,7 @@ class User < ApplicationRecord
   has_many :orders, dependent: :destroy
 
   def activate_email
-    update_columns(confirm: true, confirmation_token: nil)
+    update_columns(confirmed: true, confirmation_token: nil)
   end
 
   def set_reset_password_token
@@ -30,8 +31,8 @@ class User < ApplicationRecord
     UserMailer.reset_password(self).deliver_now
   end
 
-  def password_reset_expired?
-    reset_password_sent_at < 2.hours.ago
+  def reset_password_token_expired?
+    reset_password_sent_at < VALID_LINK_TIME
   end
 
   def admin?

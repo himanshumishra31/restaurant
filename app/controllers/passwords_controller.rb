@@ -1,9 +1,9 @@
 class PasswordsController < ApplicationController
   before_action :get_user_by_email, only: [:create, :update]
   before_action :get_user_by_token, only: [:edit]
-  before_action :email_verified?, only: [:create]
-  before_action :reset_link_expired?, only: [:update]
-  before_action :password_empty?, only: [:update]
+  before_action :check_for_confirmed_email, only: [:create]
+  before_action :check_for_expired_link, only: [:update]
+  before_action :check_for_empty_password, only: [:update]
 
   def create
     if @user
@@ -24,7 +24,7 @@ class PasswordsController < ApplicationController
 
   private
 
-    def password_empty?
+    def check_for_empty_password
       if params[:user][:password].empty?
         @user.errors.add(:password, "can't be empty")
         render 'new'
@@ -45,12 +45,12 @@ class PasswordsController < ApplicationController
       redirect_with_flash("danger", "email_not_found", new_password_url) unless @user
     end
 
-    def email_verified?
-      redirect_with_flash("danger", "email_not_verified", login_url) unless @user.confirm
+    def check_for_confirmed_email
+      redirect_with_flash("danger", "email_not_verified", login_url) unless @user.confirmed
     end
 
-    def reset_link_expired?
-      redirect_with_flash("danger", "reset_link_expired", new_password_url) if @user.password_reset_expired?
+    def check_for_expired_link
+      redirect_with_flash("danger", "reset_link_expired", new_password_url) if @user.reset_password_token_expired?
     end
 
 end

@@ -10,7 +10,7 @@ namespace :admin do
       admin.name = name
       admin.password = password
       admin.role = 'admin'
-      admin.confirm = true
+      admin.confirmed = true
     end
     if @admin.save
       puts "The admin was created successfully"

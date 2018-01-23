@@ -7,7 +7,7 @@ class RegistrationsController < ApplicationController
   def create
     @user = User.new(permitted_params)
     if @user.save
-      redirect_with_flash("success", "confirm_email", login_url)
+      redirect_with_flash("success", "confirm_email", store_index_url)
     else
       render 'new'
     end

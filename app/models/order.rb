@@ -1,4 +1,6 @@
 class Order < ApplicationRecord
+  TIME_FORMAT = "%I:%M%p"
+  PREPARATION_TIME = 1800
   include TokenGenerator
 
   # associations
@@ -78,11 +80,13 @@ class Order < ApplicationRecord
   private
 
     def sufficient_preparation_time?
-      errors.add(:pick_up, "require half an hour to prepare order") if Time.parse(pick_up.strftime("%I:%M%p")) - Time.current < 1800
+      if Time.parse(pick_up.strftime(TIME_FORMAT)) - Time.current < PREPARATION_TIME
+        errors.add(:pick_up, "require half an hour to prepare order")
+      end
     end
 
     def future_pick_up?
-      errors.add(:pick_up, "already past this time. Enter future time") if Time.current > Time.parse(pick_up.strftime("%I:%M%p"))
+      errors.add(:pick_up, "already past this time. Enter future time") if Time.current > Time.parse(pick_up.strftime(TIME_FORMAT))
     end
 
     def valid_pick_up_time?
