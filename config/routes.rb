@@ -3,11 +3,6 @@ Rails.application.routes.draw do
     get :confirm_email, to: 'users#confirm_email'
   end
 
-  # get :edit_user_password, to: 'sessions#reset_password' # edit
-  # patch :edit_user_password, to: 'sessions#update_user_password'
-  # get :reset_password, to: 'sessions#forgot_password' # reset_password
-  # patch :reset_password, to: 'sessions#reset_password_link'
-
   controller :registrations do
     get :signup, action: :new
     post :signup, action: :create
