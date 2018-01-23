@@ -14,6 +14,7 @@ class User < ApplicationRecord
   # callbacks
   before_create :set_confirmation_token
   after_create :send_email_confirmation_mail, unless: :admin?
+  after_update :reset_password_token
 
   # associations
   has_many :comments, dependent: :destroy
@@ -46,5 +47,9 @@ class User < ApplicationRecord
 
     def set_confirmation_token
       self.confirmation_token = generate_token
+    end
+
+    def reset_password_token
+      update_attribute(:reset_password_token, nil)
     end
 end

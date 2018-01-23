@@ -6,16 +6,14 @@ class PasswordsController < ApplicationController
   before_action :check_for_empty_password, only: [:update]
 
   def create
-    if @user
-      @user.set_reset_password_token
-      @user.send_password_reset_email
-      redirect_with_flash("info", "password_reset_mail", store_index_path)
-    end
+    # to discuss. If we do this in after create callback then it will also run when we will create a new user
+    @user.set_reset_password_token
+    @user.send_password_reset_email
+    redirect_with_flash("info", "password_reset_mail", store_index_path)
   end
 
   def update
     if @user.update_attributes(user_params)
-      @user.update_attribute(:reset_password_token, nil)
       redirect_with_flash("success", "new_password_saved", login_url)
     else
       render 'new'
