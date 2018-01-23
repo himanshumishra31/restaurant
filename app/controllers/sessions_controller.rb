@@ -37,6 +37,7 @@ class SessionsController < ApplicationController
     end
 
     def logout_user
+      cookies.delete(:user_id)
       session.delete(:user_id)
       @current_user = nil
     end
