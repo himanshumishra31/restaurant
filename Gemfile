@@ -29,5 +29,6 @@ group :development do
   gem 'listen',                    '>= 3.0.5', '< 3.2'
   gem 'web-console',               '>= 3.3.0'
   gem 'letter_opener',              '1.4.1'
+  gem 'bullet'
 end
 

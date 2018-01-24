@@ -13,11 +13,7 @@
       <tr>
         <td><%= ingredient.name %></td>
         <td><%= number_to_currency(ingredient.price) %></td>
-        <% unless ingredient.category %>
-          <td>Veg</td>
-        <% else %>
-          <td> Non-veg</td>
-        <% end %>
+        <td><%= ingredient.category.capitalize.sub('_', ' ') %></td>
         <td><%= ingredient.extra_allowed %></td>
         <td><%= link_to 'Edit', edit_admin_ingredient_path(ingredient) %></td>
         <td><%= link_to 'Destroy', admin_ingredient_url(ingredient), method: :delete, data: { confirm: 'Are you sure?' } %></td>

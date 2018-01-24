@@ -1,11 +1,11 @@
 class Ingredient < ApplicationRecord
 
+
   # validation
   validates :name, :price, presence: true
   validates_uniqueness_of :name, case_sensitive: false
   validate :validate_price, if: :price?
-  validates :category, inclusion: [true, false]
-
+  validates :category, inclusion: { in: %w(veg non_veg), message: "not a valid category" }
 
   # associations
   has_many :meal_items, dependent: :destroy

@@ -9,13 +9,13 @@
     <th>Contact Number </th>
     <th>Cancel Order</th>
   </thead>
-<% @orders.each do |order| %>
+<% @orders.includes(:charge).each do |order| %>
     <tbody>
       <% if order.charge && (order.charge.status.eql? 'succeeded') %>
         <tr>
           <td><%= order.id %></td>
           <td>
-            <% order.cart.line_items.each do |line_item| %>
+            <% order.cart.line_items.includes(:meal).each do |line_item| %>
               <%= line_item.meal.name %>(<%= line_item.quantity %>)<br>
             <% end %>
           </td>

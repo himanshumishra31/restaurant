@@ -9,7 +9,6 @@ class User < ApplicationRecord
   validates :name, :email, presence: true
   validates :email, uniqueness: true, format: { with: EMAIL_VALIDATION_REGEX }, allow_blank: true
   validates :password, length: { minimum: 6 }, allow_blank: true
-  validates :password, presence: true
 
   # callbacks
   before_create :set_confirmation_token
