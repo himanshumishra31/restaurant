@@ -1,6 +1,6 @@
 <% inventories.each do |inventory| %>
   <tr>
-    <td> <%= Ingredient.find_by(id: inventory.ingredient_id).name %> </td>
+    <td> <%= inventory.ingredient.name %> </td>
     <td> <%= inventory.quantity %> </td>
     <td><%= link_to 'Edit', edit_admin_inventory_path(inventory), class: 'btn btn-primary btn-xs' %></td>
   </tr>

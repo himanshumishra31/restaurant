@@ -1,6 +1,6 @@
-<!-- <%= javascript_include_tag 'store' %> -->
-<%= stylesheet_link_tag 'store' %>
-<strong>Location: <%= session[:current_location]%></strong>
+<%= javascript_include_tag :store %>
+<%= stylesheet_link_tag :store %>
+<strong>Location: <%= cookies[:current_location]%></strong>
 <div id="cart" class="cart">
   <% if @cart %>
     <% unless @cart.line_items.empty? %>

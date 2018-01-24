@@ -12,7 +12,7 @@ class Admin::InventoriesController < Admin::BaseController
   def update
     if @inventory.update(permitted_params)
       @inventory.increment!(:quantity, params[:inventory][:quantity].to_i)
-      redirect_with_flash("success", "successfully_updated", admin_inventories_path(session[:current_location]))
+      redirect_with_flash("success", "successfully_updated", admin_inventories_path(cookies[:current_location]))
     else
       set_comments
       render :edit
@@ -27,11 +27,11 @@ class Admin::InventoriesController < Admin::BaseController
     end
 
     def set_inventories
-      @inventories = Inventory.where(branch: @branch)
+      @inventories = Inventory.includes(:ingredient).where(branch: @branch)
     end
 
     def set_session_branch
-      cookies[:current_location] = session[:current_location] = params[:branch] if params[:branch]
+      cookies[:current_location] = params[:branch] if params[:branch]
     end
 
     def permitted_params
@@ -44,7 +44,7 @@ class Admin::InventoriesController < Admin::BaseController
 
     def check_quantity
       if @inventory.quantity + params[:inventory][:quantity].to_i < 0
-        redirect_with_flash("danger", "invalid_quantity", admin_inventories_path(session[:current_location]))
+        redirect_with_flash("danger", "invalid_quantity", admin_inventories_path(cookies[:current_location]))
       end
     end
 end

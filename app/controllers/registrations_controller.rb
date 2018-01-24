@@ -9,7 +9,7 @@ class RegistrationsController < ApplicationController
     if @user.save
       redirect_with_flash("success", "confirm_email", store_index_url)
     else
-      render 'new'
+      render :new
     end
   end
 

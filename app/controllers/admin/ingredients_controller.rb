@@ -10,7 +10,7 @@ class Admin::IngredientsController < Admin::BaseController
     if @ingredient.save
       redirect_with_flash("success", "ingredient_created", admin_ingredients_url)
     else
-      render 'new'
+      render :new
     end
   end
 
@@ -22,7 +22,7 @@ class Admin::IngredientsController < Admin::BaseController
     if @ingredient.update(permitted_params)
       redirect_with_flash("success", "successfully_saved", admin_ingredients_url)
     else
-      render 'edit'
+      render :edit
     end
   end
 

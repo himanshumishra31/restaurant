@@ -19,7 +19,7 @@ class Meal < ApplicationRecord
   accepts_nested_attributes_for :meal_items, allow_destroy: true
 
   def isnonveg?
-    meal_items.any? { |meal_item| Ingredient.find_by(id: meal_item.ingredient_id).category }
+    meal_items.any? { |meal_item| Ingredient.find_by(id: meal_item.ingredient_id).category.eql? 'non_veg' }
   end
 
   def set_price

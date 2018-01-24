@@ -19,9 +19,9 @@
               </div>
               <div class="form-group">
                 <div class="col-lg-10">
-                  <%= form.radio_button :category, 0 %>
+                  <%= form.radio_button :category, 'veg' %>
                   <%= form.label :category_veg, 'Veg' %>
-                  <%= form.radio_button :category, 1 %>
+                  <%= form.radio_button :category, 'non_veg' %>
                   <%= form.label :category_nonveg, 'Non-Veg' %>
                   <%= display_error(:category, @ingredient) %>
                 </div>

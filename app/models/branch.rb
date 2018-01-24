@@ -15,7 +15,7 @@ class Branch < ApplicationRecord
 
   def available_meals
     available_meals = []
-    Meal.all.each { |meal| available_meals << meal if sufficient_stock?(meal) }
+    Meal.includes(:meal_items).includes(:ratings).all.each { |meal| available_meals << meal if sufficient_stock?(meal) }
     available_meals
   end
 
