@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
   end
 
   private
+    # FIX_ME_PG_2:- Optimize the code.
     def load_current_user
       if cookies.encrypted[:user_id]
         @current_user = User.find_by(id: cookies.encrypted[:user_id])

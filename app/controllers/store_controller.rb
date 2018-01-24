@@ -5,8 +5,11 @@ class StoreController < ApplicationController
   before_action :set_cart, only: [:index, :category]
   before_action :load_available_meals, only: [:index, :category]
   before_action :categorize_available_meals, only: [:index, :category]
+
+  # FIX_ME_PG_2:- I don't think we need this before_action.
   before_action :current_user
 
+  # FIX_ME_PG_2:- Lets load meals here according to filter(veg/non-veg).
   def index
     session[:category] = params["category"] || "both"
   end

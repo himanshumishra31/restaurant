@@ -19,6 +19,7 @@ class Branch < ApplicationRecord
     available_meals
   end
 
+  # FIX_ME_PG_2:- Make this private method.
   def sufficient_stock?(meal)
     meal.meal_items.each do |meal_item|
       branch_ingredient_quantity = inventories.find_by(ingredient_id: meal_item.ingredient_id).quantity
