@@ -28,14 +28,14 @@
         <% end %>
         <% if admin_logged_in? %>
           <li>
-            <%= form_tag admin_inventories_path, method: :get do %>
-              <%= select_tag 'branch', options_for_select(Branch.pluck(:name), cookies[:current_location]), onchange: 'this.form.submit()', class: 'location' %>
+            <%= form_tag admin_inventories_path, method: :get, 'data-dropdown': 'admin_dropdown_form' do %>
+              <%= select_tag 'branch', options_for_select(Branch.pluck(:name), cookies[:current_location]), class: 'location', "data-dropdown": "admin" %>
             <% end %>
           </li>
         <% else %>
           <li>
-            <%= form_tag store_index_path, method: :get do %>
-              <%= select_tag 'branch', options_for_select(Branch.pluck(:name), cookies[:current_location]), onchange: 'this.form.submit()', class: 'location' %>
+            <%= form_tag store_index_path, method: :get, 'data-dropdown': 'customer_dropdown_form' do %>
+              <%= select_tag 'branch', options_for_select(Branch.pluck(:name), cookies[:current_location]), class: 'location', "data-dropdown": "customer" %>
             <% end %>
           </li>
         <% end %>
