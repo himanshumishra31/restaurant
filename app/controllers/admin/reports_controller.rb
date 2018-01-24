@@ -12,19 +12,18 @@ class Admin::ReportsController < Admin::BaseController
     end
 
     # to discuss: by default date show in view
-
     def set_from_to_date
       if params[:from_date].present? && params[:to_date].present?
         @from_date = get_date_from_params(params[:from_date])
         @to_date = get_date_from_params(params[:to_date])
-        @orders = @branch.orders.by_date(@from_date, @to_date)
+        @orders = @branch.orders.includes(:charge).by_date(@from_date, @to_date)
       else
-        @orders = @branch.orders.by_date
+        @orders = @branch.orders.includes(:charge).by_date
       end
     end
 
     def set_low_inventories
-      @inventories = @branch.inventories.where('quantity < 2')
+      @inventories = @branch.inventories.includes(:ingredient).where('quantity < 2')
     end
 
     def set_popular_meal

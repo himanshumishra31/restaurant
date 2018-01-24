@@ -13,7 +13,7 @@
       <tr>
         <td><%= ingredient.name %></td>
         <td><%= number_to_currency(ingredient.price) %></td>
-        <td><%= ingredient.category.capitalize.sub('_', ' ') %></td>
+        <td><%= capitalize_and_remove_undescore(ingredient.category) %></td>
         <td><%= ingredient.extra_allowed %></td>
         <td><%= link_to 'Edit', edit_admin_ingredient_path(ingredient) %></td>
         <td><%= link_to 'Destroy', admin_ingredient_url(ingredient), method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -29,7 +29,7 @@
       <th>Name</th>
       <th>Quantity left</th>
     </tr>
-    <% @inventories.includes(:ingredient).each do |inventory| %>
+    <% @inventories.each do |inventory| %>
       <tr>
         <td><%= inventory.ingredient.name %></td>
         <td><%= inventory.quantity %></td>

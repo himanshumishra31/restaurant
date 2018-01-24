@@ -10,7 +10,7 @@ class Admin::BranchesController < Admin::BaseController
     if @branch.save
       redirect_with_flash("success", "branch_created", admin_branches_url)
     else
-      render 'new'
+      render :new
     end
   end
 
@@ -22,7 +22,7 @@ class Admin::BranchesController < Admin::BaseController
     if @branch.update(permitted_params)
       redirect_with_flash("success", "successfully_saved", admin_branches_url)
     else
-      render 'edit'
+      render :edit
     end
   end
 

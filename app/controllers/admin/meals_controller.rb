@@ -3,7 +3,7 @@ class Admin::MealsController < Admin::BaseController
   before_action :ingredient_exists?, only: [:update]
 
   def index
-    @meals = Meal.all
+    @meals = Meal.includes(:meal_items).includes(:ingredients)
   end
 
   def create
@@ -11,7 +11,7 @@ class Admin::MealsController < Admin::BaseController
     if @meal.save
       redirect_with_flash("success", "meal_created", admin_meals_path)
     else
-      render 'new'
+      render :new
     end
   end
 
@@ -19,7 +19,7 @@ class Admin::MealsController < Admin::BaseController
     if @meal.update(permitted_params)
       redirect_with_flash("success", "successfully_saved", admin_meals_url)
     else
-      render 'edit'
+      render :edit
     end
   end
 

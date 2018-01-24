@@ -12,12 +12,12 @@ class UsersController < ApplicationController
     if @user.update(permitted_params)
       redirect_with_flash("success", "successfully_saved", store_index_url)
     else
-      render 'edit'
+      render :edit
     end
   end
 
   def myorders
-    @orders = current_user.orders
+    @orders = current_user.orders.includes(:charge).includes(:branch).includes(:cart)
   end
 
   private

@@ -27,7 +27,7 @@ class Admin::InventoriesController < Admin::BaseController
     end
 
     def set_inventories
-      @inventories = Inventory.where(branch: @branch)
+      @inventories = Inventory.includes(:ingredient).where(branch: @branch)
     end
 
     def set_session_branch

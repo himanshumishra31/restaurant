@@ -14,7 +14,7 @@
 <% end %>
 <br>
 <br>
-<% if (session[:category].eql? 'veg') || (session[:category].eql? 'both') %>
+<% if veg_or_both_category %>
   <% @available_veg_meals.each do |available_meal| %>
     <div class="col-md-4" id="<%= available_meal.id %>" data-name ="item_div">
       <%= image_tag(available_meal.picture, size: "150x150") %>
@@ -34,7 +34,7 @@
     </div>
   <% end %>
 <% end %>
-<% if (session[:category].eql? 'non_veg') || (session[:category].eql? 'both') %>
+<% if non_veg_or_both_category %>
   <% @available_non_veg_meals.each do |available_meal| %>
     <div class="col-md-4" id="<%= available_meal.id %>" data-name ="item_div">
       <%= image_tag(available_meal.picture, size: "150x150") %>

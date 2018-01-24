@@ -199,7 +199,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootstrap-sass (~> 3.3.7)
-  bullet
+  bullet (= 5.7.2)
   byebug
   coffee-rails (~> 4.2)
   figaro (= 1.1.1)

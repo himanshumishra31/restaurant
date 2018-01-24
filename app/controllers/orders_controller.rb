@@ -11,7 +11,7 @@ class OrdersController < ApplicationController
     if @order.save
       redirect_with_flash("success", "successfully_placed", new_charge_path)
     else
-      render 'new'
+      render :new
     end
   end
 

@@ -1,11 +1,13 @@
 class Ingredient < ApplicationRecord
 
+  VALID_CATEGORIES = ['veg', 'non_veg']
+  ERROR_MESSAGE = "not a valid category"
 
   # validation
   validates :name, :price, presence: true
   validates_uniqueness_of :name, case_sensitive: false
   validate :validate_price, if: :price?
-  validates :category, inclusion: { in: %w(veg non_veg), message: "not a valid category" }
+  validates :category, inclusion: { in: VALID_CATEGORIES, message: ERROR_MESSAGE }
 
   # associations
   has_many :meal_items, dependent: :destroy

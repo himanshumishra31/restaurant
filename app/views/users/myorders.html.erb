@@ -9,9 +9,9 @@
     <th>Contact Number </th>
     <th>Cancel Order</th>
   </thead>
-<% @orders.includes(:charge).each do |order| %>
+<% @orders.each do |order| %>
     <tbody>
-      <% if order.charge && (order.charge.status.eql? 'succeeded') %>
+      <% if order_payment_successful(order) %>
         <tr>
           <td><%= order.id %></td>
           <td>

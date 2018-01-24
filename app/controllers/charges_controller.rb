@@ -13,7 +13,7 @@ class ChargesController < ApplicationController
       redirect_with_flash("success", "payment_success", store_index_path)
     else
       flash[:danger] = charge.errors.messages.values.split.join(', ')
-      render 'new'
+      render :new
     end
   end
 
