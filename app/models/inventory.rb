@@ -13,6 +13,6 @@ class Inventory < ApplicationRecord
 
   private
     def validate_quantity
-      errors.add(:quantity, ' cannot be a negative number') if quantity < 0
+      errors.add(:quantity) if quantity < 0
     end
 end

@@ -81,17 +81,17 @@ class Order < ApplicationRecord
 
     def sufficient_preparation_time?
       if Time.parse(pick_up.strftime(TIME_FORMAT)) - Time.current < PREPARATION_TIME
-        errors.add(:pick_up, "require half an hour to prepare order")
+        errors.add(:pick_up, error_message('insufficient_time'))
       end
     end
 
     def future_pick_up?
-      errors.add(:pick_up, "already past this time. Enter future time") if Time.current > Time.parse(pick_up.strftime(TIME_FORMAT))
+      errors.add(:pick_up) if Time.current > Time.parse(pick_up.strftime(TIME_FORMAT))
     end
 
     def valid_pick_up_time?
       unless pick_up.between?(branch.opening_time, branch.closing_time)
-        errors.add(:pick_up, "should be between branch timings" )
+        errors.add(:pick_up, error_message('invalid_timings') )
       end
     end
 
@@ -101,5 +101,9 @@ class Order < ApplicationRecord
 
     def feedback_token
       update_columns(feedback_digest: generate_token, feedback_email_sent_at: Time.current)
+    end
+
+    def error_message(message)
+      I18n.t(message, scope: [:activerecord, :errors, :models, :order, :attributes, :pick_up])
     end
 end

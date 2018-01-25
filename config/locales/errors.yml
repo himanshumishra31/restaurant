@@ -1,0 +1,31 @@
+en:
+  quantity: 'quantity must be positive'
+  activerecord:
+    errors:
+      models:
+        branch:
+          attributes:
+            opening_time:
+              invalid: "should be before closing time"
+
+        ingredient:
+          attributes:
+            price:
+              invalid: 'Should be positive'
+
+        inventory:
+          attributes:
+            quantity:
+              invalid: 'cannot be a negative number'
+
+        meal:
+          attributes:
+            meal_items:
+              invalid: "atleast one must present"
+
+        order:
+          attributes:
+            pick_up:
+              insufficient_time: "require half an hour to prepare order"
+              invalid: 'already past this time. Please Enter a time in future'
+              invalid_timings: 'pick up a time between branch timings'

@@ -41,7 +41,7 @@ class Admin::MealsController < Admin::BaseController
 
   private
     def permitted_params
-      params.require(:meal).permit(:name, :active, :picture, meal_items_attributes: [:id, :ingredient_id, :quantity, :_destroy])
+      params.require(:meal).permit(:name, :active, :image, meal_items_attributes: [:id, :ingredient_id, :quantity, :_destroy])
     end
 
     def set_meal

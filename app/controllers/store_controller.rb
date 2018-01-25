@@ -4,15 +4,11 @@ class StoreController < ApplicationController
   before_action :set_branch, only: [:index, :category]
   before_action :set_cart, only: [:index, :category]
   before_action :load_available_meals, only: [:index, :category]
-  before_action :categorize_available_meals, only: [:index, :category]
+  before_action :load_meals_by_category, only: [:index, :category]
 
   # FIX_ME_PG_2:- I don't think we need this before_action.
-  before_action :current_user
 
   # FIX_ME_PG_2:- Lets load meals here according to filter(veg/non-veg).
-  def index
-    session[:category] = params["category"] || "both"
-  end
 
   def set_session_branch
     if params[:branch]
@@ -32,15 +28,14 @@ class StoreController < ApplicationController
       @available_meals = @branch.available_meals
     end
 
-    def categorize_available_meals
-      @available_veg_meals = []
-      @available_non_veg_meals = []
-      @available_meals.each do |meal|
-        if meal.isnonveg?
-          @available_non_veg_meals << meal
-        else
-          @available_veg_meals << meal
-        end
+    def load_meals_by_category
+      session[:category] = params["category"] || "both"
+      if session[:category].eql? 'veg'
+        @meals = @available_meals.select { |meal| meal.veg? }
+      elsif session[:category].eql? 'non_veg'
+        @meals = @available_meals.select { |meal| meal.non_veg? }
+      else
+        @meals = @available_meals
       end
     end
 end

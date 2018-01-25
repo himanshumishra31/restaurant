@@ -3,5 +3,5 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.precompile += %w( jquery_nested_form.js )
 Rails.application.config.assets.precompile += %w( store.js )
 Rails.application.config.assets.precompile += %w( order.js )
-Rails.application.config.assets.precompile += %w( store.css branch_dropdown.js )
+Rails.application.config.assets.precompile += %w( store.css branch_dropdown.js meal_category.js )
 
