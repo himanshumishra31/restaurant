@@ -23,7 +23,7 @@ class Branch < ApplicationRecord
 
   private
     def sufficient_stock?(meal)
-      return meal.meal_items.all? { |meal_item| inventories.find_by(ingredient_id: meal_item.ingredient_id).quantity >= meal_item.quantity }
+      meal.meal_items.all? { |meal_item| inventories.find_by(ingredient_id: meal_item.ingredient_id).quantity >= meal_item.quantity }
     end
 
     def validate_timings

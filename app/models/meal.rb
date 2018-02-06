@@ -37,7 +37,7 @@ class Meal < ApplicationRecord
 
   # FIX_ME_PG_2:- Optimize the code. Also try to use association here. - done
   def set_price
-    update_columns(price: ((ENV["PROFIT_PERCENT"].to_i + 100) * 0.01 * meal_items.sum(&:meal_item_price)))
+    update_columns(price: ((ENV["PROFIT_PERCENT"].to_i + 100) * 0.01 * meal_items.sum(&:ingredient_price_in_meal)))
   end
 
   private
