@@ -13,13 +13,10 @@ class Branch < ApplicationRecord
   # callbacks
   after_create :set_inventories
 
-  def available_meals
-    available_meals = []
-    Meal.includes(:meal_items).includes(:ratings).all.each { |meal| available_meals << meal if sufficient_stock?(meal) }
-    available_meals
-  end
 
-  # FIX_ME_PG_2:- Make this private method. -done
+  def available_meals
+    Meal.includes(:meal_items).includes(:ratings).select { |meal| meal if sufficient_stock?(meal) }
+  end
 
   private
     def sufficient_stock?(meal)

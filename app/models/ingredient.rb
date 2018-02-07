@@ -1,6 +1,6 @@
 class Ingredient < ApplicationRecord
 
-  VALID_CATEGORIES = ['veg', 'non_veg']
+ VALID_CATEGORIES = { veg: 'veg', non_veg: 'non_veg' }
   ERROR_MESSAGE = "not a valid category"
 
   # validation
@@ -17,6 +17,9 @@ class Ingredient < ApplicationRecord
   # callbacks
   after_create :set_inventory
   after_update :update_meal_price
+
+  scope :veg, -> { where(category: VALID_CATEGORIES[:veg] )}
+  scope :non_veg, -> { where(category: VALID_CATEGORIES[:non_veg] )}
 
   private
     def validate_price

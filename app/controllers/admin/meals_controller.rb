@@ -3,7 +3,7 @@ class Admin::MealsController < Admin::BaseController
   before_action :ingredient_exists?, only: [:update]
 
   def index
-    @meals = Meal.includes(:meal_items).includes(:ingredients)
+    @meals = Meal.includes(:meal_items, :ingredient)
   end
 
   def create

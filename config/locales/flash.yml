@@ -4,6 +4,11 @@ en:
       create:
         success:
           confirm_email: 'Please Confirm Your email'
+      confirm_email:
+        success:
+          email_confirmed: "Your email has been confirmed. Please sign in to continue."
+        danger:
+          already_confirmed: 'Your email has been already confirmed. Please log in.'
 
     passwords:
       create:
@@ -59,7 +64,7 @@ en:
     orders:
       new:
         danger:
-          login: 'Please Log In to Place Order'
+          login_to_continue: 'Please Log In to Place Order'
 
       destroy:
         success:
@@ -88,17 +93,17 @@ en:
           invalid_credentials: 'Invalid Email / Password'
           email_not_found: 'Email address Not found'
 
+      destroy:
+        success:
+          logged_out: 'Successfully logged out.'
+
     users:
       edit:
         danger:
           login_to_continue: 'Please Log in'
           other_account: "Can't edit others account"
 
-      confirm_email:
-        success:
-          email_confirmed: "Your email has been confirmed. Please sign in to continue."
-        danger:
-          already_confirmed: 'Your email has been already confirmed. Please log in.'
+
 
       update:
         success:

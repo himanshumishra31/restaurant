@@ -1,5 +1,4 @@
 class OrdersController < ApplicationController
-  include CurrentCart
   before_action :set_branch, only: [:create, :new]
   before_action :set_cart, only: [:create, :new]
   before_action :check_sufficient_stock, only: [:create]
@@ -23,13 +22,8 @@ class OrdersController < ApplicationController
     end
   end
 
-
   def new
-    if current_user
-      @order = Order.new
-    else
-      redirect_with_flash("danger", "login", login_path)
-    end
+    @order = Order.new
   end
 
   def destroy

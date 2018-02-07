@@ -1,5 +1,6 @@
 class Admin::InventoriesController < Admin::BaseController
   before_action :set_session_branch, only: [:index, :edit, :update]
+  # FIX_ME
   before_action :set_branch, only: [:index, :edit, :update]
   before_action :set_inventory, only: [:edit, :update]
   before_action :set_inventories, only: [:index]

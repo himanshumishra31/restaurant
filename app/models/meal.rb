@@ -28,16 +28,16 @@ class Meal < ApplicationRecord
 
   # FIX_ME_PG_2:- Create 2 methods:- veg? and non_veg?. Also code can be optimized here. -done
   def non_veg?
-    meal_items.includes(:ingredient).any? { |meal_item| meal_item.ingredient.category.eql? 'non_veg' }
+    meal_items.includes(:ingredient).any? { |meal_item| meal_item.ingredient.in?(Ingredient.non_veg) }
   end
 
   def veg?
-    meal_items.includes(:ingredient).all? { |meal_item| meal_item.ingredient.category.eql? 'veg' }
+    meal_items.includes(:ingredient).all? { |meal_item| meal_item.ingredient.in?(Ingredient.veg) }
   end
 
   # FIX_ME_PG_2:- Optimize the code. Also try to use association here. - done
   def set_price
-    update_columns(price: ((ENV["PROFIT_PERCENT"].to_i + 100) * 0.01 * meal_items.sum(&:ingredient_price_in_meal)))
+    update_columns(price: ((ENV["PROFIT_PERCENT"].to_i + 100) * 0.01 * meal_items.sum(&:total_price)))
   end
 
   private

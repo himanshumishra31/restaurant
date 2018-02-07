@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
-  scope :account do
-    get :confirm_email, to: 'users#confirm_email'
-  end
 
   controller :registrations do
     get :signup, action: :new
     post :signup, action: :create
+    # get 'users:id/confirm_email', to: :confirm_email
+  end
+
+  resources :registrations, only: [] do
+    get :confirm_email, on: :member
   end
 
   resources :passwords, only: [:new, :edit, :create, :update]
@@ -37,7 +39,6 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:edit, :update] do
-    get :confirm_email, on: :member
     get :myorders, on: :collection
   end
 

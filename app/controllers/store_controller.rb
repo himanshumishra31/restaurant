@@ -1,5 +1,5 @@
 class StoreController < ApplicationController
-  include CurrentCart
+  skip_before_action :authenticate_user!
   before_action :set_session_branch, only: [:index, :category]
   before_action :set_branch, only: [:index, :category]
   before_action :set_cart, only: [:index, :category]
@@ -10,19 +10,19 @@ class StoreController < ApplicationController
 
   # FIX_ME_PG_2:- Lets load meals here according to filter(veg/non-veg).
 
-  def set_session_branch
-    if params[:branch]
-      cookies[:current_location] = params[:branch]
-      session[:cart_id] = nil
-    end
-  end
-
   def category
     output = render_to_string partial: "store/meals"
     render json: { output: output }
   end
 
   private
+
+    def set_session_branch
+      if params[:branch]
+        cookies[:current_location] = params[:branch]
+        session[:cart_id] = nil
+      end
+    end
 
     def load_available_meals
       @available_meals = @branch.available_meals

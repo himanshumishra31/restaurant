@@ -7,7 +7,7 @@ class MealItem < ApplicationRecord
   # validations
   validates :quantity, presence: true
 
-  def ingredient_price_in_meal
+  def total_price
     quantity * ingredient.price
   end
 end

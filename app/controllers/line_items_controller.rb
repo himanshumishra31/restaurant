@@ -1,10 +1,11 @@
 class LineItemsController < ApplicationController
-  include CurrentCart
+  skip_before_action :authenticate_user!
   before_action :set_cart
   before_action :set_line_item, only: [:update_quantity, :destroy, :update]
   before_action :set_branch, only: [:create, :update]
   before_action :extra_ingredient, only: [:update]
   before_action :set_meal, only: [:create]
+  before_action :check_stock, only: [:update]
 
   def create
     @line_item = @cart.add_meal(@meal)
@@ -20,21 +21,24 @@ class LineItemsController < ApplicationController
   end
 
   def update
-    ingredient = Ingredient.find_by(name: params[:line_item][:extra_ingredient])
-    if @line_item.ingredient_left(ingredient, @branch)
-      @line_item.update_columns(extra_ingredient: params[:line_item][:extra_ingredient])
-      redirect_with_flash("success", "extra_ingredient_added", store_index_url)
-    else
-      redirect_with_flash("danger", "insufficient_stock", store_index_url)
-    end
+    @line_item.update_columns(extra_ingredient: params[:line_item][:extra_ingredient])
+    redirect_with_flash("success", "extra_ingredient_added", store_index_url)
   end
 
   private
+
+    def check_stock
+      ingredient = Ingredient.find_by(name: params[:line_item][:extra_ingredient])
+      unless @line_item.ingredient_left(ingredient, @branch)
+        redirect_with_flash("danger", "insufficient_stock", store_index_url)
+      end
+    end
 
     def set_meal
       @meal = Meal.find_by(id: params[:meal_id])
       redirect_with_flash("danger", "not_found", store_index_url) unless @meal
     end
+
     def extra_ingredient
       redirect_with_flash("danger", "no_select", store_index_path) unless params[:line_item][:extra_ingredient].present?
     end
