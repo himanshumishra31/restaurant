@@ -1,56 +1,30 @@
 <br>
 <br>
-<% if @available_non_veg_meals.any? || @available_veg_meals.any? %>
-  <%= form_tag store_index_path, method: :get do %>
+<% if @meals.any? %>
+  <%= form_tag store_index_path, method: :get, data: { category: :options } do %>
+    <%= radio_button_tag 'category', 'veg', (session[:category].eql? 'veg') %>
     <%= label_tag 'category_veg', 'Only Veg' %>
-    <%= radio_button_tag 'category', 'veg', (session[:category].eql? 'veg'), { onclick: 'this.form.submit()' } %>
+    <%= radio_button_tag 'category', 'non_veg', (session[:category].eql? 'non_veg') %>
     <%= label_tag 'category_non_veg', 'Only Non Veg' %>
-    <%= radio_button_tag 'category', 'non_veg', (session[:category].eql? 'non_veg'), { onclick: 'this.form.submit()' } %>
+    <%= radio_button_tag 'category', 'both', (session[:category].eql? 'both') %>
     <%= label_tag 'category_both', 'All Meals' %>
-    <%= radio_button_tag 'category', 'both', (session[:category].eql? 'both'), { onclick: 'this.form.submit()' } %>
   <% end %>
 <% else %>
   <strong> No Available Meals</strong>
 <% end %>
 <br>
 <br>
-<% if veg_or_both_category %>
-  <% @available_veg_meals.each do |available_meal| %>
-    <div class="col-md-4" id="<%= available_meal.id %>" data-name ="item_div">
-      <%= image_tag(available_meal.picture, size: "150x150") %>
-      <p>
-        <div class="foo green"></div>
-        <%= available_meal.name %>
-      </p>
-      <p><strong><%= number_to_currency(available_meal.price) %></strong></p>
-      <p><%= button_to 'Add To Cart', line_items_path(meal_id: available_meal), remote: true, class: 'btn btn-primary'  %></p>
-      <p><strong>Rating:
-        <% if available_meal.ratings.blank? %>
-          Not Yet Rated
-        <% else %>
-          <%= available_meal.ratings.average(:value) %>
-        <% end %>
-      </strong></p>
-    </div>
-  <% end %>
-<% end %>
-<% if non_veg_or_both_category %>
-  <% @available_non_veg_meals.each do |available_meal| %>
-    <div class="col-md-4" id="<%= available_meal.id %>" data-name ="item_div">
-      <%= image_tag(available_meal.picture, size: "150x150") %>
-      <p>
-        <div class="foo red"></div>
-        <%= available_meal.name %>
-      </p>
-      <strong><%= number_to_currency(available_meal.price) %></strong>
-      <p><%= button_to 'Add To Cart', line_items_path(meal_id: available_meal), remote: true, class: 'btn btn-primary' %></p>
-      <p><strong>Rating:
-        <% if available_meal.ratings.blank? %>
-          Not Yet Rated
-        <% else %>
-          <%= available_meal.ratings.average(:value) %>
-        <% end %>
-      </strong></p>
-    </div>
-  <% end %>
+<% @meals.each do |available_meal| %>
+  <div class="col-md-4" id="<%= available_meal.id %>" data-name ="item_div">
+    <%= image_tag(available_meal.image, size: "150x150") %><br><br>
+    <p><strong>Price: <%= number_to_currency(available_meal.price) %></strong></p>
+    <p><%= button_to 'Add To Cart', line_items_path(meal_id: available_meal), remote: true, class: 'btn btn-primary'  %></p>
+    <p><strong>Rating:
+      <% if meal_rated?(available_meal) %>
+        Not Yet Rated
+      <% else %>
+        <%= average_rating(available_meal) %>
+      <% end %>
+    </strong></p>
+  </div>
 <% end %>

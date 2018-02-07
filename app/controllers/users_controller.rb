@@ -27,8 +27,8 @@ class UsersController < ApplicationController
     end
 
     def validate_user
-      @user = User.find(session[:user_id])
-      redirect_with_flash("danger", "other_account", login_url) unless @user == current_user
+      @user = User.find_by(session[:user_id])
+      redirect_with_flash("danger", "other_account", login_url) unless @user == @current_user
     end
 
     def load_user

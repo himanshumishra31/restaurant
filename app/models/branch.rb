@@ -19,18 +19,15 @@ class Branch < ApplicationRecord
     available_meals
   end
 
-  def sufficient_stock?(meal)
-    meal.meal_items.each do |meal_item|
-      branch_ingredient_quantity = inventories.find_by(ingredient_id: meal_item.ingredient_id).quantity
-      return false if branch_ingredient_quantity < meal_item.quantity
-    end
-    true
-  end
+  # FIX_ME_PG_2:- Make this private method. -done
 
   private
+    def sufficient_stock?(meal)
+      meal.meal_items.all? { |meal_item| inventories.find_by(ingredient_id: meal_item.ingredient_id).quantity >= meal_item.quantity }
+    end
 
     def validate_timings
-      errors.add(:opening_time, "should be before closing time") if closing_time < opening_time
+      errors.add(:opening_time) if closing_time < opening_time
     end
 
     def set_inventories

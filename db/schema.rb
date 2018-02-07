@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180124044819) do
+ActiveRecord::Schema.define(version: 20180206055239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,16 +99,15 @@ ActiveRecord::Schema.define(version: 20180124044819) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "active"
-    t.string "picture_file_name"
-    t.string "picture_content_type"
-    t.integer "picture_file_size"
-    t.datetime "picture_updated_at"
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "orders", force: :cascade do |t|
     t.time "pick_up"
     t.string "phone_number"
-    t.bigint "cart_id"
     t.bigint "user_id"
     t.bigint "branch_id"
     t.datetime "created_at", null: false
@@ -117,6 +116,7 @@ ActiveRecord::Schema.define(version: 20180124044819) do
     t.boolean "picked", default: false
     t.string "feedback_digest"
     t.datetime "feedback_email_sent_at"
+    t.bigint "cart_id"
     t.index ["branch_id"], name: "index_orders_on_branch_id"
     t.index ["cart_id"], name: "index_orders_on_cart_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(version: 20180124044819) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.integer "role", default: 0
+    t.string "str"
   end
 
   add_foreign_key "line_items", "carts"
