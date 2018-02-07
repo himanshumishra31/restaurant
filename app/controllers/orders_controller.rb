@@ -23,7 +23,6 @@ class OrdersController < ApplicationController
     end
   end
 
-
   def new
     if current_user
       @order = Order.new

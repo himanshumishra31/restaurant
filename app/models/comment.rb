@@ -7,3 +7,5 @@ class Comment < ApplicationRecord
   # validations
   validates :body, presence: true
 end
+
+#FIX_ME:- Lets think of better architecture for commenting on inventory.

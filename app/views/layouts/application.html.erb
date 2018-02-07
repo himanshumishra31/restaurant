@@ -5,10 +5,14 @@
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag :application, media: :all %>
     <%= javascript_include_tag :application %>
+
+    <!-- FIX_ME_PG_3:- Move this to the file where the branch dropdown is present. -->
     <%= javascript_include_tag :branch_dropdown %>
   </head>
   <body>
     <%= render 'layouts/header' %>
+
+    <!-- FIX_ME_PG_3:- lets move this to flash partial -->
     <div class="container-page">
       <% flash.each do |key, value| %>
         <div class="alert alert-<%= key %>"><%= value %></div>

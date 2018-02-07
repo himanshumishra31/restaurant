@@ -1,7 +1,9 @@
 <br>
 <br>
+<!-- FIX_ME_PG_3:- Move this to separate filter partial -->
 <% if @meals.any? %>
-  <%= form_tag store_index_path, method: :get, data: { category: :options } do %>
+  <%= form_tag store_index_path, method: :get, data: { category: :options }, remote: true do %>
+    <!--FIX_ME_PG_3:-  Lets itegrate to valid categories and build radio tags except for `All Meal` -->
     <%= radio_button_tag 'category', 'veg', (session[:category].eql? 'veg') %>
     <%= label_tag 'category_veg', 'Only Veg' %>
     <%= radio_button_tag 'category', 'non_veg', (session[:category].eql? 'non_veg') %>

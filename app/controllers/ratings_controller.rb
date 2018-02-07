@@ -1,6 +1,5 @@
 class RatingsController < ApplicationController
 
-
   def rate_meals
     params[:ratings].each do |rating_params|
       if rating_params[:value].present?

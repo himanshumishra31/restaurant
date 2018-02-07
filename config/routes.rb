@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  scope :account do
-    get :confirm_email, to: 'users#confirm_email'
+  controller :sessions do
+    get :login, action: :new
+    post :login, action: :create
+    delete :logout, action: :destroy
   end
 
   controller :registrations do
@@ -10,10 +12,10 @@ Rails.application.routes.draw do
 
   resources :passwords, only: [:new, :edit, :create, :update]
 
-  controller :sessions do
-    get :login, action: :new
-    post :login, action: :create
-    delete :logout, action: :destroy
+  resources :users, only: [:edit, :update] do
+    # FIX_ME:- Should this be a get request or something else. Also move the route to registration.
+    get :confirm_email, on: :member
+    get :myorders, on: :collection
   end
 
   namespace :admin do
@@ -36,11 +38,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: [:edit, :update] do
-    get :confirm_email, on: :member
-    get :myorders, on: :collection
-  end
-
   resources :orders do
     member do
       get :feedback
@@ -48,6 +45,7 @@ Rails.application.routes.draw do
   end
 
   root 'store#index', as: 'store_index'
+  # FIX_ME_PG_3:- Is this route in use?
   get :category, to: 'store#category', as: 'store_category'
 
   resources :line_items do
@@ -57,7 +55,7 @@ Rails.application.routes.draw do
   end
 
   resources :carts, only: [:update, :destroy]
-  resources :orders, only: [:create, :new, :destroy ]
+  resources :orders, only: [:create, :new, :destroy]
   resources :charges, only: [:create, :new]
 
   controller :ratings do

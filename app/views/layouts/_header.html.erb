@@ -4,6 +4,7 @@
       <ul class="nav navbar-nav navbar-right">
         <% if @current_user %>
           <li class="text-danger "><a href="#" class="text-left"><strong>Hi <%= @current_user.name %></strong></a></li>
+          <!-- FIX_ME_PG_3:- Lets just check here if user is admin or not? -->
           <% if admin_logged_in? %>
             <li><%= link_to "Branches", admin_branches_path %></li>
             <li><%= link_to "Ingredients", admin_ingredients_path %></li>
@@ -27,7 +28,9 @@
           <li><%= link_to 'Home',  store_index_path %></li>
         <% end %>
         <li>
+          <!-- FIX_ME_PG_3:- Move this to separate partial. -->
           <%= form_tag admin_logged_in? ? admin_inventories_path : store_index_path, method: :get, 'data-dropdown': 'dropdown_form' do %>
+            <!-- FIX_ME_PG_3:- Lets move the logic to helper `def branches_name_collection` -->
             <%= select_tag 'branch', options_for_select(Branch.pluck(:name), cookies[:current_location]), class: 'location', "data-dropdown": "dropdown_box" %>
           <% end %>
         </li>

@@ -9,18 +9,22 @@
     <th>Contact Number </th>
     <th>Cancel Order</th>
   </thead>
+<!-- FIX_ME_PG_3:- <tbody> tag is generated for each order. Please maintain a proper structure. -->
 <% @orders.each do |order| %>
     <tbody>
+      <!-- FIX_ME_PG_3:- What is the need for this condition? -->
       <% if order_payment_successful(order) %>
         <tr>
           <td><%= order.id %></td>
           <td>
             <% order.cart.line_items.includes(:meal).each do |line_item| %>
+              <!-- FIX_ME_PG_3:- Lets deletage the name here to line_item. -->
               <%= line_item.meal.name %>(<%= line_item.quantity %>)<br>
             <% end %>
           </td>
           <td><%= order.pick_up.strftime("%I:%M %p") %></td>
           <td><%= number_to_currency(order.charge.amount) %></td>
+          <!-- FIX_ME_PG_3:- Lets deletage the fields here to order. -->
           <td><%= order.branch.name %></td>
           <td><%= order.branch.address %></td>
           <td><%= order.branch.contact_number %></td>

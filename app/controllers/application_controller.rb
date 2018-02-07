@@ -16,7 +16,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_branch
-    cookies[:current_location] = Branch.find_by(default: true).name unless cookies[:current_location]
+    cookies[:current_location] ||= Branch.find_by(default: true).name
+    # cookies[:current_location] = Branch.find_by(default: true).name unless cookies[:current_location]
     @branch = Branch.find_by(name: cookies[:current_location])
   end
 

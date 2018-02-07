@@ -1,6 +1,9 @@
 <%= javascript_include_tag :store %>
+<%= javascript_include_tag :meal_category %>
 <%= stylesheet_link_tag :store %>
-<strong>Location: <%= cookies[:current_location]%></strong>
+
+<!-- FIX_ME_PG_3:- Lets use @branch variable here all over the code. -->
+<strong>Location: <%= cookies[:current_location] %></strong>
 <div id="cart" class="cart">
   <% if @cart %>
     <% unless @cart.line_items.empty? %>
