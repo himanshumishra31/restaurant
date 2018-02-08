@@ -7,26 +7,36 @@
     <th>Branch </th>
     <th>Pick up Address </th>
     <th>Contact Number </th>
+    <th>Order prepared</th>
+    <th>Order picked</th>
+    <th>Payment status</th>
     <th>Cancel Order</th>
   </thead>
-<% @orders.each do |order| %>
-    <tbody>
-      <% if order_payment_successful(order) %>
-        <tr>
-          <td><%= order.id %></td>
-          <td>
-            <% order.cart.line_items.includes(:meal).each do |line_item| %>
-              <%= line_item.meal.name %>(<%= line_item.quantity %>)<br>
-            <% end %>
-          </td>
-          <td><%= order.pick_up.strftime("%I:%M %p") %></td>
-          <td><%= number_to_currency(order.charge.amount) %></td>
-          <td><%= order.branch.name %></td>
-          <td><%= order.branch.address %></td>
-          <td><%= order.branch.contact_number %></td>
-          <td><%= link_to 'Cancel', order_url(order), method: :delete, data: { confirm: 'Are you Sure?' },class: 'btn btn-primary btn-xs' %></td>
-        </tr>
-      <% end %>
-    </tbody>
-<% end %>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <td>
+          <% order.cart.line_items.includes(:meal).each do |line_item| %>
+            <%= line_item.meal.name %>(<%= line_item.quantity %>)<br>
+          <% end %>
+        </td>
+        <td><%= order.pick_up.strftime("%I:%M %p") %></td>
+        <td><%= number_to_currency(order.cart.total_price) %></td>
+        <td><%= order.branch_name %></td>
+        <td><%= order.branch_address %></td>
+        <td><%= order.branch_contact_number %></td>
+        <td><%= order.ready %></td>
+        <td><%= order.picked %></td>
+        <td>
+          <% if order.charge %>
+            <%= order.charge.status %>
+          <% else %>
+            <%= link_to 'Please Pay', new_charge_path, method: :get, class: 'btn btn-primary btn-xs' %>
+          <% end %>
+        </td>
+        <td><%= link_to 'Cancel', order_url(order), method: :delete, data: { confirm: 'Are you Sure?' },class: 'btn btn-primary btn-xs' %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>

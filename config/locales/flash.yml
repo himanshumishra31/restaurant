@@ -76,7 +76,7 @@ en:
         danger:
           insufficient_stock: 'Sorry Ingredient is not in sufficient quantity. Please again create your cart'
         success:
-          successfully_placed: 'Order is successfully placed.'
+          successfully_placed: 'Order is successfully placed. It will be cancelled after 24 hours'
 
       feedback:
         danger:

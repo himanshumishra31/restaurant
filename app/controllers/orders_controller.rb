@@ -1,5 +1,4 @@
 class OrdersController < ApplicationController
-  before_action :set_branch, only: [:create, :new]
   before_action :set_cart, only: [:create, :new]
   before_action :check_sufficient_stock, only: [:create]
   before_action :set_order, only: [:feedback]

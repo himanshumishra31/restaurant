@@ -1,6 +1,7 @@
 class StoreController < ApplicationController
   skip_before_action :authenticate_user!
   before_action :set_session_branch, only: [:index, :category]
+  # FIX_ME
   before_action :set_branch, only: [:index, :category]
   before_action :set_cart, only: [:index, :category]
   before_action :load_available_meals, only: [:index, :category]

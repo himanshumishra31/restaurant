@@ -1,12 +1,17 @@
-<strong> Inventory: <%= @branch.name %> </strong>
-<table class="table table-hover stock">
-  <thead>
-    <tr>
-      <th> Name </th>
-      <th> Quantity </th>
-      <th></th>
-    </tr>
-    <%= render partial: 'inventory', locals: { inventories: @inventories } %>
-  </thead>
-</table>
-
+<div class="container">
+  <h2 class="text-center text-uppercase">Inventory</h2>
+  <div class="table-responsive margin-top-30">
+    <table class="table table-hover table-striped" border="2">
+      <thead>
+        <tr>
+          <th> Name </th>
+          <th> Quantity </th>
+          <th></th>
+        </tr>
+        <tbody>
+          <%= render partial: 'inventory', locals: { inventories: @inventories } %>
+        </tbody>
+      </thead>
+    </table>
+  </div>
+</div>

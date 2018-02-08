@@ -2,7 +2,6 @@ class LineItemsController < ApplicationController
   skip_before_action :authenticate_user!
   before_action :set_cart
   before_action :set_line_item, only: [:update_quantity, :destroy, :update]
-  before_action :set_branch, only: [:create, :update]
   before_action :extra_ingredient, only: [:update]
   before_action :set_meal, only: [:create]
   before_action :check_stock, only: [:update]

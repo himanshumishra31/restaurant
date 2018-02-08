@@ -1,32 +1,50 @@
-<% if @meals.any? %>
-  <table class="table">
-    <thead>
-      <th>Name</th>
-      <th>Ingredient(Quanity)</th>
-      <th>Price</th>
-      <th>Rating</th>
-      <th>Show Comments</th>
-      <th></th>
-      <th></th>
-    </thead>
-    <% @meals.each do |meal| %>
-      <tr>
-        <td><%= meal.name %></td>
-        <td>
-          <% meal.ingredients.each do |ingredient| %>
-            <%= ingredient.name %>(<%= MealItem.find_by(ingredient_id: ingredient.id, meal_id: meal.id).quantity
-%>)<br>
-          <% end %>
-        </td>
-        <td><%= number_to_currency(meal.price) %></td>
-        <td><%= meal.ratings.average(:value) %></td>
-        <td><%= link_to 'Comments', show_comments_admin_meal_url(meal.id) %></td>
-        <td><%= link_to 'Edit', edit_admin_meal_path(meal) %></td>
-        <td><%= link_to 'Destroy', admin_meal_path(meal) ,method: :delete, data: { confirm: 'Are you sure?' }%></td>
-      </tr>
-    <% end %>
-  </table>
-<% else %>
-  <p><strong>No meals present</strong></p>
-<% end %>
-<%= link_to "Create New Meal", new_admin_meal_path %>
+<div class="container">
+  <h2 class="text-center text-uppercase">Meals</h2>
+  <div class="table-responsive margin-top-30">
+    <table class="table table-hover table-striped" border='2'>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Ingredient(Quanity)</th>
+          <th>Price</th>
+          <th>Rating</th>
+          <th>Show Comments</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @meals.each do |meal| %>
+          <tr>
+            <td><%= meal.name %></td>
+            <td>
+              <% meal.ingredients.each do |ingredient| %>
+                <%= ingredient.name %>(<%= MealItem.find_by(ingredient_id: ingredient.id, meal_id: meal.id).quantity %>)<br>
+              <% end %>
+            </td>
+            <td><%= number_to_currency(meal.price) %></td>
+            <td><%= meal.ratings.average(:value) %></td>
+            <td>
+              <%= link_to show_comments_admin_meal_url(meal.id),class: 'btn btn-danger btn-site-primary text-uppercase' do %>
+                <span class='glyphicon glyphicon-pencil'> Comments </span>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to edit_admin_meal_path(meal),class: 'btn btn-danger btn-site-primary text-uppercase' do %>
+                <span class='glyphicon glyphicon-pencil'> Edit </span>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to admin_meal_path(meal),class: 'btn btn-danger btn-site-primary text-uppercase' , method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <span class='glyphicon glyphicon-trash'> Delete </span>
+                <%end %>
+              </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= link_to new_admin_meal_path, class: 'btn btn-danger btn-site-primary text-uppercase' do %>
+    <span><i class="glyphicon glyphicon-plus"></i> Add new meal </span>
+  <% end %>
+</div>

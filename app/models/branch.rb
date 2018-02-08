@@ -24,7 +24,7 @@ class Branch < ApplicationRecord
     end
 
     def validate_timings
-      errors.add(:opening_time) if closing_time < opening_time
+      errors.add(:opening_time, error_message('invalid', :branch, :opening_time)) if closing_time < opening_time
     end
 
     def set_inventories

@@ -3,6 +3,11 @@ class Order < ApplicationRecord
   PREPARATION_TIME = 1800
   include TokenGenerator
 
+  delegate :name, to: :branch, prefix: true
+  delegate :address, to: :branch, prefix: true
+  delegate :contact_number, to: :branch, prefix: true
+
+
   # associations
   belongs_to :cart
   belongs_to :user
@@ -81,17 +86,19 @@ class Order < ApplicationRecord
 
     def sufficient_preparation_time?
       if Time.parse(pick_up.strftime(TIME_FORMAT)) - Time.current < PREPARATION_TIME
-        errors.add(:pick_up, error_message('insufficient_time'))
+        errors.add(:pick_up, error_message('insufficient_time', :order, :pick_up))
       end
     end
 
     def future_pick_up?
-      errors.add(:pick_up) if Time.current > Time.parse(pick_up.strftime(TIME_FORMAT))
+      if Time.current > Time.parse(pick_up.strftime(TIME_FORMAT))
+        errors.add(:pick_up, error_message('invalid', :order, :pick_up))
+      end
     end
 
     def valid_pick_up_time?
       unless pick_up.between?(branch.opening_time, branch.closing_time)
-        errors.add(:pick_up, error_message('invalid_timings') )
+        errors.add(:pick_up, error_message('invalid_timings', :order, :pick_up) )
       end
     end
 
@@ -101,9 +108,5 @@ class Order < ApplicationRecord
 
     def feedback_token
       update_columns(feedback_digest: generate_token, feedback_email_sent_at: Time.current)
-    end
-
-    def error_message(message)
-      I18n.t(message, scope: [:activerecord, :errors, :models, :order, :attributes, :pick_up])
     end
 end
