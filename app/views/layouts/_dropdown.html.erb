@@ -1,4 +1,4 @@
 <%= javascript_include_tag :branch_dropdown %>
-<%= form_tag admin_logged_in? ? admin_inventories_path : store_index_path, method: :get, 'data-dropdown': 'dropdown_form' do %>
+<%= form_tag switch_branch_path, method: :get, 'data-dropdown': 'dropdown_form' do %>
   <%= select_tag 'branch', options_for_select(Branch.pluck(:name), @branch.name), class: 'location-dropdown', "data-dropdown": "dropdown_box" %>
 <% end %>

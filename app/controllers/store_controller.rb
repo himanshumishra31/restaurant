@@ -1,8 +1,5 @@
 class StoreController < ApplicationController
   skip_before_action :authenticate_user!
-  before_action :set_session_branch, only: [:index, :category]
-  # FIX_ME
-  before_action :set_branch, only: [:index, :category]
   before_action :set_cart, only: [:index, :category]
   before_action :load_available_meals, only: [:index, :category]
   before_action :load_meals_by_category, only: [:index, :category]
@@ -16,14 +13,16 @@ class StoreController < ApplicationController
     render json: { output: output }
   end
 
-  private
-
-    def set_session_branch
-      if params[:branch]
-        cookies[:current_location] = params[:branch]
-        session[:cart_id] = nil
-      end
+  def switch_branch
+    cookies[:current_location] = params[:branch]
+    if @current_user && @current_user.admin?
+      redirect_to admin_inventories_path
+    else
+      redirect_to store_index_path
     end
+  end
+
+  private
 
     def load_available_meals
       @available_meals = @branch.available_meals

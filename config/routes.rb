@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   controller :registrations do
     get :signup, action: :new
     post :signup, action: :create
-    # get 'users:id/confirm_email', to: :confirm_email
   end
 
   resources :registrations, only: [] do
@@ -41,6 +40,7 @@ Rails.application.routes.draw do
   resources :users, only: [:edit, :update] do
     get :myorders, on: :collection
   end
+  resources :orders, only: [:create, :new, :destroy]
 
   resources :orders do
     member do
@@ -50,6 +50,7 @@ Rails.application.routes.draw do
 
   root 'store#index', as: 'store_index'
   get :category, to: 'store#category', as: 'store_category'
+  get :switch_branch, controller: :store
 
   resources :line_items do
     member do
@@ -58,7 +59,6 @@ Rails.application.routes.draw do
   end
 
   resources :carts, only: [:update, :destroy]
-  resources :orders, only: [:create, :new, :destroy ]
   resources :charges, only: [:create, :new]
 
   controller :ratings do

@@ -1,7 +1,4 @@
 class Admin::InventoriesController < Admin::BaseController
-  before_action :set_session_branch, only: [:index, :edit, :update]
-  # FIX_ME
-  before_action :set_branch, only: [:index, :edit, :update]
   before_action :set_inventory, only: [:edit, :update]
   before_action :set_inventories, only: [:index]
   before_action :check_quantity, only: [:update]
@@ -29,10 +26,6 @@ class Admin::InventoriesController < Admin::BaseController
 
     def set_inventories
       @inventories = Inventory.includes(:ingredient).where(branch: @branch)
-    end
-
-    def set_session_branch
-      cookies[:current_location] = params[:branch] if params[:branch]
     end
 
     def permitted_params
