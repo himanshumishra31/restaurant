@@ -5,7 +5,7 @@ class Ingredient < ApplicationRecord
   # validation
   validates :name, :price, presence: true
   validates_uniqueness_of :name, case_sensitive: false
-  validate :validate_price, if: :price?
+  validates :price, numericality: { greater_than: 0 }
   validates :category, inclusion: { in: VALID_CATEGORIES.values }
 
   # associations
@@ -21,10 +21,6 @@ class Ingredient < ApplicationRecord
   scope :non_veg, -> { where(category: VALID_CATEGORIES[:non_veg] )}
 
   private
-    def validate_price
-      errors.add(:price) if price < 0
-    end
-
     def price_changed?
       price.eql? price_was
     end

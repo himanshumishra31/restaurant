@@ -15,7 +15,12 @@ class Branch < ApplicationRecord
 
 
   def available_meals
-    Meal.includes(:meal_items).includes(:ratings).select { |meal| meal if sufficient_stock?(meal) }
+    Meal.includes(:meal_items).includes(:ratings).select { |meal| meal if sufficient_stock?(meal) && meal.active }
+  end
+
+  def change_default_branch
+    Branch.find_by(default: true).update_column(:default, false)
+    update_columns(default: true)
   end
 
   private

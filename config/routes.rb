@@ -18,10 +18,14 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :branches, except: [:show]
+    resources :branches, except: [:show] do
+      patch :change_default, on: :member
+    end
     resources :ingredients, except: [:show]
     resources :inventories, except: [:show]
-    resources :meals, except: [:show]
+    resources :meals, except: [:show] do
+      patch :toggle_meal_status, on: :member
+    end
     resources :reports, only: [:index]
     resources :orders do
       member do
@@ -39,10 +43,10 @@ Rails.application.routes.draw do
 
   resources :users, only: [:edit, :update] do
     get :myorders, on: :collection
+    resources :orders, only: [:create, :new, :destroy]
   end
-  resources :orders, only: [:create, :new, :destroy]
 
-  resources :orders do
+  resources :orders, only: [] do
     member do
       get :feedback
     end

@@ -147,6 +147,10 @@ en:
         danger:
           branch_not_found: 'Branch not found. Please try again'
 
+      change_default:
+        success:
+          default_branch: 'Successfully updated default branch.'
+
 
     admin/ingredients:
       new:
@@ -187,6 +191,9 @@ en:
         danger:
           access_restricted: "Sorry, you don't have authority to access this section"
 
+      toggle_meal_status:
+        success:
+          status_updated: 'Successfully updated meal status'
 
       destroy:
         success:

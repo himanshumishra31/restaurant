@@ -1,33 +1,41 @@
-<br><br>
-<strong> Location: <%= cookies[:current_location] %> </strong>
 <br>
-<strong> Address: <%= @branch.address %> </strong>
-<div class="container">
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">Please Enter Order Details</h4>
-        </div>
-        <div class="panel-body">
-          <%= form_for @order do |form| %>
-            <fieldset>
-              <div class="form-group">
-                <%= form.number_field :phone_number, class: 'form-control', placeholder: "Phone Number"%>
-                <%= display_error(:phone_number, @order) %>
-              </div>
-              <div class="form-group"><strong>Pick Up Time</strong>
-                <%= form.time_field :pick_up, class: 'form-control' %>
-                <%= display_error(:pick_up, @order) %>
-                <%= form.hidden_field :user_id, value: @current_user.id %>
-                <%= form.hidden_field :branch_id, value: @branch.id %>
-                <%= form.hidden_field :cart_id, value: @cart.id %>
-              </div>
-              <%= form.submit 'Place Order', class: 'btn btn-lg btn-success btn-block' %>
-            </fieldset>
-          <% end %>
-          <hr/>
-          <center><h4><%= link_to 'Store', store_index_path %></h4></center>
+<br>
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Please Enter Order Details</h4>
+        <br>
+        <strong> Address: <%= @branch.address %> </strong><br>
+        <strong> Opening Time: <%= time_format(@branch.opening_time) %></strong><br>
+        <strong> Closing Time: <%= time_format(@branch.closing_time) %></strong>
+      </div>
+      <div class="panel-body">
+        <%= form_for @order, url: user_orders_path do |form| %>
+          <div class="form-group">
+            <div class="col-sm-12 form-label-group" data-id="form-label-group">
+              <%= label_tag :phone_number, 'Phone Number', class: "control-label" %>
+              <%= form.number_field :phone_number, class: 'form-control form-control-input' %>
+              <%= display_error(:phone_number, @order) %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-12 form-label-group" data-id="form-label-group">
+              <%= label_tag :pick_up, 'Phone Number', class: "control-label" %>
+              <%= form.time_field :pick_up, class: 'form-control' %>
+              <%= display_error(:pick_up, @order) %>
+              <%= form.hidden_field :branch_id, value: @branch.id %>
+              <%= form.hidden_field :cart_id, value: @cart.id %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-12">
+              <%= form.submit 'Place Order', class: 'btn btn-danger btn-site-primary btn-lg btn-block text-uppercase' %>
+            </div>
+          </div>
+        <% end %>
+        <div class="traversal-link text-center">
+          <%= link_to 'Store', store_index_path %>
         </div>
       </div>
     </div>

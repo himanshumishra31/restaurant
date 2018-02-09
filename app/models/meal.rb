@@ -35,6 +35,10 @@ class Meal < ApplicationRecord
     update_columns(price: ((ENV["PROFIT_PERCENT"].to_i + 100) * 0.01 * meal_items.sum(&:total_price)))
   end
 
+  def toggle_status
+    toggle!(:active)
+  end
+
   private
 
     def check_for_atleast_one_ingredient

@@ -9,6 +9,7 @@
           <th>Price</th>
           <th>Rating</th>
           <th>Show Comments</th>
+          <th>Meal Status</th>
           <th></th>
           <th></th>
         </tr>
@@ -27,6 +28,11 @@
             <td>
               <%= link_to show_comments_admin_meal_url(meal.id),class: 'btn btn-danger btn-site-primary text-uppercase' do %>
                 <span class='glyphicon glyphicon-pencil'> Comments </span>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to toggle_meal_status_admin_meal_path(meal), method: :patch, class: "btn #{meal_active(meal)} btn-site-primary text-uppercase" do %>
+                <span class='glyphicon glyphicon-pencil'> <%= meal.active %> </span>
               <% end %>
             </td>
             <td>

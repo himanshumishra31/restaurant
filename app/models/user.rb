@@ -14,6 +14,7 @@ class User < ApplicationRecord
   before_create :set_confirmation_token
   after_create :send_email_confirmation_mail, unless: :admin?
   after_update :reset_password_token_to_nil
+  after_create_commit :generate_slug
 
   # associations
   has_many :comments, dependent: :destroy
@@ -37,6 +38,10 @@ class User < ApplicationRecord
 
   def admin?
     role.eql? 'admin'
+  end
+
+  def generate_slug
+    update_columns(slug: generate_token)
   end
 
   private

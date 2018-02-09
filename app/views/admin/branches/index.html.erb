@@ -9,6 +9,7 @@
           <th>Closing Time</th>
           <th>Address</th>
           <th>Contact Number</th>
+          <th>Default Location</th>
           <th></th>
           <th></th>
         </tr>
@@ -21,6 +22,15 @@
             <td><%= branch.closing_time.strftime("%I:%M %p") %></td>
             <td><%= branch.address %></td>
             <td><%= branch.contact_number %></td>
+            <td>
+              <% if branch.default %>
+                <strong>Default</strong>
+              <% else %>
+                <%= link_to change_default_admin_branch_path(branch), method: :patch, class: 'btn btn-danger btn-site-primary text-uppercase' do %>
+                  <span class='glyphicon glyphicon-pencil'> Set Default </span>
+                <% end %>
+              <% end %>
+            </td>
             <td>
               <%= link_to edit_admin_branch_path(branch),class: 'btn btn-danger btn-site-primary text-uppercase' do %>
                 <span class='glyphicon glyphicon-pencil'> Edit </span>

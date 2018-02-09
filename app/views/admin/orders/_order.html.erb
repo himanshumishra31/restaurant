@@ -10,7 +10,6 @@
       <td><%= order.pick_up.strftime("%I:%M %p") %></td>
       <td><%= number_to_currency(order.charge.amount) %></td>
       <td>
-
         <%= link_to toggle_ready_status_admin_order_path(order), method: :patch, class: 'btn btn-danger btn-site-primary text-uppercase' do %>
           <span class='glyphicon glyphicon-pencil'> <%= order.ready %> </span>
         <% end %>

@@ -28,13 +28,13 @@ class Order < ApplicationRecord
   scope :by_date, -> (from = 7.days.ago, to = Time.current) { where created_at: from..to }
 
   def delivered
-    update_columns(picked: !picked)
+    toggle!(:picked)
     feedback_token
     OrderMailer.feedback_mail(self).deliver
   end
 
   def prepared
-    update_columns(ready: !ready)
+    toggle!(:ready)
   end
 
   def self.most_sold_meal(orders)

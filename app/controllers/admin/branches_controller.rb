@@ -1,5 +1,5 @@
 class Admin::BranchesController < Admin::BaseController
-  before_action :load_branch, only: [:destroy, :edit, :update]
+  before_action :load_branch, only: [:destroy, :edit, :update, :change_default]
 
   def new
     @branch = Branch.new
@@ -24,6 +24,11 @@ class Admin::BranchesController < Admin::BaseController
     else
       render :edit
     end
+  end
+
+  def change_default
+    @branch.change_default_branch
+    redirect_with_flash("success", "default_branch", admin_branches_url)
   end
 
   def destroy
