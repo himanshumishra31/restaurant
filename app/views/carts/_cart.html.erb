@@ -26,11 +26,7 @@
             <td>   </td>
             <td>   </td>
             <td>
-              <% if @current_user %>
-                <%= button_to 'Place Order', new_user_order_path(@current_user.slug), method: :get, class: 'btn btn-success' %>
-              <% else %>
-                <%= button_to 'Login to Place Order', login_path, class: 'btn btn-danger' %>
-              <% end %>
+              <%= button_to 'Place Order', @current_user ? new_user_order_path(@current_user.slug) : login_path, method: :get, class: 'btn btn-success' %>
             <td>
               <%= button_to 'empty', cart, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-success'  %>
             </td>
