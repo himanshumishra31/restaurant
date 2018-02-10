@@ -5,7 +5,7 @@ class Ingredient < ApplicationRecord
   # validation
   validates :name, :price, presence: true
   validates_uniqueness_of :name, case_sensitive: false
-  validates :price, numericality: { greater_than: 0 }
+  validates :price, numericality: { greater_than: 0 }, allow_blank: true
   validates :category, inclusion: { in: VALID_CATEGORIES.values }
 
   # associations

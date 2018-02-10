@@ -32,3 +32,7 @@ group :development do
   gem 'bullet',                    '5.7.2'
 end
 
+group :test do
+  gem 'minitest-reporters'
+  gem 'simplecov'
+end

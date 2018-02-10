@@ -2,6 +2,10 @@ require 'test_helper'
 
 class BranchTest < ActiveSupport::TestCase
 
+  setup do
+    @new_branch = Branch.new(name: 'north delhi', opening_time: '2', closing_time: '3', address: '24/A North campus', contact_number: '9654208158')
+  end
+
   test "should have valid fixture data #fixtures/users.yml" do
     assert branches(:first).valid?
   end
@@ -46,6 +50,12 @@ class BranchTest < ActiveSupport::TestCase
     branch = Branch.new(closing_time: '2', opening_time: '4')
     assert_not branch.valid?
     assert_equal ["should be before closing time"], branch.errors[:opening_time]
+  end
+
+  test "should save with valid values" do
+    assert_difference 'Branch.count', 1 do
+      @new_branch.save
+    end
   end
 
   test "should raise error for an invalid contact number" do

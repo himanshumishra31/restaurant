@@ -4,12 +4,7 @@ class UserTest < ActiveSupport::TestCase
 
   setup do
     @user = users(:first)
-    @new_user = User.new(
-          name: 'himanshu',
-          email: 'himanshumishra@gmail.com',
-          password: '123456',
-          password_confirmation: '123456'
-        )
+    @new_user = User.new(name: 'himanshu', email: 'himanshumishra@gmail.com', password: '123456', password_confirmation: '123456' )
   end
 
   test "should have valid fixture data #fixtures/users.yml" do
