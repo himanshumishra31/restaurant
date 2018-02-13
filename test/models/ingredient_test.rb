@@ -3,7 +3,7 @@ require 'test_helper'
 class IngredientTest < ActiveSupport::TestCase
 
   setup do
-    @ingredient = Ingredient.first
+    @first_ingredient = Ingredient.first
     @new_ingredient = Ingredient.new(name: 'paneer', price: 50, category: 'veg')
     @ingredient = Ingredient.new
   end
@@ -29,7 +29,7 @@ class IngredientTest < ActiveSupport::TestCase
   end
 
   test "should raise error if name already exists" do
-    ingredient = Ingredient.new(name: ingredients(:first).name)
+    ingredient = Ingredient.new(name: @first_ingredient.name)
     assert_not ingredient.valid?
     assert_equal ["has already been taken"], ingredient.errors[:name]
   end
@@ -62,7 +62,10 @@ class IngredientTest < ActiveSupport::TestCase
   end
 
   test "should update meal price if ingredient price is updated" do
-    @ingredient.update_columns(price: 80)
-    assert @ingredient.save
+    @first_ingredient.price = 80
+    old_price = Meal.first.price
+    @first_ingredient.save
+    new_price = Meal.first.price
+    assert_not_equal old_price, new_price
   end
 end

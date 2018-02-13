@@ -8,14 +8,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get edit page" do
-    post login_url, params: { email: User.first.email, password: '123456' }
+    debugger
+    post login_url, params: { email: @user.email, password: '123456' }
     assert_redirected_to store_index_url
     get edit_user_path(@user)
     assert_response 200
   end
 
   test "should edit user" do
-    post login_url, params: { email: User.first.email, password: '123456' }
+    post login_url, params: { email: @user.email, password: '123456' }
     assert_redirected_to store_index_url
     patch user_path(@user), params: { user: { email: @user.email, password: '123456', password_confirmation: '123456' } }
     assert_redirected_to store_index_url
@@ -23,14 +24,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not edit user with invalid details" do
-    post login_url, params: { email: User.first.email, password: '123456' }
+    post login_url, params: { email: @user.email, password: '123456' }
     assert_redirected_to store_index_url
     patch user_path(@user), params: { user: { name: '', password: '123456', password_confirmation: '123456' } }
     assert_template :edit
   end
 
   test "should get orders list" do
-    post login_url, params: { email: User.first.email, password: '123456' }
+    post login_url, params: { email: @user.email, password: '123456' }
     assert_redirected_to store_index_url
     get myorders_users_path
     assert_response 200

@@ -68,7 +68,7 @@ class OrderTest < ActiveSupport::TestCase
   end
 
   test "should give errors if wrong cart id is provided" do
-    order = Order.new(cart_id: 1)
+    order = Order.new(cart_id: 2)
     assert_not order.valid?
     assert_equal ["must exist"], order.errors[:cart]
   end
