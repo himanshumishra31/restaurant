@@ -28,7 +28,7 @@ class LineItemTest < ActiveSupport::TestCase
   end
 
   test "should save with valid credentials" do
-    line_item = LineItem.new(meal_id: meals(:first).id, cart_id: carts(:first).id)
+    line_item = LineItem.new(meal_id: meals(:second).id, cart_id: carts(:first).id)
     assert line_item.valid?
     assert_difference "LineItem.count", 1 do
       line_item.save

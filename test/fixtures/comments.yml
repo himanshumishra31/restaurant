@@ -1,4 +1,10 @@
 first:
   body: "add"
-  user_id: 2
+  user: "himan shu"
+  inventory_id: 1
+
+second:
+  id: 2
+  body: 'add'
+  user: "himan shu"
   inventory_id: 2

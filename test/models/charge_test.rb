@@ -1,9 +1,6 @@
 require 'test_helper'
 
 class ChargeTest < ActiveSupport::TestCase
-  # belongs_to :order
-
-  # validates :customer_id, :status, :amount, :last4, presence: true
   setup do
     @new_charge = Charge.new
   end

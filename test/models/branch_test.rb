@@ -17,13 +17,11 @@ class BranchTest < ActiveSupport::TestCase
   end
 
   test "should raise error without opening time" do
-
     assert_not @branch.valid?
     assert_equal ["can't be blank"], @branch.errors[:opening_time]
   end
 
   test "should raise error without closing time" do
-
     assert_not @branch.valid?
     assert_equal ["can't be blank"], @branch.errors[:closing_time]
   end
