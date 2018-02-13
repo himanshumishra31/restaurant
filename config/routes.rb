@@ -22,12 +22,12 @@ Rails.application.routes.draw do
       patch :change_default, on: :member
     end
     resources :ingredients, except: [:show]
-    resources :inventories, except: [:show]
+    resources :inventories, except: [:show, :create, :new]
     resources :meals, except: [:show] do
       patch :toggle_meal_status, on: :member
     end
     resources :reports, only: [:index]
-    resources :orders do
+    resources :orders, only: [:index] do
       member do
         patch :toggle_ready_status
         patch :toggle_pick_up_status

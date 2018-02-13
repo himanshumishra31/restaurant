@@ -3,6 +3,7 @@ require 'test_helper'
 class IngredientTest < ActiveSupport::TestCase
 
   setup do
+    @ingredient = Ingredient.first
     @new_ingredient = Ingredient.new(name: 'paneer', price: 50, category: 'veg')
     @ingredient = Ingredient.new
   end
@@ -58,5 +59,10 @@ class IngredientTest < ActiveSupport::TestCase
     assert_difference 'Ingredient.count', 1 do
       @new_ingredient.save
     end
+  end
+
+  test "should update meal price if ingredient price is updated" do
+    @ingredient.update_columns(price: 80)
+    assert @ingredient.save
   end
 end

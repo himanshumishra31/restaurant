@@ -17,7 +17,7 @@ class PasswordsController < ApplicationController
     if @user.update_attributes(user_params)
       redirect_with_flash("success", "new_password_saved", login_url)
     else
-      render :new
+      render :edit
     end
   end
 
@@ -26,7 +26,7 @@ class PasswordsController < ApplicationController
     def check_for_empty_password
       if params[:user][:password].empty?
         @user.errors.add(:password, "can't be empty")
-        render :new
+        render :edit
       end
     end
 

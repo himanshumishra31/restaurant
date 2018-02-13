@@ -21,4 +21,5 @@ class MealTest < ActiveSupport::TestCase
     assert_not @meal.valid?
     assert_equal ["atleast one must present"], @meal.errors[:meal_items]
   end
+
 end

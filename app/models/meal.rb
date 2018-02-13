@@ -16,7 +16,7 @@ class Meal < ApplicationRecord
   validate :check_for_atleast_one_ingredient
 
   # callbacks
-  after_commit :set_price
+  after_commit :set_price, on: [:create, :update]
 
   accepts_nested_attributes_for :meal_items, allow_destroy: true
 
@@ -40,9 +40,5 @@ class Meal < ApplicationRecord
 
     def check_for_atleast_one_ingredient
       errors.add(:meal_items) unless meal_items.present?
-    end
-
-    def check_for_valid_ingredient_quantity
-      errors.add(:meal_items, error_message('quantity', :meal, :meal_items)) if meal_items.any? { |meal| meal.quantity.to_i < 1 }
     end
 end

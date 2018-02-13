@@ -23,7 +23,7 @@ class Order < ApplicationRecord
   validate :future_pick_up?, if: :pick_up?
 
   #callbacks
-  after_save :send_confirmation_mail
+  after_create_commit :send_confirmation_mail
 
   scope :by_date, -> (from = 7.days.ago, to = Time.current) { where created_at: from..to }
 

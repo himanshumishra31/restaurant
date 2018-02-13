@@ -36,10 +36,6 @@ class User < ApplicationRecord
     reset_password_sent_at < VALID_RESET_PASSWORD_LINK_TIME
   end
 
-  def admin?
-    role.eql? 'admin'
-  end
-
   def generate_slug
     update_columns(slug: generate_token)
   end

@@ -16,7 +16,7 @@ en:
           password_reset_mail: 'Email sent with password reset instructions'
         danger:
           email_not_found: 'Email address Not found'
-          email_not_verified: 'Email id not verified.'
+          email_not_verified: 'Email id not verified. Please confirm email from the mail sent to your id.'
 
       update:
         success:
@@ -39,6 +39,7 @@ en:
           status_changed: 'Order status has been successfully updated'
         danger:
           order_not_prepared: 'Order is not prepared yet'
+
       toggle_ready_status:
         success:
           status_changed: 'Order status has been successfully updated'
@@ -103,7 +104,9 @@ en:
           login_to_continue: 'Please Log in'
           other_account: "Can't edit others account"
 
-
+      myorders:
+        danger:
+          login_to_continue: 'Please Log in'
 
       update:
         success:
@@ -197,7 +200,7 @@ en:
 
       destroy:
         success:
-          successfully_destroyed: 'Ingredient has been successfully destroyed'
+          successfully_destroyed: 'Meal has been successfully destroyed'
         danger:
           access_restricted: "Sorry, you don't have authority to access this section"
 

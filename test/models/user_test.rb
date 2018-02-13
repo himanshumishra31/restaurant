@@ -70,6 +70,9 @@ class UserTest < ActiveSupport::TestCase
 
   test "should create user with valid details" do
     assert @new_user.valid?
+    assert_difference 'User.count', 1 do
+      @new_user.save
+    end
   end
 
   test "should have 2 valid user roles" do

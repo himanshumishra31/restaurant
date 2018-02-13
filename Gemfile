@@ -35,4 +35,5 @@ end
 group :test do
   gem 'minitest-reporters'
   gem 'simplecov'
+  gem 'rails-controller-testing'
 end
