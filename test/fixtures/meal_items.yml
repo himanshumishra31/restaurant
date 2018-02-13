@@ -1,0 +1,14 @@
+first:
+  meal: "Cheese Burger"
+  ingredient: "cheese slice"
+  quantity: 1
+
+second:
+  meal: "Cheese Burger"
+  ingredient: "burger bun"
+  quantity: 1
+
+third:
+  meal: "Cheese bun"
+  ingredient: "burger bun"
+  quantity: 1

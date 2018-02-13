@@ -32,7 +32,7 @@
               <div class="form-group">
                 <%= meal_item.select :ingredient_id, Ingredient.pluck(:name, :id), prompt: 'Select an ingredient'%>
                 <%= meal_item.number_field :quantity %>
-                <%= display_error(:quantity, @meal) %>
+                <%= display_error(:"meal_items.quantity", @meal) %>
               </div>
             <% end %>
             <div class="col-lg-10">

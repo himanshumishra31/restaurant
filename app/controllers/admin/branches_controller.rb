@@ -16,6 +16,10 @@ class Admin::BranchesController < Admin::BaseController
 
   def index
     @branches = Branch.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data @branches.as_csv }
+    end
   end
 
   def update

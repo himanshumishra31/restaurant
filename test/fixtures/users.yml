@@ -1,0 +1,26 @@
+first:
+  name: 'himan shu'
+  email: "himanshu.mishra@vinsol.com"
+  password_digest: "$2a$10$zckx7bRhbSn4eBRGggkwb.VgI2XwrfzhP3CFOBOcv/mG4RgPar7Ti"
+  confirmed: true
+  confirmation_token:
+  reset_password_token:
+  role: "customer"
+
+second:
+  name: 'asdfsadf'
+  email: "himanshumishra3@gmail.com"
+  password_digest: "$2a$10$rBqjahLJYZ9xjiuMV46Ud.Bwr8cev8H6CNPMIBv/Zd09JnJUDRNze"
+  confirmed: true
+  confirmation_token:
+  reset_password_token:
+  role: "admin"
+
+third:
+  name: 'him'
+  email: 'abhishek.kanojia@vinsol.com'
+  password_digest: "$2a$10$RHKGC0XmGckgEPg76VGt1OYcldK2LgPc0rSbWPNLkAQTYwLS5nPo6"
+  confirmed: true
+  confirmation_token:
+  reset_password_token:
+  role: "customer"

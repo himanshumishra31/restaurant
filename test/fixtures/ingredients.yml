@@ -1,0 +1,11 @@
+first:
+  name: "cheese slice"
+  price: 29.0
+  category: "veg"
+  extra_allowed: true
+
+second:
+  name: "burger bun"
+  price: 50.0
+  category: "veg"
+  extra_allowed: false

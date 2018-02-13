@@ -1,0 +1,17 @@
+first:
+  name: "Cheese Burger"
+  price: 75
+  active: true
+  image_file_name: "download_(1).jpeg"
+  image_content_type: "image/jpeg"
+  image_file_size: 7706
+  image_updated_at: "2018-01-18 11:44:16"
+
+second:
+  name: "Cheese bun"
+  price: 80
+  active: true
+  image_file_name: "download_(1).jpeg"
+  image_content_type: "image/jpeg"
+  image_file_size: 7706
+  image_updated_at: "2018-01-18 11:44:16"

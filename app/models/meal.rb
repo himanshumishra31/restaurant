@@ -13,9 +13,6 @@ class Meal < ApplicationRecord
   validates_uniqueness_of :name, case_sensitive: false
   validates_attachment :image, content_type: { content_type: PAPERCLIP_CONTENT_TYPE_REGEX }
 
-  # FIX_ME_PG_2:- Rename to `check_for_valid_ingredient_quantity`. Should not this validation be present in MealItem model.
-  # to discuss
-  validate :check_for_valid_ingredient_quantity
   validate :check_for_atleast_one_ingredient
 
   # callbacks
@@ -48,5 +45,4 @@ class Meal < ApplicationRecord
     def check_for_valid_ingredient_quantity
       errors.add(:meal_items, error_message('quantity', :meal, :meal_items)) if meal_items.any? { |meal| meal.quantity.to_i < 1 }
     end
-
 end

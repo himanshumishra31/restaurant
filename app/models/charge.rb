@@ -44,10 +44,6 @@ class Charge < ApplicationRecord
     end
 
     def add_fields_to_charge(charge)
-      self.customer_id =  charge.customer
-      self.amount = charge.amount
-      self.status = charge.status
-      self.last4 = charge.source.last4
-      save!
+      update_columns(customer_id: charge.customer, amount: charge.amount, status: charge.status, last4: charge.source.last4)
     end
 end

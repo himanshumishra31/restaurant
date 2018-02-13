@@ -1,0 +1,23 @@
+first:
+  name: 'Patel Nagar'
+  opening_time: '2000-01-01 09:00:00'
+  closing_time: '2000-01-01 22:00:00'
+  default: true
+  address: '3/11 East Patel Nagar'
+  contact_number: '9654208158'
+
+second:
+  name: "Laxmi Nagar"
+  opening_time: "2000-01-01 10:00:00"
+  closing_time: "2000-01-01 22:00:00"
+  default: false
+  address: "3/11 Laxmi Nagar"
+  contact_number: '9654208158'
+
+third:
+  name: "saket"
+  opening_time: "2000-01-01 10:00:00"
+  closing_time: "2000-01-01 20:00:00"
+  default: false
+  address: "1/4 indra enclave"
+  contact_number: '8588067626'

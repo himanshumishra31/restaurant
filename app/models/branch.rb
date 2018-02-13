@@ -14,6 +14,15 @@ class Branch < ApplicationRecord
   after_create :set_inventories
 
 
+  def self.as_csv
+    CSV.generate do |csv|
+      csv << column_names
+      all.each do |item|
+        csv << item.attributes.values_at(*column_names)
+      end
+    end
+  end
+
   def available_meals
     Meal.includes(:meal_items).includes(:ratings).select { |meal| meal if sufficient_stock?(meal) && meal.active }
   end
