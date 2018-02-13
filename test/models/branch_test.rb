@@ -4,6 +4,7 @@ class BranchTest < ActiveSupport::TestCase
 
   setup do
     @new_branch = Branch.new(name: 'north delhi', opening_time: '2', closing_time: '3', address: '24/A North campus', contact_number: '9654208158')
+    @branch = Branch.new
   end
 
   test "should have valid fixture data #fixtures/users.yml" do
@@ -11,33 +12,30 @@ class BranchTest < ActiveSupport::TestCase
   end
 
   test "should raise error without a name" do
-    branch = Branch.new
-    assert_not branch.valid?
-    assert_equal ["can't be blank"], branch.errors[:name]
+    assert_not @branch.valid?
+    assert_equal ["can't be blank"], @branch.errors[:name]
   end
 
   test "should raise error without opening time" do
-    branch = Branch.new
-    assert_not branch.valid?
-    assert_equal ["can't be blank"], branch.errors[:opening_time]
+
+    assert_not @branch.valid?
+    assert_equal ["can't be blank"], @branch.errors[:opening_time]
   end
 
   test "should raise error without closing time" do
-    branch = Branch.new
-    assert_not branch.valid?
-    assert_equal ["can't be blank"], branch.errors[:closing_time]
+
+    assert_not @branch.valid?
+    assert_equal ["can't be blank"], @branch.errors[:closing_time]
   end
 
   test "should raise error without address" do
-    branch = Branch.new
-    assert_not branch.valid?
-    assert_equal ["can't be blank"], branch.errors[:address]
+    assert_not @branch.valid?
+    assert_equal ["can't be blank"], @branch.errors[:address]
   end
 
   test "should give error without contact number" do
-    branch = Branch.new
-    assert_not branch.valid?
-    assert_equal ["can't be blank"], branch.errors[:contact_number]
+    assert_not @branch.valid?
+    assert_equal ["can't be blank"], @branch.errors[:contact_number]
   end
 
   test "should give error if branch name already exists" do

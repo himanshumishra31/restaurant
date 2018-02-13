@@ -11,3 +11,4 @@
 !/tmp/.keep
 /yarn-error.log
 /coverage/*
+.DS_Store

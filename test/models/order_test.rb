@@ -84,11 +84,11 @@ class OrderTest < ActiveSupport::TestCase
   end
 
   test "should save with valid credentials" do
-    order = Order.new(pick_up: Time.current + 2.hour, phone_number: '9654208158', user_id: users(:first).id, branch_id: branches(:first).id, cart_id: carts(:first).id)
+    order = Order.new(pick_up: Time.current + 5.hour, phone_number: '9654208158', user_id: users(:first).id, branch_id: branches(:first).id, cart_id: carts(:first).id)
     assert order.valid?
-    # assert_difference 'Order.count', 1 do
-    #   order.save
-    # end
+    assert_difference 'Order.count', 1 do
+      order.save
+    end
   end
 
 end

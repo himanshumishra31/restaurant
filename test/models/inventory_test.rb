@@ -3,19 +3,18 @@ require 'test_helper'
 class InventoryTest < ActiveSupport::TestCase
 
   setup do
-    @new_inventory = Inventory.new(branch_id: 1, ingredient_id: 7)
+    @new_inventory = Inventory.new(branch_id: branches(:first).id, ingredient_id: ingredients(:first).id)
+    @inventory = Inventory.new
   end
 
   test "should give error without branch" do
-    inventory = Inventory.new
-    assert_not inventory.valid?
-    assert_equal ["must exist"], inventory.errors[:branch]
+    assert_not @inventory.valid?
+    assert_equal ["must exist"], @inventory.errors[:branch]
   end
 
   test "should give error without ingredient" do
-    inventory = Inventory.new
-    assert_not inventory.valid?
-    assert_equal ["must exist"], inventory.errors[:ingredient]
+    assert_not @inventory.valid?
+    assert_equal ["must exist"], @inventory.errors[:ingredient]
   end
 
   test "should give error if quantity is negative" do
@@ -30,9 +29,9 @@ class InventoryTest < ActiveSupport::TestCase
     assert_equal ["has already been taken"], inventory.errors[:branch_id]
   end
 
-  # test "should save with valid credentials" do
-  #   assert_difference 'Inventory.count', 1 do
-  #     @new_inventory.save
-  #   end
-  # end
+  test "should save with valid credentials" do
+    assert_difference 'Inventory.count', 1 do
+      @new_inventory.save
+    end
+  end
 end

@@ -3,8 +3,9 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
 
   setup do
-    @user = users(:first)
+    @first_user = users(:first)
     @new_user = User.new(name: 'himanshu', email: 'himanshumishra@gmail.com', password: '123456', password_confirmation: '123456' )
+    @user = User.new
   end
 
   test "should have valid fixture data #fixtures/users.yml" do
@@ -12,30 +13,27 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "should have unique email address" do
-    user = User.new(email: @user.email)
+    user = User.new(email: @first_user.email)
     assert_not user.valid?
     assert_equal ["has already been taken"], user.errors[:email]
   end
 
   test "should raise error without a name" do
-    user = User.new
-    assert_not user.valid?
-    assert user.errors[:name].any?
-    assert_equal ["can't be blank"], user.errors[:name]
+    assert_not @user.valid?
+    assert @user.errors[:name].any?
+    assert_equal ["can't be blank"], @user.errors[:name]
   end
 
   test "should raise error without an email" do
-    user = User.new
-    assert_not user.valid?
-    assert user.errors[:email].any?
-    assert_equal ["can't be blank"], user.errors[:email]
+    assert_not @user.valid?
+    assert @user.errors[:email].any?
+    assert_equal ["can't be blank"], @user.errors[:email]
   end
 
   test "should raise error without a password" do
-    user = User.new
-    assert_not user.valid?
-    assert user.errors[:password].any?
-    assert_equal ["can't be blank"], user.errors[:password]
+    assert_not @user.valid?
+    assert @user.errors[:password].any?
+    assert_equal ["can't be blank"], @user.errors[:password]
   end
 
   test "should raise error for an invalid email" do
@@ -61,15 +59,13 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "should have customer role by default" do
-    user = User.new
-    assert_not user.valid?
-    assert "customer", user.role
+    assert_not @user.valid?
+    assert "customer", @user.role
   end
 
   test "should have confirmed field set as false" do
-    user = User.new
-    assert_not user.valid?
-    assert_not user.confirmed
+    assert_not @user.valid?
+    assert_not @user.confirmed
   end
 
   test "should create user with valid details" do

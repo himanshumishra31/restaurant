@@ -4,6 +4,7 @@ class IngredientTest < ActiveSupport::TestCase
 
   setup do
     @new_ingredient = Ingredient.new(name: 'paneer', price: 50, category: 'veg')
+    @ingredient = Ingredient.new
   end
 
   test "should have valid fixture data #fixtures/users.yml" do
@@ -11,15 +12,13 @@ class IngredientTest < ActiveSupport::TestCase
   end
 
   test "should raise error if name is not present" do
-    ingredient = Ingredient.new
-    assert_not ingredient.valid?
-    assert_equal ["can't be blank"], ingredient.errors[:name]
+    assert_not @ingredient.valid?
+    assert_equal ["can't be blank"], @ingredient.errors[:name]
   end
 
   test "should raise error if price is not present" do
-    ingredient = Ingredient.new
-    assert_not ingredient.valid?
-    assert_equal ["can't be blank"], ingredient.errors[:price]
+    assert_not @ingredient.valid?
+    assert_equal ["can't be blank"], @ingredient.errors[:price]
   end
 
   test "should raise error if price is not a number" do
@@ -47,14 +46,12 @@ class IngredientTest < ActiveSupport::TestCase
   end
 
   test "should raise errors if category is not checked" do
-    ingredient = Ingredient.new
-    assert_not ingredient.valid?
-    assert_equal ["is not included in the list"], ingredient.errors[:category]
+    assert_not @ingredient.valid?
+    assert_equal ["is not included in the list"], @ingredient.errors[:category]
   end
 
   test "should have default value of extra_allowed false" do
-    ingredient = Ingredient.new
-    assert_not ingredient.category
+    assert_not @ingredient.category
   end
 
   test "should save with valid values" do
