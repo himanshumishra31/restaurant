@@ -27,7 +27,11 @@ class Admin::IngredientsController < Admin::BaseController
   end
 
   def destroy
-    redirect_with_flash("success", "successfully_destroyed", admin_ingredients_url) if @ingredient.destroy
+    if @ingredient.destroy
+      redirect_with_flash("success", "successfully_destroyed", admin_ingredients_url)
+    else
+      redirect_with_flash("danger", "error", admin_ingredients_url)
+    end
   end
 
   private
@@ -37,6 +41,8 @@ class Admin::IngredientsController < Admin::BaseController
 
     def set_ingredient
       @ingredient = Ingredient.find_by(id: params[:id])
-      redirect_with_flash("danger", "not_found", admin_ingredients_url) unless @ingredient
+       unless @ingredient
+        redirect_with_flash("danger", "not_found", admin_ingredients_url)
+      end
     end
 end

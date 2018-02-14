@@ -1,10 +1,12 @@
 first:
+  id: 8
   name: "cheese slice"
   price: 29.0
   category: "veg"
   extra_allowed: true
 
 second:
+  id: 9
   name: "burger bun"
   price: 50.0
   category: "veg"

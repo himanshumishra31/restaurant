@@ -50,6 +50,8 @@ class Admin::BranchesController < Admin::BaseController
 
     def load_branch
       @branch = Branch.find_by(id: params[:id])
-      redirect_with_flash("danger", "branch_not_found", admin_branches_url) unless @branch
+      unless @branch
+        redirect_with_flash("danger", "branch_not_found", admin_branches_url)
+      end
     end
 end

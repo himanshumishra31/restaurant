@@ -39,10 +39,22 @@ en:
           status_changed: 'Order status has been successfully updated'
         danger:
           order_not_prepared: 'Order is not prepared yet'
+          not_found: 'Order not found. Please try again after some time'
+
 
       toggle_ready_status:
         success:
           status_changed: 'Order status has been successfully updated'
+        danger:
+          not_found: 'Order not found. Please try again after some time'
+
+      destroy:
+        success:
+          order_cancelled: 'Successfully cancelled order'
+        danger:
+          error: 'Cannot cancel order. Try again later'
+          not_found: 'Order not found. Please try again after some time'
+
 
     ratings:
       rate_meals:
@@ -54,13 +66,30 @@ en:
         success:
           payment_success: 'Payment Successful. You Can see your orders under myorders section.'
 
+      new:
+        danger:
+          not_found: 'Order has not been found. Try again with new order'
+
     line_items:
       update:
         danger:
           insufficient_stock: 'Sorry Ingredient is not left. Please try again after some time'
           no_select: 'Please select any extra ingredient'
+          not_found: 'Line Item not found.'
         success:
           extra_ingredient_added: 'Extra Ingredient Added'
+
+      update_quantity:
+        danger:
+          not_found: 'Line Item not found.'
+
+      destroy:
+        danger:
+          not_found: 'Line Item not found.'
+
+      create:
+        danger:
+          not_found: 'Meal not found'
 
     orders:
       new:
@@ -71,7 +100,8 @@ en:
         success:
           order_cancelled: "Order successfully cancelled"
         danger:
-          time_up: "Order is prepared now. Cannot cancel now"
+          not_found: 'Order not found. Please try again later'
+          time_up: "Order is prepared now. Cannot cancel."
 
       create:
         danger:
@@ -82,6 +112,8 @@ en:
       feedback:
         danger:
           login: 'Login first and then access the link to provide feedback'
+          not_found: 'Order not found. Please try again later'
+          link_expired: 'feedback link has expired.'
 
     sessions:
       new:
@@ -173,12 +205,20 @@ en:
         success:
           successfully_saved: "Changes have been successfully saved"
           access_restricted: "Sorry, you don't have authority to access this section"
+        danger:
+          not_found: 'Ingredient not found. Please try again'
+
+      edit:
+        danger:
+          not_found: 'Ingredient not found. Please try again'
 
       destroy:
         success:
           successfully_destroyed: 'Ingredient has been successfully destroyed'
         danger:
+          error: 'Could not delete ingredient. Please try again.'
           access_restricted: "Sorry, you don't have authority to access this section"
+          not_found: 'Ingredient not found. Please try again'
 
     admin/inventories:
       update:
@@ -186,6 +226,15 @@ en:
           successfully_updated: "Changes have been successfully saved"
         danger:
           invalid_quantity: 'Insufficent quantity'
+          not_found: 'Inventory not found. Please try again'
+
+      edit:
+        danger:
+          not_found: 'Inventory not found. Please try again'
+
+      destroy:
+        danger:
+          not_found: 'Inventory not found. Please try again'
 
     admin/meals:
       create:
@@ -194,14 +243,21 @@ en:
         danger:
           access_restricted: "Sorry, you don't have authority to access this section"
 
+      edit:
+        danger:
+          not_found: 'Meal not found. Please try again'
+
       toggle_meal_status:
         success:
           status_updated: 'Successfully updated meal status'
+        danger:
+          not_found: 'Meal not found. Please try again'
 
       destroy:
         success:
           successfully_destroyed: 'Meal has been successfully destroyed'
         danger:
+          not_found: 'Meal not found. Please try again'
           access_restricted: "Sorry, you don't have authority to access this section"
 
       update:
@@ -210,3 +266,11 @@ en:
           access_restricted: "Sorry, you don't have authority to access this section"
         danger:
           only_one_ingredient: 'Cannot delete only ingredient. One Ingredient must exist'
+          not_found: 'Meal not found. Please try again'
+
+      show_comments:
+        danger:
+          not_found: 'Meal not found. Please try again'
+
+
+

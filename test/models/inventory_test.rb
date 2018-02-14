@@ -3,7 +3,7 @@ require 'test_helper'
 class InventoryTest < ActiveSupport::TestCase
 
   setup do
-    @new_inventory = Inventory.new(branch_id: branches(:first).id, ingredient_id: ingredients(:first).id)
+    @new_inventory = Inventory.new(branch_id: branches(:second).id, ingredient_id: ingredients(:second).id)
     @inventory = Inventory.new
   end
 

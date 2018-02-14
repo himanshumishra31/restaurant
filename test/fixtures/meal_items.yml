@@ -1,14 +1,17 @@
 first:
-  meal: "Cheese Burger"
-  ingredient: "cheese slice"
+  id: 12
+  meal_id: 6
+  ingredient_id: 8
   quantity: 1
 
 second:
-  meal: "Cheese Burger"
-  ingredient: "burger bun"
+  id: 13
+  meal_id: 7
+  ingredient_id: 9
   quantity: 1
 
 third:
-  meal: "Cheese bun"
-  ingredient: "burger bun"
+  id: 14
+  meal_id: 6
+  ingredient_id: 8
   quantity: 1

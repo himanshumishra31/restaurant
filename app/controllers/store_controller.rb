@@ -15,11 +15,7 @@ class StoreController < ApplicationController
 
   def switch_branch
     cookies[:current_location] = params[:branch]
-    if @current_user && @current_user.admin?
-      redirect_to admin_inventories_path
-    else
-      redirect_to store_index_path
-    end
+    redirect_to @current_user && @current_user.admin? ? admin_inventories_path : store_index_path
   end
 
   private

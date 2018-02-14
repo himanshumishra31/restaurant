@@ -60,12 +60,4 @@ class IngredientTest < ActiveSupport::TestCase
       @new_ingredient.save
     end
   end
-
-  test "should update meal price if ingredient price is updated" do
-    @first_ingredient.price = 80
-    old_price = Meal.first.price
-    @first_ingredient.save
-    new_price = Meal.first.price
-    assert_not_equal old_price, new_price
-  end
 end

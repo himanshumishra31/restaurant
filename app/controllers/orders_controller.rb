@@ -1,13 +1,15 @@
 class OrdersController < ApplicationController
   before_action :set_cart, only: [:create, :new]
   before_action :check_sufficient_stock, only: [:create]
-  before_action :set_order, only: [:feedback]
+  before_action :set_order_by_feedback_digest, only: [:feedback]
   before_action :link_expired?, only: [:feedback]
   before_action :is_user_logged_in?, only: [:feedback]
-
+  before_action :set_order, only: [:destroy]
+  skip_before_action :authenticate_user!, only: [:feedback]
   def create
     if @order.save
-      redirect_with_flash("success", "successfully_placed", new_charge_path)
+      session[:cart_id] = nil
+      redirect_with_flash("success", "successfully_placed", new_charge_path(@order))
     else
       render :new
     end
@@ -19,7 +21,6 @@ class OrdersController < ApplicationController
   end
 
   def destroy
-    @order = Order.find_by(id: params[:id])
     if @order.cancellable?
       @order.destroy
       @order.affect_ingredient("+")
@@ -31,6 +32,13 @@ class OrdersController < ApplicationController
 
   private
 
+    def set_order
+      @order = Order.find_by(id: params[:id])
+      unless @order
+        redirect_with_flash("danger", "not_found", store_index_path)
+      end
+    end
+
     def check_sufficient_stock
       @order = @current_user.orders.build(permitted_params)
       unless @order.sufficient_stock
@@ -39,13 +47,17 @@ class OrdersController < ApplicationController
       end
     end
 
-    def set_order
+    def set_order_by_feedback_digest
       @order = Order.find_by(feedback_digest: params[:id])
-      redirect_with_flash("danger", "not_found", store_index_path) unless @order
+      unless @order
+        redirect_with_flash("danger", "not_found", store_index_path)
+      end
     end
 
     def link_expired?
-      redirect_with_flash("danger", "link_expired", store_index_path) if @order.feedback_link_expired?
+      if @order.feedback_link_expired?
+        redirect_with_flash("danger", "link_expired", store_index_path)
+      end
     end
 
     def is_user_logged_in?

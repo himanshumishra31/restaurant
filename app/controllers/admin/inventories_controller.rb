@@ -21,7 +21,9 @@ class Admin::InventoriesController < Admin::BaseController
 
     def set_inventory
       @inventory = Inventory.find_by(id: params[:id])
-      redirect_with_flash("danger", "not_found", admin_inventories_path) unless @inventory
+      unless @inventory
+        redirect_with_flash("danger", "not_found", admin_inventories_path)
+      end
     end
 
     def set_inventories

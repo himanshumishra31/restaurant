@@ -35,15 +35,21 @@ class LineItemsController < ApplicationController
 
     def set_meal
       @meal = Meal.find_by(id: params[:meal_id])
-      redirect_with_flash("danger", "not_found", store_index_url) unless @meal
+      unless @meal
+        redirect_with_flash("danger", "not_found", store_index_url)
+      end
     end
 
     def extra_ingredient
-      redirect_with_flash("danger", "no_select", store_index_path) unless params[:line_item][:extra_ingredient].present?
+      unless params[:line_item][:extra_ingredient].present?
+        redirect_with_flash("danger", "no_select", store_index_path)
+      end
     end
 
     def set_line_item
       @line_item = LineItem.find_by(id: params[:id])
-      redirect_with_flash("danger", "not_found", store_index_url) unless @line_item
+      unless @line_item
+        redirect_with_flash("danger", "not_found", store_index_url)
+      end
     end
 end

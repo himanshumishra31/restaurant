@@ -1,19 +1,17 @@
 first:
-  branch: 'Patel Nagar'
-  ingredient: "cheese slice"
+  id: 2
+  branch_id: 2
+  ingredient_id: 8
   quantity: 1
 
 second:
-  branch: 'Patel Nagar'
-  ingredient: "burger bun"
+  id: 4
+  branch_id: 2
+  ingredient_id: 9
   quantity: 1
 
 third:
-  branch: "Laxmi Nagar"
-  ingredient: "burger bun"
-  quantity: 2
-
-forth:
-  branch: "Laxmi Nagar"
-  ingredient: "cheese slice"
+  id: 5
+  branch_id: 3
+  ingredient_id: 8
   quantity: 2

@@ -20,7 +20,7 @@
         <% end %>
       </td>
       <td>
-        <%= link_to order_url(order), method: :delete, data: { confirm: 'Are you Sure?' },class: 'btn btn-danger btn-site-primary text-uppercase' do %>
+        <%= link_to admin_order_path(order), method: :delete, data: { confirm: 'Are you Sure?' },class: 'btn btn-danger btn-site-primary text-uppercase' do %>
           <span class='glyphicon glyphicon-trash delete'> Cancel </span>
         <% end %>
       </td>

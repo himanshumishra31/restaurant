@@ -36,20 +36,28 @@ class PasswordsController < ApplicationController
 
     def get_user_by_token
       @user = User.find_by(reset_password_token: params[:id])
-      redirect_with_flash("danger", "already_used", store_index_path) unless @user
+      unless @user
+        redirect_with_flash("danger", "already_used", store_index_path)
+      end
     end
 
     def get_user_by_email
       @user = User.find_by(email: params[:email])
-      redirect_with_flash("danger", "email_not_found", new_password_url) unless @user
+      unless @user
+        redirect_with_flash("danger", "email_not_found", new_password_url)
+      end
     end
 
     def check_for_confirmed_email
-      redirect_with_flash("danger", "email_not_verified", login_url) unless @user.confirmed
+      unless @user.confirmed
+        redirect_with_flash("danger", "email_not_verified", login_url)
+      end
     end
 
     def check_for_expired_link
-      redirect_with_flash("danger", "reset_link_expired", new_password_url) if @user.reset_password_token_expired?
+      if @user.reset_password_token_expired?
+        redirect_with_flash("danger", "reset_link_expired", new_password_url)
+      end
     end
 
 end

@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  before_action :load_cart, only: [:update, :destroy]
+  before_action :load_cart, only: [:destroy]
 
   def destroy
     @cart.destroy if @cart.id = session[:cart_id]

@@ -1,4 +1,5 @@
 first:
+  id: 6
   name: "Cheese Burger"
   price: 75
   active: true
@@ -8,6 +9,7 @@ first:
   image_updated_at: "2018-01-18 11:44:16"
 
 second:
+  id: 7
   name: "Cheese bun"
   price: 80
   active: true

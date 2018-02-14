@@ -1,5 +1,6 @@
 first:
+  id: 16
   value: 1
   review: "bad"
-  user: 'himan shu'
-  meal: "Cheese Burger"
+  user_id: 22
+  meal_id: 6

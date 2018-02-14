@@ -4,7 +4,9 @@ class SessionsController < ApplicationController
   before_action :check_for_confirmation, only: [:create]
 
   def new
-    redirect_with_flash("danger", "already_login", store_index_path) if @current_user
+    if @current_user
+      redirect_with_flash("danger", "already_login", store_index_path)
+    end
   end
 
   def create
@@ -21,11 +23,15 @@ class SessionsController < ApplicationController
 
     def check_for_valid_credentials
       @user = User.find_by(email: params[:email])
-      redirect_with_flash("danger", "invalid_credentials", login_url) unless @user && @user.authenticate(params[:password])
+      unless @user && @user.authenticate(params[:password])
+        redirect_with_flash("danger", "invalid_credentials", login_url)
+      end
     end
 
     def check_for_confirmation
-      redirect_with_flash("danger", "activate_your_account", store_index_path) unless @user.confirmed
+      unless @user.confirmed
+        redirect_with_flash("danger", "activate_your_account", store_index_path)
+      end
     end
 
     def create_user(user)

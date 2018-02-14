@@ -1,4 +1,5 @@
 first:
+  id: 22
   name: 'himan shu'
   email: "himanshu.mishra@vinsol.com"
   password_digest: "$2a$10$zckx7bRhbSn4eBRGggkwb.VgI2XwrfzhP3CFOBOcv/mG4RgPar7Ti"
@@ -8,6 +9,7 @@ first:
   role: "customer"
 
 second:
+  id: 23
   name: 'asdfsadf'
   email: "himanshumishra3@gmail.com"
   password_digest: "$2a$10$rBqjahLJYZ9xjiuMV46Ud.Bwr8cev8H6CNPMIBv/Zd09JnJUDRNze"
@@ -17,6 +19,7 @@ second:
   role: "admin"
 
 third:
+  id: 24
   name: 'him'
   email: 'abhishek.kanojia@vinsol.com'
   password_digest: "$2a$10$RHKGC0XmGckgEPg76VGt1OYcldK2LgPc0rSbWPNLkAQTYwLS5nPo6"

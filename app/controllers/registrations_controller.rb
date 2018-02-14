@@ -28,6 +28,8 @@ class RegistrationsController < ApplicationController
 
     def load_user
       @user = User.find_by(confirmation_token: params[:id])
-      redirect_with_flash("danger", 'already_confirmed', login_url) unless @user
+      unless @user
+        redirect_with_flash("danger", 'already_confirmed', login_url)
+      end
     end
 end

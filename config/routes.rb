@@ -25,19 +25,15 @@ Rails.application.routes.draw do
     resources :inventories, except: [:show, :create, :new]
     resources :meals, except: [:show] do
       patch :toggle_meal_status, on: :member
+      get :show_comments, on: :member
     end
     resources :reports, only: [:index]
-    resources :orders, only: [:index] do
+    resources :orders, only: [:index, :destroy] do
       member do
         patch :toggle_ready_status
         patch :toggle_pick_up_status
       end
       get :update_orders, on: :collection
-    end
-    resources :meals do
-      member do
-        get :show_comments
-      end
     end
   end
 
@@ -48,6 +44,7 @@ Rails.application.routes.draw do
 
   resources :orders, only: [] do
     member do
+      resources :charges, only: [:create, :new]
       get :feedback
     end
   end
@@ -63,7 +60,6 @@ Rails.application.routes.draw do
   end
 
   resources :carts, only: [:update, :destroy]
-  resources :charges, only: [:create, :new]
 
   controller :ratings do
     put :rate_meals

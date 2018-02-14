@@ -1,5 +1,4 @@
 en:
-  quantity: 'quantity must be positive'
   activerecord:
     errors:
       models:

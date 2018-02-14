@@ -2,7 +2,6 @@ class ChargesController < ApplicationController
   before_action :set_order
 
   def new
-    redirect_with_flash("danger", "invalid_cart", store_index_path) unless @order
   end
 
   def create
@@ -19,7 +18,9 @@ class ChargesController < ApplicationController
 
   private
     def set_order
-      @order = Order.find_by(cart_id: session[:cart_id])
-      redirect_with_flash("danger", "flash", store_index_path) unless @order
+      @order = Order.find_by(id: params[:id])
+      unless @order
+        redirect_with_flash("danger", "not_found", store_index_path)
+      end
     end
 end
