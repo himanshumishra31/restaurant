@@ -30,9 +30,9 @@ class StoreController < ApplicationController
 
     def load_meals_by_category
       session[:category] = params["category"] || "both"
-      if session[:category].eql? 'veg'
+      if session[:category].eql? 'Veg'
         @meals = @available_meals.select { |meal| meal.veg? }
-      elsif session[:category].eql? 'non_veg'
+      elsif session[:category].eql? 'Non Veg'
         @meals = @available_meals.select { |meal| meal.non_veg? }
       else
         @meals = @available_meals

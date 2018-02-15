@@ -5,8 +5,8 @@ Rails.application.routes.draw do
     post :signup, action: :create
   end
 
-  resources :registrations, only: [] do
-    get :confirm_email, on: :member
+  controller :registrations do
+    get :confirm_email, path: "registrations/:id/confirm_email"
   end
 
   resources :passwords, only: [:new, :edit, :create, :update]
@@ -24,7 +24,8 @@ Rails.application.routes.draw do
     resources :ingredients, except: [:show]
     resources :inventories, except: [:show]
     resources :meals, except: [:show] do
-      patch :toggle_meal_status, on: :member
+      patch :update_status, on: :member
+      get :show_comments, on: :member
     end
     resources :reports, only: [:index]
     resources :orders do
@@ -34,11 +35,6 @@ Rails.application.routes.draw do
       end
       get :update_orders, on: :collection
     end
-    resources :meals do
-      member do
-        get :show_comments
-      end
-    end
   end
 
   resources :users, only: [:edit, :update] do
@@ -46,10 +42,8 @@ Rails.application.routes.draw do
     resources :orders, only: [:create, :new, :destroy]
   end
 
-  resources :orders, only: [] do
-    member do
-      get :feedback
-    end
+  controller :orders do
+    get :feedback, path: 'orders/:id/feedback'
   end
 
   root 'store#index', as: 'store_index'
@@ -57,9 +51,7 @@ Rails.application.routes.draw do
   get :switch_branch, controller: :store
 
   resources :line_items do
-    member do
-      patch :update_quantity
-    end
+    patch :update_quantity, on: :member
   end
 
   resources :carts, only: [:update, :destroy]

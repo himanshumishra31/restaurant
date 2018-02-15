@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    create_user(@user)
+    signin_user(@user)
     redirect_to session[:feedback_url] ? session[:feedback_url] : store_index_path
   end
 
@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
       redirect_with_flash("danger", "activate_your_account", store_index_path) unless @user.confirmed
     end
 
-    def create_user(user)
+    def signin_user(user)
       session[:user_id] = user.id
       params[:remember_me] ? remember_user(user) : forget_user(user)
     end

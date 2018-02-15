@@ -1,7 +1,5 @@
 class Ingredient < ApplicationRecord
 
-  VALID_CATEGORIES = { veg: 'veg', non_veg: 'non_veg' }
-
   # validation
   validates :name, :price, presence: true
   validates_uniqueness_of :name, case_sensitive: false

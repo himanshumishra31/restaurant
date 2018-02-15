@@ -27,7 +27,7 @@ class Admin::BranchesController < Admin::BaseController
   end
 
   def change_default
-    @branch.change_default_branch
+    @branch.change_default
     redirect_with_flash("success", "default_branch", admin_branches_url)
   end
 

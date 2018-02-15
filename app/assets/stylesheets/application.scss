@@ -1,50 +1,5 @@
 /*
  *= require jquery-ui
  *= require bootstrap.min
+ *= require design
  */
-
-.banner {
-  margin: 50px 0 0 190px;
-}
-
-.top_bar {
-  margin: 200px 0 100px 500px;
-}
-
-.field-error {
-  color: red;
-}
-
-
-.fields {
-  margin-left: 50px;
-}
-
-.form-horizontal {
-  h1 {
-    margin: 0 0 50px 500px;
-  }
-}
-
-.panel-heading {
-  h4 {
-    text-align: center;
-  }
-}
-
-.container-page {
-  padding: 0 15px;
-  margin: 100px auto 0 auto;
-}
-
-.location {
-  margin-top: 14px;
-  color: darkgrey;
-  font-size: 20px;
-  margin-left: -100px;
-  margin-right: 80px;
-}
-
-.location-dropdown {
-  margin-top: 14px;
-}

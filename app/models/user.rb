@@ -41,7 +41,7 @@ class User < ApplicationRecord
   end
 
   def generate_slug
-    update_columns(slug: generate_token)
+    update_column(:slug, generate_token)
   end
 
   private

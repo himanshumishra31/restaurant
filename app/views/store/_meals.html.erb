@@ -1,10 +1,10 @@
 <br>
 <br>
 <%= form_tag store_index_path, method: :get, data: { category: :options } do %>
-  <%= radio_button_tag 'category', 'veg', (session[:category].eql? 'veg') %>
-  <%= label_tag 'category_veg', 'Only Veg' %>
-  <%= radio_button_tag 'category', 'non_veg', (session[:category].eql? 'non_veg') %>
-  <%= label_tag 'category_non_veg', 'Only Non Veg' %>
+  <% VALID_CATEGORIES.each do |key, value| %>
+    <%= radio_button_tag 'category', value, (session[:category].eql? value) %>
+    <%= label_tag "category_#{ value }", "Only #{ value }" %>
+  <% end %>
   <%= radio_button_tag 'category', 'both', (session[:category].eql? 'both') %>
   <%= label_tag 'category_both', 'All Meals' %>
 <% end %>
@@ -23,9 +23,9 @@
       <p><%= button_to 'Add To Cart', line_items_path(meal_id: available_meal), remote: true, class: 'btn btn-primary'  %></p>
       <p><strong>Rating:
         <% if meal_rated?(available_meal) %>
-          Not Yet Rated
-        <% else %>
           <%= average_rating(available_meal) %>
+        <% else %>
+          Not Yet Rated
         <% end %>
       </strong></p>
     </div>

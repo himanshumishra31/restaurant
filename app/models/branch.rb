@@ -13,17 +13,17 @@ class Branch < ApplicationRecord
   # callbacks
   after_create :set_inventories
 
-
   def available_meals
     Meal.includes(:meal_items).includes(:ratings).select { |meal| meal if sufficient_stock?(meal) && meal.active }
   end
 
-  def change_default_branch
-    Branch.find_by(default: true).update_column(:default, false)
-    update_columns(default: true)
+  def change_default
+    Branch.update_all(default: false)
+    update(default: true)
   end
 
   private
+
     def sufficient_stock?(meal)
       meal.meal_items.all? { |meal_item| inventories.find_by(ingredient_id: meal_item.ingredient_id).quantity >= meal_item.quantity }
     end

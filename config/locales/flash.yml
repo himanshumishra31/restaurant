@@ -58,8 +58,11 @@ en:
         danger:
           insufficient_stock: 'Sorry Ingredient is not left. Please try again after some time'
           no_select: 'Please select any extra ingredient'
+          error: 'Please try after some time.'
+
         success:
           extra_ingredient_added: 'Extra Ingredient Added'
+
 
     orders:
       new:

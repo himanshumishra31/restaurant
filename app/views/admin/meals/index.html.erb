@@ -31,7 +31,7 @@
               <% end %>
             </td>
             <td>
-              <%= link_to toggle_meal_status_admin_meal_path(meal), method: :patch, class: "btn #{meal_active(meal)} btn-site-primary text-uppercase" do %>
+              <%= link_to update_status_admin_meal_path(meal), method: :patch, class: "btn #{meal_active(meal)} btn-site-primary text-uppercase" do %>
                 <span class='glyphicon glyphicon-pencil'> <%= meal.active %> </span>
               <% end %>
             </td>
