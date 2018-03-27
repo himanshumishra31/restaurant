@@ -1,4 +1,8 @@
 class Branch < ApplicationRecord
+
+  attribute :my_string, :string
+
+
   # validations
   validates :name, :opening_time, :closing_time, :contact_number, :address, presence: true
   validates_uniqueness_of :name, case_sensitive: false
@@ -12,7 +16,6 @@ class Branch < ApplicationRecord
 
   # callbacks
   after_create :set_inventories
-
 
   def self.as_csv
     CSV.generate do |csv|

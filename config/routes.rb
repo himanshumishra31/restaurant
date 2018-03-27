@@ -65,4 +65,5 @@ Rails.application.routes.draw do
     put :rate_meals
   end
   match "*path" => redirect("/"), via: [:get]
+
 end

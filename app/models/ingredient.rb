@@ -1,6 +1,7 @@
 class Ingredient < ApplicationRecord
 
   VALID_CATEGORIES = { veg: 'veg', non_veg: 'non_veg' }
+  include TokenGenerator
 
   # validation
   validates :name, :price, presence: true
@@ -26,10 +27,12 @@ class Ingredient < ApplicationRecord
     end
 
     def set_inventory
-      Branch.all.map { |branch| branch.inventories.build(ingredient_id: id, branch_id: branch.id).save }
+      true
+      # Branch.all.map { |branch| branch.inventories.build(ingredient_id: id, branch_id: branch.id).save }
     end
 
     def update_meal_price
-      Meal.all.each(&:set_price)
+      true
+      # Meal.all.each(&:set_price)
     end
 end

@@ -17,7 +17,7 @@ class User < ApplicationRecord
   after_create_commit :generate_slug
 
   # associations
-  has_many :comments, dependent: :destroy
+  has_many :comments, -> { where(body: 'sub') }, dependent: :destroy
   has_many :orders, dependent: :destroy
 
   def activate_email
