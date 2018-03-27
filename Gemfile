@@ -36,4 +36,10 @@ group :test do
   gem 'minitest-reporters'
   gem 'simplecov'
   gem 'rails-controller-testing'
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'shoulda'
+  gem 'shoulda-matchers'
+  gem 'shoulda-callback-matchers'
+  gem 'faker'
 end
