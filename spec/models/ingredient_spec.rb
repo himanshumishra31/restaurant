@@ -28,7 +28,7 @@ describe Ingredient do
 
   describe 'callbacks' do
     it { should callback(:set_inventory).after(:create) }
-    it { should callback(:update_meal_price).after(:update).unless(:price_changed?) }
+    it { should callback(:update_meal_price).after(:update).unless(:price_unchanged?) }
   end
 
   describe 'scope' do
@@ -54,9 +54,14 @@ describe Ingredient do
       end
     end
 
-    describe 'price_changed?' do
-      it 'returns whether price is changed or not' do
-        expect(veg_ingredient.send(:price_changed?)).to eq(true)
+    describe 'price_unchanged?' do
+      it 'should return true when price is not changed' do
+        expect(veg_ingredient.send(:price_unchanged?)).to eq(true)
+      end
+
+      it 'should return false when price is changed' do
+        veg_ingredient.price = Faker::Number.number
+        expect(veg_ingredient.send(:price_unchanged?)).to eq(false)
       end
     end
   end

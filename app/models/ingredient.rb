@@ -16,13 +16,13 @@ class Ingredient < ApplicationRecord
 
   # callbacks
   after_create :set_inventory
-  after_update :update_meal_price, unless: :price_changed?
+  after_update :update_meal_price, unless: :price_unchanged?
 
   scope :veg, -> { where(category: VALID_CATEGORIES[:veg] )}
   scope :non_veg, -> { where(category: VALID_CATEGORIES[:non_veg] )}
 
   private
-    def price_changed?
+    def price_unchanged?
       price.eql? price_was
     end
 
