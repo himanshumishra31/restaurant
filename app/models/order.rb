@@ -7,7 +7,6 @@ class Order < ApplicationRecord
   delegate :address, to: :branch, prefix: true
   delegate :contact_number, to: :branch, prefix: true
 
-
   # associations
   belongs_to :cart
   belongs_to :user
@@ -20,7 +19,7 @@ class Order < ApplicationRecord
   validates :pick_up, presence: true
   validate :valid_pick_up_time?, if: :pick_up?
   validate :sufficient_preparation_time?, if: :pick_up?
-  validate :future_pick_up?, if: :pick_up?
+  validate :past_pick_up?, if: :pick_up?
 
   #callbacks
   after_create_commit :send_confirmation_mail
@@ -30,7 +29,7 @@ class Order < ApplicationRecord
   def delivered
     toggle!(:picked)
     feedback_token
-    OrderMailer.feedback_mail(self).deliver
+    OrderMailer.feedback_mail(self).deliver_later
   end
 
   def prepared
@@ -44,7 +43,6 @@ class Order < ApplicationRecord
     meal_sold_with_quantity = meal_sold.each { |id, ls| meal_sold[id] = ls.pluck(:quantity).sum }
     meal_sold_with_quantity.key(meal_sold_with_quantity.values.max)
   end
-
 
   def feedback_submitted
     update_attributes(feedback_digest: nil, feedback_email_sent_at: nil)
@@ -61,7 +59,7 @@ class Order < ApplicationRecord
   def sufficient_stock
     Ingredient.all.each do |ingredient|
       quantity_used = 0
-      branch_quantity = branch.inventories.find_by(ingredient_id: ingredient.id).quantity
+      branch_quantity = branch.inventories.find_by(ingredient_id: ingredient.id).try(:quantity) || 0
       cart.line_items.each do |line_item|
         quantity_used += line_item.quantity if line_item.extra_ingredient.eql? ingredient.name
         ingredient_used = line_item.meal.meal_items.find_by(ingredient_id: ingredient.id)
@@ -90,7 +88,7 @@ class Order < ApplicationRecord
       end
     end
 
-    def future_pick_up?
+    def past_pick_up?
       if Time.current > Time.parse(pick_up.strftime(TIME_FORMAT))
         errors.add(:pick_up, error_message('invalid', :order, :pick_up))
       end
@@ -103,7 +101,7 @@ class Order < ApplicationRecord
     end
 
     def send_confirmation_mail
-      OrderMailer.confirmation_mail(self).deliver
+      OrderMailer.confirmation_mail(self).deliver_later
     end
 
     def feedback_token

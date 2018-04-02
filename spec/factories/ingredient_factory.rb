@@ -1,9 +1,7 @@
-require 'faker'
-
 FactoryBot.define do
   factory :ingredient do
     name { Faker::Name.unique.name }
-    price { Faker::Number.number}
+    price { Faker::Number.number(2) }
 
     trait :veg do
       category 'veg'
