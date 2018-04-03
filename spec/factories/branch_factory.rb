@@ -3,8 +3,8 @@ FactoryBot.define do
     name { Faker::Name.unique.name }
     opening_time { 4.hour.ago }
     closing_time { 4.hour.from_now }
-    contact_number { '9654208158' }
-    address { '3/11 east patel nagar'}
+    contact_number { Faker::Base.numerify('9#########') }
+    address { Faker::Address.city }
 
     trait :default do
       default true
@@ -15,7 +15,6 @@ FactoryBot.define do
     end
 
     after(:create) do |branch|
-      branch.inventories = create_list(:inventory, 1, branch: branch)
       branch.orders = create_list(:order, 1, branch: branch)
     end
 

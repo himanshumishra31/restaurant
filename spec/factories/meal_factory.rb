@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :meal do
-    name { Faker::Friends.character }
+    name { Faker::Name.unique.name }
     trait :active_meal do
       active true
     end

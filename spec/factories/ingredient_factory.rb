@@ -4,11 +4,11 @@ FactoryBot.define do
     price { Faker::Number.number(2) }
 
     trait :veg do
-      category 'veg'
+      category Ingredient::VALID_CATEGORIES[:veg]
     end
 
     trait :non_veg do
-      category 'non_veg'
+      category Ingredient::VALID_CATEGORIES[:non_veg]
     end
   end
 end

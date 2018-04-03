@@ -75,18 +75,17 @@ describe Order do
 
   describe 'Instance Public Methods' do
     describe 'delivered' do
+      let(:order_picked_status) { order.picked }
       it 'is expected to change the picked status of order' do
-        order_deliver_status = order.picked
-        order.delivered
-        expect(order.picked).to eq(!order_deliver_status)
+        expect { order.delivered }.to change { order.picked }.from(order_picked_status).to(!order_picked_status)
       end
 
-      it "is expected to set the feedback digest token and feeback email sent at" do
-        feedback_digest = order.feedback_digest
-        feedback_email_sent_at = order.feedback_email_sent_at
-        order.delivered
-        expect(order.feedback_digest).not_to eq(feedback_digest)
-        expect(order.feedback_email_sent_at).not_to eq(feedback_email_sent_at)
+      it "is expected to set the feedback digest token" do
+        expect { order.delivered }.to change { order.feedback_digest }
+      end
+
+      it "is expected to set the feedback email sent at" do
+        expect { order.delivered }.to change { order.feedback_email_sent_at }
       end
 
       it "is expected to increase the enqueued jobs count of order mailer" do
@@ -95,54 +94,83 @@ describe Order do
     end
 
     describe 'prepared' do
+      let(:order_ready_status) { order.ready }
       it "is expected to change the prepared status of the order" do
-        order_ready_status = order.picked
-        order.prepared
-        expect(order.ready).to eq(!order_ready_status)
+        expect { order.prepared }.to change { order.ready }.from(order_ready_status).to(!order_ready_status)
       end
     end
 
     describe 'feedback_submitted' do
+      before { order.update_column(:feedback_digest, 'sfasdfsfas') }
       it "is expected to set the feedback digest token and feedback email sent at to nil" do
-        order.update_columns(feedback_digest: 'sfasdfsfas', feedback_email_sent_at: Time.current)
-        order.feedback_submitted
-        expect(order.feedback_email_sent_at).to eq(nil)
-        expect(order.feedback_email_sent_at).to eq(nil)
+        expect { order.feedback_submitted }.to change { order.feedback_digest }.from('sfasdfsfas').to(nil)
+      end
+
+      let(:time) { Time.current }
+      before { order.update_column(:feedback_email_sent_at, time ) }
+      it "is expected to set the feedback email sent at feedback to nil" do
+        expect { order.feedback_submitted }.to change { order.feedback_email_sent_at }.from(time).to(nil)
       end
     end
 
     describe 'feedback_link_expired' do
-      it "is expected to return true if the feedback email sent at is less than 1 day" do
-        order.update_column(:feedback_email_sent_at, 1.hour.ago )
-        expect(order.feedback_link_expired?).to eq(false)
+      context "when feedback email sent at is less than 1 day" do
+        before { order.update_column(:feedback_email_sent_at, 1.hour.ago ) }
+        it "is expected to return false" do
+          expect(order.feedback_link_expired?).to eq(false)
+        end
       end
 
-      it "is expected to return false if the feedback email sent at is less than 1 day" do
-        order.update_column(:feedback_email_sent_at, 2.day.ago )
-        expect(order.feedback_link_expired?).to eq(true)
+      context "when feedback email sent at is more than 1 day" do
+        before { order.update_column(:feedback_email_sent_at, 2.day.ago ) }
+        it "is expected to return true " do
+          expect(order.feedback_link_expired?).to eq(true)
+        end
       end
     end
 
     describe 'cancellable?' do
-      it "is expected to return true if the current time is more than half an hour of pick up time" do
-        order.update_column(:pick_up, 1.hour.from_now)
-        expect(order.cancellable?).to eq(true)
+      context "when current time is more than half an hour of pick up time" do
+        before { order.update_column(:pick_up, 1.hour.from_now) }
+        it "is expected to return true" do
+          expect(order.cancellable?).to eq(true)
+        end
       end
 
-      it "is expected to return false if the current time is less than half an hour of pick up time" do
-        order.update_column(:pick_up, 10.minutes.ago)
-        expect(order.cancellable?).to eq(false)
+      context "when current time is less than half an hour of pick up time" do
+        before { order.update_column(:pick_up, 10.minutes.ago) }
+        it "is expected to return false" do
+          expect(order.cancellable?).to eq(false)
+        end
+      end
+    end
+
+    describe 'affect ingredient' do
+      context "when order is cancelled" do
+        it "is expected to increase the inventory" do
+          expect{ order.affect_ingredient("+") }.to change { order.branch.inventories.find_by(ingredient_id: order.cart.line_items.first.meal.ingredients.first.id).quantity }.by(1)
+        end
+      end
+
+      context "when order is placed" do
+        it "is expected to increase the inventory" do
+          expect{ order.affect_ingredient("-") }.to change { order.branch.inventories.find_by(ingredient_id: order.cart.line_items.first.meal.ingredients.first.id).quantity }.by(-1)
+        end
       end
     end
 
     describe 'sufficient stock' do
-      it "is expected to return true if sufficient stock is present in inventory" do
-        expect(order.sufficient_stock).to eq(true)
+      context "when sufficient stock is present in inventory" do
+        it "is expected to return true " do
+          expect(order.sufficient_stock).to eq(true)
+        end
       end
 
-      it "is expected to return false if stock is insufficient" do
-        order.branch.inventories.first.update_column(:quantity, 0)
-        expect(order.sufficient_stock).to eq(false)
+      context "when stock is insufficient in inventory" do
+        before { order.branch.inventories.first.update_column(:quantity, 0) }
+        it "is expected to return false" do
+          expect(order.sufficient_stock).to eq(false)
+        end
       end
     end
   end
@@ -157,54 +185,62 @@ describe Order do
 
   describe 'Instance private methods' do
     describe 'sufficient_preparation_time?' do
-      it "is expected to show error if sufficient preparation time is not provided" do
-        order_with_insufficient_preparation_time = Order.new(pick_up: 20.minutes.from_now, branch: Branch.first)
-        expect(order_with_insufficient_preparation_time.valid?).to eq(false)
-        expect(order_with_insufficient_preparation_time.errors[:pick_up]).to include("require half an hour to prepare order")
+      context "when sufficient preparation time is not provided" do
+        let(:order_with_insufficient_preparation_time) { Order.new(pick_up: 20.minutes.from_now, branch: Branch.first) }
+        before { order_with_insufficient_preparation_time.valid? }
+        it "is expected to show error" do
+          expect(order_with_insufficient_preparation_time.errors[:pick_up]).to include("require half an hour to prepare order")
+        end
       end
 
-      it "is expected not to show error if sufficient preparation time is not provided" do
-        order_with_sufficient_preparation_time = Order.new(pick_up: 2.hours.from_now, branch: Branch.first)
-        order_with_sufficient_preparation_time.valid?
-        expect(order_with_sufficient_preparation_time.errors[:pick_up]).not_to include("require half an hour to prepare order")
+      context "when sufficient preparation time is provided" do
+        let(:order_with_sufficient_preparation_time) { Order.new(pick_up: 2.hours.from_now, branch: Branch.first) }
+        before { order_with_sufficient_preparation_time.valid? }
+        it "is expected not to show error" do
+          expect(order_with_sufficient_preparation_time.errors[:pick_up]).not_to include("require half an hour to prepare order")
+        end
       end
     end
 
     describe 'past_pick_up?' do
-      it "is expected to show error if pick up time is before the current time" do
-        order_with_past_pick_up = Order.new(pick_up: 1.hour.ago, branch: Branch.first )
-        expect(order_with_past_pick_up.valid?).to eq(false)
-        expect(order_with_past_pick_up.errors[:pick_up]).to include("already past this time. Please Enter a time in future")
+      context "when pick up time is before the current time" do
+        let(:order_with_past_pick_up) { Order.create(pick_up: 1.hour.ago, branch: Branch.first ) }
+        it "is expected to show error if " do
+          expect(order_with_past_pick_up.errors[:pick_up]).to include("already past this time. Please Enter a time in future")
+        end
       end
 
-      it "is expected not to show error if pick up time is ahead the current time" do
-        order_with_future_pick_up = Order.new(pick_up: 1.hour.from_now, branch: Branch.first )
-        order_with_future_pick_up.valid?
-        expect(order_with_future_pick_up.errors[:pick_up]).not_to include("already past this time. Please Enter a time in future")
+      context "when pick up time is ahead the current time" do
+        let(:order_with_future_pick_up) { Order.create(pick_up: 1.hour.from_now, branch: Branch.first ) }
+        it "is expected not to show error" do
+          expect(order_with_future_pick_up.errors[:pick_up]).not_to include("already past this time. Please Enter a time in future")
+        end
       end
     end
 
     describe 'valid_pick_up_time?' do
-      it "is expected to show error is pick up time is not between branch timings" do
-        order_with_invalid_pick_up = Order.new(pick_up: Branch.first.opening_time - 30.minutes, branch: Branch.first )
-        expect(order_with_invalid_pick_up.valid?).to eq(false)
-        expect(order_with_invalid_pick_up.errors[:pick_up]).to include("pick up a time between branch timings")
+      context "when pick up time is not between branch timings" do
+        let(:order_with_invalid_pick_up) { Order.create(pick_up: Branch.first.opening_time - 30.minutes, branch: Branch.first ) }
+        it "is expected to show error is " do
+          expect(order_with_invalid_pick_up.errors[:pick_up]).to include("pick up a time between branch timings")
+        end
       end
 
-      it "is expected not to show error is pick up time is between branch timings" do
-        order_with_valid_pick_up = Order.new(pick_up: Branch.first.opening_time + 31.minutes, branch: Branch.first )
-        order_with_valid_pick_up.valid?
-        expect(order_with_valid_pick_up.errors[:pick_up]).not_to include("pick up a time between branch timings")
+      context "when pick up time is between branch timings" do
+        let(:order_with_valid_pick_up) { Order.create(pick_up: Branch.first.opening_time + 31.minutes, branch: Branch.first ) }
+        it "is expected not to show error" do
+          expect(order_with_valid_pick_up.errors[:pick_up]).not_to include("pick up a time between branch timings")
+        end
       end
     end
 
     describe 'feedback_token' do
-      it "is expected to set the feedback_digest and feedback_email_sent_at" do
-        feedback_digest = order.feedback_digest
-        feedback_email_sent_at = order.feedback_email_sent_at
-        order.send(:feedback_token)
-        expect(order.feedback_digest).not_to eq(feedback_digest)
-        expect(order.feedback_email_sent_at).not_to eq(feedback_email_sent_at)
+      it "is expected to set the feedback_digest" do
+        expect { order.send(:feedback_token) }.to change { order.feedback_digest }
+      end
+
+      it "is expected to set the feedback email sent at" do
+        expect { order.send(:feedback_token) }.to change { order.feedback_email_sent_at }
       end
     end
 

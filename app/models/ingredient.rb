@@ -27,8 +27,8 @@ class Ingredient < ApplicationRecord
     end
 
     def set_inventory
-      true
-      # Branch.all.map { |branch| branch.inventories.build(ingredient_id: id, branch_id: branch.id).save }
+      # true
+      Branch.all.map { |branch| branch.inventories.build(ingredient_id: id, branch_id: branch.id).save }
     end
 
     def update_meal_price

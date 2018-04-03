@@ -75,7 +75,7 @@ class Order < ApplicationRecord
       meal = Meal.find_by(id: line_item.meal_id)
       meal.meal_items.each do |meal_item|
         branch_inventory = branch.inventories.find_by(ingredient_id: meal_item.ingredient_id)
-        branch_inventory.update_columns(quantity: branch_inventory.quantity.send(action.to_sym, (meal_item.quantity * line_item.quantity) ))
+        branch_inventory.update_columns(quantity: branch_inventory.quantity.send(action.to_sym, (meal_item.quantity * line_item.quantity) )) if branch_inventory
       end
     end
   end

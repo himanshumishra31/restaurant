@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do
-    name { Faker::GameOfThrones.character }
+    name { Faker::Name.unique.name }
     email { Faker::Internet.email }
     password { Faker::Internet.password(8) }
 
@@ -11,7 +11,7 @@ FactoryBot.define do
 
     trait :user_not_confirmed do
       confirmed false
-      confirmation_token 'zHJnzhs2rex'
+      confirmation_token { Faker::Lorem.word }
     end
 
     trait :customer do
