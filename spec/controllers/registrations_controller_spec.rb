@@ -41,8 +41,10 @@ describe RegistrationsController do
   end
 
   describe 'GET confirm_email' do
+    let(:user) { FactoryBot.create(:user, :user_not_confirmed, :customer) }
+
     context "when user if found with the id passed" do
-      let(:user) { FactoryBot.create(:user, :user_not_confirmed, :customer) }
+      before { get :confirm_email, params: { id: user.confirmation_token } }
       it "is expected to show a flash message" do
         get :confirm_email, params: { id: user.confirmation_token }
         expect(flash[:success]).to eq("Your email has been confirmed. Please sign in to continue.")
@@ -52,11 +54,11 @@ describe RegistrationsController do
         get :confirm_email, params: { id: user.confirmation_token }
         expect(response).to redirect_to(login_url)
       end
+    end
 
-      it "is expected to change confirmed state to true" do
-        expect_any_instance_of(User).to receive(:activate_email).and_return(true)
-        get :confirm_email, params: { id: user.confirmation_token }
-      end
+    it "is expected to change confirmed state to true" do
+      expect_any_instance_of(User).to receive(:activate_email).and_return(true)
+      get :confirm_email, params: { id: user.confirmation_token }
     end
 
     context "when user is not found with the id passed" do
