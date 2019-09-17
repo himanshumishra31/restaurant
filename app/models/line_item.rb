@@ -5,7 +5,7 @@ class LineItem < ApplicationRecord
   belongs_to :cart, counter_cache: :line_items_count
 
   # validations
-  validates :meal_id, uniqueness: { scope: :cart_id, message: "duplicate entry" }
+  validates :meal_id, uniqueness: { scope: :cart_id }
 
   def total_price
     meal_price = meal.price * quantity

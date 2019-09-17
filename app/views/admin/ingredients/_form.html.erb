@@ -1,42 +1,56 @@
-<br><br><br><br><br>
-<div class="container">
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">Ingredient Details</h4>
-        </div>
-        <div class="panel-body">
-          <%= form_for [:admin, @ingredient], html: { class: 'form-horizontal'} do |form| %>
-            <fieldset>
-              <div class="form-group">
-                <%= form.text_field :name, size: 40, class: 'form-control', placeholder: 'Name*' %>
-                <%= display_error(:name, @ingredient) %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel login-form">
+      <div class="panel-heading text-center text-uppercase">
+        <h2><strong>Enter Ingredient Details</strong></h2>
+      </div>
+      <div class="panel-body">
+        <%= form_for [:admin, @ingredient], html: { class: 'form-horizontal'} do |form| %>
+          <div class="form-group">
+            <div class="col-sm-12 form-label-group" data-id="form-label-group">
+              <%= form.label :name, 'Enter ingredient name', class: "control-label", :'data-id'=>"control-label" %>
+              <%= form.text_field :name, size: 40, class: 'form-control form-control-input', :'data-id'=>"form-control-input" %>
+              <%= display_error(:name, @ingredient) %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-12 form-label-group" data-id="form-label-group">
+              <%= form.label :price, 'Enter the price', class: "control-label", :'data-id'=>"control-label" %>
+              <%= form.number_field :price, class: 'form-control form-control-input', :'data-id'=>"form-control-input" %>
+              <%= display_error(:price, @ingredient) %>
+            </div>
+          </div>
+          <div class="form-group margin-bottom-0">
+            <%= form.label :category_veg do %>
+              <div class="col-sm-12">
+                <%= form.radio_button :category, 'veg'%>
+                <span class="checkbox-label text-capitalize">Veg</span>
               </div>
-              <div class="form-group">
-                <%= form.number_field :price, class: 'form-control', placeholder: 'Price*' %>
-                <%= display_error(:price, @ingredient) %>
+            <% end %>
+          </div>
+          <div class="form-group margin-bottom-0">
+            <%= form.label :category_nonveg do %>
+              <div class="col-sm-12">
+                <%= form.radio_button :category, 'non_veg'%>
+                <span class="checkbox-label text-capitalize">non Veg</span>
               </div>
-              <div class="form-group">
-                <div class="col-lg-10">
-                  <%= form.radio_button :category, 'veg' %>
-                  <%= form.label :category_veg, 'Veg' %>
-                  <%= form.radio_button :category, 'non_veg' %>
-                  <%= form.label :category_nonveg, 'Non-Veg' %>
-                  <%= display_error(:category, @ingredient) %>
-                </div>
+            <% end %>
+            <%= display_error(:category, @ingredient) %>
+          </div>
+          <div class="form-group">
+            <%= form.label :extra_allowed do %>
+              <div class="col-sm-12">
+                <%= form.check_box :extra_allowed%>
+                <span class="checkbox-label">Add extra Cheese</span>
               </div>
-              <div class="form-group col-lg-10">
-                <%= form.label :extra_allowed %>
-                <%= form.check_box :extra_allowed %>
-                <%= display_error(:extra_allowed, @ingredient) %>
-              </div>
-              <%= form.submit 'Submit', class: 'btn btn-lg btn-success btn-block' %>
-            </fieldset>
-          <% end %>
-          <hr/>
-          <center><h4><%= link_to 'Back', admin_ingredients_url %></h4></center>
-        </div>
+            <% end %>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-12">
+              <%= submit_tag 'Continue', class: 'btn btn-danger btn-site-primary btn-lg btn-block text-uppercase' %>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

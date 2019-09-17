@@ -1,5 +1,4 @@
 class Admin::ReportsController < Admin::BaseController
-  before_action :set_branch
   before_action :set_from_to_date
   before_action :set_low_inventories
   before_action :set_popular_meal

@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
-  scope :account do
-    get :confirm_email, to: 'users#confirm_email'
-  end
 
   controller :registrations do
     get :signup, action: :new
     post :signup, action: :create
+  end
+
+  controller :registrations do
+    get :confirm_email, path: "registrations/:id/confirm_email"
   end
 
   resources :passwords, only: [:new, :edit, :create, :update]
@@ -17,10 +18,15 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :branches, except: [:show]
+    resources :branches, except: [:show] do
+      patch :change_default, on: :member
+    end
     resources :ingredients, except: [:show]
     resources :inventories, except: [:show]
-    resources :meals, except: [:show]
+    resources :meals, except: [:show] do
+      patch :update_status, on: :member
+      get :show_comments, on: :member
+    end
     resources :reports, only: [:index]
     resources :orders do
       member do
@@ -29,35 +35,26 @@ Rails.application.routes.draw do
       end
       get :update_orders, on: :collection
     end
-    resources :meals do
-      member do
-        get :show_comments
-      end
-    end
   end
 
   resources :users, only: [:edit, :update] do
-    get :confirm_email, on: :member
     get :myorders, on: :collection
+    resources :orders, only: [:create, :new, :destroy]
   end
 
-  resources :orders do
-    member do
-      get :feedback
-    end
+  controller :orders do
+    get :feedback, path: 'orders/:id/feedback'
   end
 
   root 'store#index', as: 'store_index'
   get :category, to: 'store#category', as: 'store_category'
+  get :switch_branch, controller: :store
 
   resources :line_items do
-    member do
-      patch :update_quantity
-    end
+    patch :update_quantity, on: :member
   end
 
   resources :carts, only: [:update, :destroy]
-  resources :orders, only: [:create, :new, :destroy ]
   resources :charges, only: [:create, :new]
 
   controller :ratings do

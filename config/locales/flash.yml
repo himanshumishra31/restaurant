@@ -4,6 +4,11 @@ en:
       create:
         success:
           confirm_email: 'Please Confirm Your email'
+      confirm_email:
+        success:
+          email_confirmed: "Your email has been confirmed. Please sign in to continue."
+        danger:
+          already_confirmed: 'Your email has been already confirmed. Please log in.'
 
     passwords:
       create:
@@ -53,13 +58,16 @@ en:
         danger:
           insufficient_stock: 'Sorry Ingredient is not left. Please try again after some time'
           no_select: 'Please select any extra ingredient'
+          error: 'Please try after some time.'
+
         success:
           extra_ingredient_added: 'Extra Ingredient Added'
+
 
     orders:
       new:
         danger:
-          login: 'Please Log In to Place Order'
+          login_to_continue: 'Please Log In to Place Order'
 
       destroy:
         success:
@@ -71,7 +79,7 @@ en:
         danger:
           insufficient_stock: 'Sorry Ingredient is not in sufficient quantity. Please again create your cart'
         success:
-          successfully_placed: 'Order is successfully placed.'
+          successfully_placed: 'Order is successfully placed. It will be cancelled after 24 hours'
 
       feedback:
         danger:
@@ -88,17 +96,17 @@ en:
           invalid_credentials: 'Invalid Email / Password'
           email_not_found: 'Email address Not found'
 
+      destroy:
+        success:
+          logged_out: 'Successfully logged out.'
+
     users:
       edit:
         danger:
           login_to_continue: 'Please Log in'
           other_account: "Can't edit others account"
 
-      confirm_email:
-        success:
-          email_confirmed: "Your email has been confirmed. Please sign in to continue."
-        danger:
-          already_confirmed: 'Your email has been already confirmed. Please log in.'
+
 
       update:
         success:
@@ -142,6 +150,10 @@ en:
         danger:
           branch_not_found: 'Branch not found. Please try again'
 
+      change_default:
+        success:
+          default_branch: 'Successfully updated default branch.'
+
 
     admin/ingredients:
       new:
@@ -182,6 +194,9 @@ en:
         danger:
           access_restricted: "Sorry, you don't have authority to access this section"
 
+      toggle_meal_status:
+        success:
+          status_updated: 'Successfully updated meal status'
 
       destroy:
         success:

@@ -1,13 +1,10 @@
 class Ingredient < ApplicationRecord
 
-  VALID_CATEGORIES = ['veg', 'non_veg']
-  ERROR_MESSAGE = "not a valid category"
-
   # validation
   validates :name, :price, presence: true
   validates_uniqueness_of :name, case_sensitive: false
-  validate :validate_price, if: :price?
-  validates :category, inclusion: { in: VALID_CATEGORIES, message: ERROR_MESSAGE }
+  validates :price, numericality: { greater_than: 0 }
+  validates :category, inclusion: { in: VALID_CATEGORIES.values }
 
   # associations
   has_many :meal_items, dependent: :destroy
@@ -16,11 +13,14 @@ class Ingredient < ApplicationRecord
 
   # callbacks
   after_create :set_inventory
-  after_update :update_meal_price
+  after_update :update_meal_price, unless: :price_changed?
+
+  scope :veg, -> { where(category: VALID_CATEGORIES[:veg] )}
+  scope :non_veg, -> { where(category: VALID_CATEGORIES[:non_veg] )}
 
   private
-    def validate_price
-      errors.add(:price) if price < 0
+    def price_changed?
+      price.eql? price_was
     end
 
     def set_inventory

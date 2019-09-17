@@ -1,6 +1,6 @@
 module StoreHelper
   def meal_rated?(meal)
-    meal.ratings.blank?
+    meal.ratings.present?
   end
 
   def average_rating(meal)

@@ -1,5 +1,7 @@
 class MealItem < ApplicationRecord
 
+  delegate :price, to: :ingredient
+
   # associations
   belongs_to :ingredient
   belongs_to :meal
@@ -7,7 +9,7 @@ class MealItem < ApplicationRecord
   # validations
   validates :quantity, presence: true
 
-  def ingredient_price_in_meal
-    quantity * ingredient.price
+  def total_price
+    quantity * price
   end
 end

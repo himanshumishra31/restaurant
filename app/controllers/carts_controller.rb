@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  before_action :set_cart, only: [:update, :destroy]
+  before_action :load_cart, only: [:update, :destroy]
 
   def destroy
     @cart.destroy if @cart.id = session[:cart_id]
@@ -8,7 +8,7 @@ class CartsController < ApplicationController
   end
 
   private
-    def set_cart
+    def load_cart
       @cart = Cart.find_by(id: params[:id])
       redirect_with_flash("danger", "not_found", store_index_url) unless @cart
     end

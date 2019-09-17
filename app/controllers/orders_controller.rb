@@ -1,6 +1,4 @@
 class OrdersController < ApplicationController
-  include CurrentCart
-  before_action :set_branch, only: [:create, :new]
   before_action :set_cart, only: [:create, :new]
   before_action :check_sufficient_stock, only: [:create]
   before_action :set_order, only: [:feedback]
@@ -15,21 +13,9 @@ class OrdersController < ApplicationController
     end
   end
 
-  def check_sufficient_stock
-    @order = Order.new(permitted_params)
-    unless @order.sufficient_stock
-      session[:cart_id] = nil
-      redirect_with_flash("danger", "insufficient_stock", store_index_path)
-    end
-  end
-
 
   def new
-    if current_user
-      @order = Order.new
-    else
-      redirect_with_flash("danger", "login", login_path)
-    end
+    @order = @current_user.orders.build
   end
 
   def destroy
@@ -44,6 +30,14 @@ class OrdersController < ApplicationController
   end
 
   private
+
+    def check_sufficient_stock
+      @order = @current_user.orders.build(permitted_params)
+      unless @order.sufficient_stock
+        session[:cart_id] = nil
+        redirect_with_flash("danger", "insufficient_stock", store_index_path)
+      end
+    end
 
     def set_order
       @order = Order.find_by(feedback_digest: params[:id])
@@ -62,6 +56,6 @@ class OrdersController < ApplicationController
     end
 
     def permitted_params
-      params.require(:order).permit(:pick_up, :phone_number, :user_id, :branch_id, :cart_id)
+      params.require(:order).permit(:pick_up, :phone_number, :branch_id, :cart_id)
     end
 end

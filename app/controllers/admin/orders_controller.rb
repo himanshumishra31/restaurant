@@ -1,5 +1,4 @@
 class Admin::OrdersController < Admin::BaseController
-  before_action :set_branch
   before_action :set_orders, only: [:index, :update_orders]
   before_action :set_order, only: [:toggle_pick_up_status, :toggle_ready_status]
 

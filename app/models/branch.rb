@@ -14,20 +14,22 @@ class Branch < ApplicationRecord
   after_create :set_inventories
 
   def available_meals
-    available_meals = []
-    Meal.includes(:meal_items).includes(:ratings).all.each { |meal| available_meals << meal if sufficient_stock?(meal) }
-    available_meals
+    Meal.includes(:meal_items).includes(:ratings).select { |meal| meal if sufficient_stock?(meal) && meal.active }
   end
 
-  # FIX_ME_PG_2:- Make this private method. -done
+  def change_default
+    Branch.update_all(default: false)
+    update(default: true)
+  end
 
   private
+
     def sufficient_stock?(meal)
       meal.meal_items.all? { |meal_item| inventories.find_by(ingredient_id: meal_item.ingredient_id).quantity >= meal_item.quantity }
     end
 
     def validate_timings
-      errors.add(:opening_time) if closing_time < opening_time
+      errors.add(:opening_time, error_message('invalid', :branch, :opening_time)) if closing_time < opening_time
     end
 
     def set_inventories

@@ -1,17 +1,20 @@
-<table class="table">
-  <thead>
-    <th>Order Number</th>
-    <th>Items (Quantity)</th>
-    <th>Pick Up Time</th>
-    <th>Total Price</th>
-    <th>Branch </th>
-    <th>Pick up Address </th>
-    <th>Contact Number </th>
-    <th>Cancel Order</th>
-  </thead>
-<% @orders.each do |order| %>
+<div class="container" border= "2">
+  <table class="table">
+    <thead>
+      <th>Order Number</th>
+      <th>Items (Quantity)</th>
+      <th>Pick Up Time</th>
+      <th>Total Price</th>
+      <th>Branch </th>
+      <th>Pick up Address </th>
+      <th>Contact Number </th>
+      <th>Order prepared</th>
+      <th>Order picked</th>
+      <th>Payment status</th>
+      <th>Cancel Order</th>
+    </thead>
     <tbody>
-      <% if order_payment_successful(order) %>
+      <% @orders.each do |order| %>
         <tr>
           <td><%= order.id %></td>
           <td>
@@ -20,13 +23,22 @@
             <% end %>
           </td>
           <td><%= order.pick_up.strftime("%I:%M %p") %></td>
-          <td><%= number_to_currency(order.charge.amount) %></td>
-          <td><%= order.branch.name %></td>
-          <td><%= order.branch.address %></td>
-          <td><%= order.branch.contact_number %></td>
-          <td><%= link_to 'Cancel', order_url(order), method: :delete, data: { confirm: 'Are you Sure?' },class: 'btn btn-primary btn-xs' %></td>
+          <td><%= number_to_currency(order.cart.total_price) %></td>
+          <td><%= order.branch_name %></td>
+          <td><%= order.branch_address %></td>
+          <td><%= order.branch_contact_number %></td>
+          <td><%= order.ready %></td>
+          <td><%= order.picked %></td>
+          <td>
+            <% if order.charge %>
+              <%= order.charge.status %>
+            <% else %>
+              <%= link_to 'Please Pay', new_charge_path, method: :get, class: 'btn btn-primary btn-xs' %>
+            <% end %>
+          </td>
+          <td><%= link_to 'Cancel', user_order_path(@current_user, order), method: :delete, data: { confirm: 'Are you Sure?' },class: 'btn btn-primary btn-xs' %></td>
         </tr>
       <% end %>
     </tbody>
-<% end %>
-</table>
+  </table>
+</div>

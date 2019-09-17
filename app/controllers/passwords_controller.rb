@@ -1,4 +1,5 @@
 class PasswordsController < ApplicationController
+  skip_before_action :authenticate_user!
   before_action :get_user_by_email, only: [:create, :update]
   before_action :get_user_by_token, only: [:edit]
   before_action :check_for_confirmed_email, only: [:create]
@@ -52,4 +53,3 @@ class PasswordsController < ApplicationController
     end
 
 end
-

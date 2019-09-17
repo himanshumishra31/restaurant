@@ -1,9 +1,9 @@
 class Admin::MealsController < Admin::BaseController
-  before_action :set_meal, only: [:destroy, :edit, :update, :show_comments]
+  before_action :set_meal, only: [:destroy, :edit, :update, :show_comments, :update_status]
   before_action :ingredient_exists?, only: [:update]
 
   def index
-    @meals = Meal.includes(:meal_items).includes(:ingredients)
+    @meals = Meal.includes(:meal_items, :ingredients)
   end
 
   def create
@@ -29,6 +29,11 @@ class Admin::MealsController < Admin::BaseController
 
   def new
     @meal = Meal.new
+  end
+
+  def update_status
+    @meal.toggle_status
+    redirect_with_flash("success", "status_updated", admin_meals_path)
   end
 
   def destroy

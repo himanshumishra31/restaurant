@@ -1,25 +1,41 @@
-<h3>Ingredients</h3>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Category</th>
-      <th>Extra Allowed</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @ingredients.each do |ingredient| %>
-      <tr>
-        <td><%= ingredient.name %></td>
-        <td><%= number_to_currency(ingredient.price) %></td>
-        <td><%= capitalize_and_remove_undescore(ingredient.category) %></td>
-        <td><%= ingredient.extra_allowed %></td>
-        <td><%= link_to 'Edit', edit_admin_ingredient_path(ingredient) %></td>
-        <td><%= link_to 'Destroy', admin_ingredient_url(ingredient), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<div class="conatiner">
+  <h2 class="text-center text-uppercase">Ingredients</h2>
+  <div class="table-responsive margin-top-30">
+    <table class="table table-hover table-striped" border='2'>
+      <thead>
+        <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Extra Allowed</th>
+        <th></th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-<br>
-<%= link_to 'New Ingredient', new_admin_ingredient_url %>
+      </thead>
+      <tbody>
+        <% @ingredients.each do |ingredient| %>
+          <tr>
+            <td><%= ingredient.name %></td>
+            <td><%= number_to_currency(ingredient.price) %></td>
+            <td><%= capitalize_and_remove_undescore(ingredient.category) %></td>
+            <td><%= ingredient.extra_allowed %></td>
+            <td>
+              <%= link_to edit_admin_ingredient_path(ingredient),class: 'btn btn-danger btn-site-primary text-uppercase' do %>
+                <span class='glyphicon glyphicon-pencil'> Edit </span>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to admin_ingredient_url(ingredient),class: 'btn btn-danger btn-site-primary text-uppercase' , method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <span class='glyphicon glyphicon-trash delete'> Delete </span>
+                <%end %>
+
+              </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= link_to new_admin_ingredient_url, class: 'btn btn-danger btn-site-primary text-uppercase' do %>
+    <span><i class="glyphicon glyphicon-plus"></i> Add new ingredient </span>
+  <% end %>
+</div>

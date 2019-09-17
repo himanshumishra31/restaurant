@@ -10,14 +10,20 @@
       <td><%= order.pick_up.strftime("%I:%M %p") %></td>
       <td><%= number_to_currency(order.charge.amount) %></td>
       <td>
-        <%= order.ready %>
-        <%= link_to 'Edit', toggle_ready_status_admin_order_path(order), method: :patch, class: 'btn btn-primary btn-xs' %>
+        <%= link_to toggle_ready_status_admin_order_path(order), method: :patch, class: 'btn btn-danger btn-site-primary text-uppercase' do %>
+          <span class='glyphicon glyphicon-pencil'> <%= order.ready %> </span>
+        <% end %>
       </td>
       <td>
-        <%= order.picked %>
-        <%= link_to 'Edit', toggle_pick_up_status_admin_order_path(order), method: :patch, class: 'btn btn-primary btn-xs' %>
+        <%= link_to toggle_pick_up_status_admin_order_path(order), method: :patch, class: 'btn btn-danger btn-site-primary text-uppercase' do %>
+          <span class='glyphicon glyphicon-pencil'> <%= order.picked %> </span>
+        <% end %>
       </td>
-      <td><%= link_to 'Cancel', order_url(order), method: :delete, data: { confirm: 'Are you Sure?' },class: 'btn btn-primary btn-xs' %></td>
+      <td>
+        <%= link_to order_url(order), method: :delete, data: { confirm: 'Are you Sure?' },class: 'btn btn-danger btn-site-primary text-uppercase' do %>
+          <span class='glyphicon glyphicon-trash delete'> Cancel </span>
+        <% end %>
+      </td>
     </tr>
   <% end %>
 <% end %>

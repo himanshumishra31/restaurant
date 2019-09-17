@@ -12,6 +12,8 @@ en:
           attributes:
             price:
               invalid: 'Should be positive'
+            category:
+              invalid: 'Should be a valid category'
 
         inventory:
           attributes:
@@ -22,6 +24,7 @@ en:
           attributes:
             meal_items:
               invalid: "atleast one must present"
+              quantity: "quantity should be greater than 0"
 
         order:
           attributes:

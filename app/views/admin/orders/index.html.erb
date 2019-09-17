@@ -1,17 +1,21 @@
 <%= javascript_include_tag 'order' %>
 <br>
-<h5>Orders: <%= cookies[:current_location] %></h5>
-<table class="table" data-name="order-table">
-  <thead>
-    <th>Order Number</th>
-    <th>Items (Quantity)</th>
-    <th>Pick Up Time</th>
-    <th>Total Price</th>
-    <th>Order Prepared</th>
-    <th>Order Picked</th>
-    <th>Cancel Order</th>
-  </thead>
-  <tbody>
-    <%= render "order" %>
-  </tbody>
-</table>
+<div class="container">
+  <h2 class="text-center text-uppercase">Orders</h2>
+  <div class="table-responsive margin-top-30">
+    <table class="table table-hover table-striped" data-name="order-table" border="2">
+      <thead>
+        <th>Order Number</th>
+        <th>Items (Quantity)</th>
+        <th>Pick Up Time</th>
+        <th>Total Price</th>
+        <th>Order Prepared</th>
+        <th>Order Picked</th>
+        <th>Cancel Order</th>
+      </thead>
+      <tbody>
+        <%= render "order" %>
+      </tbody>
+    </table>
+  </div>
+</div>
