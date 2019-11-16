@@ -29,7 +29,7 @@ class User < ApplicationRecord
   end
 
   def send_password_reset_email
-    UserMailer.reset_password(self).deliver_now
+    UserMailer.reset_password(self).deliver_later
   end
 
   def reset_password_token_expired?
@@ -42,7 +42,7 @@ class User < ApplicationRecord
 
   private
     def send_email_confirmation_mail
-      UserMailer.verify_email(self).deliver
+      UserMailer.verify_email(self).deliver_later
     end
 
     def set_confirmation_token

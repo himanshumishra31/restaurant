@@ -16,19 +16,19 @@ class Ingredient < ApplicationRecord
 
   # callbacks
   after_create :set_inventory
-  after_update :update_meal_price, unless: :price_changed?
+  after_update :update_meal_price, unless: :price_unchanged?
 
   scope :veg, -> { where(category: VALID_CATEGORIES[:veg] )}
   scope :non_veg, -> { where(category: VALID_CATEGORIES[:non_veg] )}
 
   private
-    def price_changed?
+    def price_unchanged?
       price.eql? price_was
     end
 
     def set_inventory
-      true
-      # Branch.all.map { |branch| branch.inventories.build(ingredient_id: id, branch_id: branch.id).save }
+      # true
+      Branch.all.map { |branch| branch.inventories.build(ingredient_id: id, branch_id: branch.id).save }
     end
 
     def update_meal_price
